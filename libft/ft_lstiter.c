@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/18 15:50:53 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/18 17:51:31 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+void	ft_lstiter(t_list *lst, void (*f)(void *));
 
-int	main(void)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	prompt();
-	return (0);
+	if (!lst || !f)
+		return ;
+	while (lst != NULL)
+	{
+		(*f)(lst->content);
+		lst = lst->next;
+	}
 }

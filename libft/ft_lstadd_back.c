@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/18 17:37:59 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+void	ft_lstadd_back(t_list **lst, t_list *new);
 
-int	main(void)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	prompt();
-	return (0);
+	t_list	*last;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last = ft_lstlast(*lst);
+	last->next = new;
 }

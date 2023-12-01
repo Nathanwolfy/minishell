@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_isascii.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/16 12:55:39 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/17 21:37:23 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+int	ft_isascii(int c);
 
-int	main(void)
+int	ft_isascii(int c)
 {
-	prompt();
-	return (0);
+	return (0 <= c && c <= 127);
 }

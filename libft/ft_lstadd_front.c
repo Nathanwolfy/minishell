@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/18 15:30:38 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/18 17:37:44 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+void	ft_lstadd_front(t_list **lst, t_list *new);
 
-int	main(void)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	prompt();
-	return (0);
+	if (new && lst)
+	{
+		new->next = *lst;
+		*lst = new;
+	}
 }

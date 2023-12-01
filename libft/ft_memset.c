@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/16 13:54:35 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/17 21:39:30 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+void	*ft_memset(void *s, int c, size_t n);
 
-int	main(void)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	prompt();
-	return (0);
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+	{
+		*((char *)s + i) = c;
+		i++;
+	}
+	return (s);
 }

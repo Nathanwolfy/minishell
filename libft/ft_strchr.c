@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/16 17:16:01 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/20 17:09:38 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+char	*ft_strchr(const char *s, int c);
 
-int	main(void)
+char	*ft_strchr(const char *s, int c)
 {
-	prompt();
-	return (0);
+	int	i;
+
+	i = 0;
+	while (s[i] && (unsigned char)c != s[i])
+	{
+		i++;
+	}
+	if ((unsigned char)c == s[i])
+		return ((char *)(s + i));
+	return (NULL);
 }

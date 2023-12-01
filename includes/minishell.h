@@ -15,7 +15,7 @@
 
 # include <stdio.h>
 # include <readline/readline.h>
-# include <readline/readline.h>
+# include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/wait.h>
@@ -31,6 +31,8 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
+
+# define PROMPT "minishell: "
 
 #endif
 

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/16 17:09:42 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/17 21:44:38 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+int	ft_toupper(int c);
 
-int	main(void)
+static int	ft_islower(int c)
 {
-	prompt();
-	return (0);
+	return ('a' <= c && c <= 'z');
+}
+
+int	ft_toupper(int c)
+{
+	if (ft_islower(c))
+		return (c - 32);
+	return (c);
 }

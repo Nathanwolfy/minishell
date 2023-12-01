@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/18 15:39:24 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/18 17:37:24 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+t_list	*ft_lstlast(t_list *lst);
 
-int	main(void)
+t_list	*ft_lstlast(t_list *lst)
 {
-	prompt();
-	return (0);
+	if (!lst)
+		return (NULL);
+	if (lst->next == NULL)
+		return (lst);
+	return (ft_lstlast(lst->next));
 }

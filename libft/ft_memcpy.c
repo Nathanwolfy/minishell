@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:02:08 by nlederge         ###   ########.fr       */
+/*   Created: 2023/10/16 14:05:20 by nlederge          #+#    #+#             */
+/*   Updated: 2023/10/17 21:47:31 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	prompt(void);
+void	*ft_memcpy(void *dest, const void *src, size_t n);
 
-int	main(void)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	prompt();
-	return (0);
+	size_t	i;
+
+	i = 0;
+	if (!src && !dest)
+		return (dest);
+	while (i < n)
+	{
+		*((char *)dest + i) = *((char *)src + i);
+		i++;
+	}
+	return (dest);
 }
