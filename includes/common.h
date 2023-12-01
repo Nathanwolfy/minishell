@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef COMMON_H
+# define COMMON_H
 
 # include <stdio.h>
 # include <readline/readline.h>
@@ -35,9 +35,6 @@
 # define PROMPT "minishell: "
 
 void	prompt(void);
-
-char	**ft_split_spaces(char *s);
-void	free_split(char **split);
 
 #endif
 
