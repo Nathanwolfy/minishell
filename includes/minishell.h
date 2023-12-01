@@ -34,5 +34,10 @@
 
 # define PROMPT "minishell: "
 
+void	prompt(void);
+
+char	**ft_split_spaces(char *s);
+void	free_split(char **split);
+
 #endif
 

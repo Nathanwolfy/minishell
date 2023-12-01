@@ -1,7 +1,9 @@
 NAME = minishell
 
 SRCS_FILES = minishell.c \
-			test_readline.c
+				prompt.c \
+				ft_split_spaces.c \
+				utils.c
 
 SRCS = $(addprefix srcs/, $(SRCS_FILES))
 

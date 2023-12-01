@@ -12,26 +12,25 @@
 
 #include "../includes/minishell.h"
 
+void	exec_cmd(char *cmd)
+{
+	printf("%s\n", cmd);
+}
+
+
 void	prompt(void)
 {
 	char	*line;
 	int		running;
-	//char	*paths;
 
-	//line = readline(PROMPT);
-	//printf("line = %s\n", line);
-	//paths = getenv("PATH");
-	//printf("paths = %s\n", paths);
-	//free(line);
-	running = 10;
-	while (running--)
+	running = 1;
+	while (running)
 	{
 		line = readline(PROMPT);
+		//parsing of line
+		exec_cmd(line);
+		//add to history if no here doc
 		add_history(line);
-		if (running == 5)
-			rl_clear_history();
-		printf("line = %s\n", line);
 		free(line);
 	}
-
 }
