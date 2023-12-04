@@ -13,6 +13,8 @@
 #ifndef COMMON_H
 # define COMMON_H
 
+#include "../libft/libft.h"
+
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -35,6 +37,8 @@
 # define PROMPT "minishell: "
 
 void	prompt(void);
+void	free_split(char **split);
+void	lexer1(char *line, int to);
 
 #endif
 

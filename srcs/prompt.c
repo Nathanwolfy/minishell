@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/common.h"
 
 void	exec_cmd(char *cmd)
 {
@@ -28,7 +28,7 @@ void	prompt(void)
 	{
 		line = readline(PROMPT);
 		//parsing of line
-		exec_cmd(line);
+		lexer1(line, ft_strlen(line) + 1);
 		//add to history if no here doc
 		add_history(line);
 		free(line);

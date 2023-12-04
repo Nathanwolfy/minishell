@@ -3,7 +3,8 @@ NAME = minishell
 SRCS_FILES = minishell.c \
 				prompt.c \
 				ft_split_spaces.c \
-				utils.c
+				utils.c \
+				parsing.c
 
 SRCS = $(addprefix srcs/, $(SRCS_FILES))
 
@@ -31,7 +32,7 @@ CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
-LIBS = -lreadline -L$(DIR_libft) -l$(LIBFT_lib)
+LIBS = -L. -lreadline -L$(DIR_libft) -l$(LIBFT_lib)
 
 RM = rm -rf
 
@@ -44,7 +45,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@make -C $(DIR_libft)
-	@$(CC) $(CFLAGS) $(LIBS) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) created successfully!$(DEF_COLOR)"
 
 clean:
