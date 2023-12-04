@@ -21,3 +21,17 @@ void	free_split(char **split)
 		free(split[i++]);
 	free(split);
 }
+
+void	print_tree(t_list **tree)
+{
+	t_list *l;
+
+	if (!tree)
+		return ;
+	l = *tree;
+	while (l)
+	{
+		printf("%s\n", (char *)l->content);
+		l = l->next;
+	}
+}

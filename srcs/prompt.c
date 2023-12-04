@@ -22,15 +22,20 @@ void	prompt(void)
 {
 	char	*line;
 	int		running;
+	t_list	*tree;
 
 	running = 1;
+	tree = NULL;
 	while (running)
 	{
 		line = readline(PROMPT);
 		//parsing of line
-		lexer1(line, ft_strlen(line) + 1);
+		lexer1(line, ft_strlen(line) + 1, &tree);
 		//add to history if no here doc
+		print_tree(&tree);
 		add_history(line);
+		ft_lstclear(&tree, &free);
+		tree = NULL;
 		free(line);
 	}
 }

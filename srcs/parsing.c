@@ -64,11 +64,11 @@ int	count_words_cmd(char *line, int to)
 		while (line[j] && ft_isspace(line[j]))
 			j++;
 		if (line[j] == '\'')
-			size = ft_word_size_adapted(line + j + 1, &ft_is_sq);
+			size = ft_word_size_adapted(&line[j + 1], &ft_is_sq) + 2;
 		else if (line[j] == '\"')
-			size = ft_word_size_adapted(line + j + 1, &ft_is_dq);
+			size = ft_word_size_adapted(&line[j + 1], &ft_is_dq) + 2;
 		else
-			size = ft_word_size_adapted(line + j, &ft_isspace);
+			size = ft_word_size_adapted(&line[j], &ft_isspace);
 		j += size;
 		if (size != 0)
 			ct++;
@@ -78,7 +78,7 @@ int	count_words_cmd(char *line, int to)
 	return (ct);
 }
 
-void	lexer1(char *line, int to)
+void	lexer1(char *line, int to, t_list **tree)
 {
 	int	sq;
 	int	dq;
@@ -87,13 +87,6 @@ void	lexer1(char *line, int to)
 	sq = 0;
 	dq = 0;
 	k = 0;
-	char *test = "eqwuefqoyfew q > \"\" \"qweqweqwe\" eqwgei";
-	printf("test avec :%s count = %d\n", test, count_words_cmd(test, ft_strlen(test)));
-	write(1,"called with :", 14);
-	k = 0;
-	while (k < to)
-		write(1, &line[k++], 1);
-	write(1, "\n", 1);
 	k = 0;
 	while (line[k] && k < to)
 	{
@@ -103,33 +96,41 @@ void	lexer1(char *line, int to)
 			dq = (1 - dq);
 		else if (line[k] == '|' && !sq && !dq) //what if last char
 		{
-			lexer1(line, k);
-			printf("pipe\n");
-			lexer1(line + k + 1, ft_strlen(line + k + 1) + 1);
+			lexer1(line, k - 1, tree);
+			//printf("pipe\n");
+			ft_lstadd_back(tree, ft_lstnew(ft_strdup("pipe")));
+			lexer1(&line[k + 1], ft_strlen(&line[k + 1]), tree);
 			return ;
 		}
 		else if (line[k] == '<' && !sq && !dq)
 		{
-			lexer1(line, k);
-			printf("<\n");
-			lexer1(line + k + 1, ft_strlen(line + k + 1) + 1);
+			lexer1(line, k - 1, tree);
+			//printf("<\n");
+			ft_lstadd_back(tree, ft_lstnew(ft_strdup("<")));
+			lexer1(&line[k + 1], ft_strlen(&line[k + 1]), tree);
 			return ;
 		}
 		else if (line[k] == '>' && !sq && !dq)
 		{
-			lexer1(line, k);
-			printf(">\n");
-			lexer1(line + k + 1, ft_strlen(line + k + 1) + 1);
+			lexer1(line, k - 1, tree);
+			//printf(">\n");
+			ft_lstadd_back(tree, ft_lstnew(ft_strdup(">")));
+			lexer1(&line[k + 1], ft_strlen(&line[k + 1]), tree);
 			return ;
 		}
 		k++;
 	}
+	/*if (sq)
+		printf("unclosed single quote");
+	if (dq)
+		printf("unclosed double quote");*/
 	//handle unclosed quotes
 	//count words
 	k = 0;
 	while (k < count_words_cmd(line, to))
 	{
-		printf("words\n");
+		//printf("words\n");
+		ft_lstadd_back(tree, ft_lstnew(ft_strdup("words")));
 		k++;
 	}
 }

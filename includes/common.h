@@ -38,7 +38,8 @@
 
 void	prompt(void);
 void	free_split(char **split);
-void	lexer1(char *line, int to);
+void	lexer1(char *line, int to, t_list **tree);
+void	print_tree(t_list **tree);
 
 #endif
 
