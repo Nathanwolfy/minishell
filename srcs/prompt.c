@@ -22,7 +22,7 @@ void	prompt(void)
 {
 	char	*line;
 	int		running;
-	t_list	*tree;
+	t_token	*tree;
 
 	running = 1;
 	tree = NULL;
@@ -34,7 +34,7 @@ void	prompt(void)
 		//add to history if no here doc
 		print_tree(&tree);
 		add_history(line);
-		ft_lstclear(&tree, &free);
+		ft_tokenclear(&tree, &free);
 		tree = NULL;
 		free(line);
 	}

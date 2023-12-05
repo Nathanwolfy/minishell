@@ -1,14 +1,27 @@
 NAME = minishell
 
-SRCS_FILES = minishell.c \
-				prompt.c \
-				ft_split_spaces.c \
-				utils.c \
-				parsing.c
+SRCS_MAIN_FILES = minishell.c \
+					prompt.c
 
-SRCS = $(addprefix srcs/, $(SRCS_FILES))
+SRCS_UTILS_FILES = utils.c
 
-OBJS = $(SRCS:.c=.o)
+SRCS_PARSING_FILES = parsing.c \
+						ft_token.c \
+						ft_split_spaces.c
+
+SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
+
+SRCS_UTILS = $(addprefix srcs/utils/, $(SRCS_UTILS_FILES))
+
+SRCS_PARSING = $(addprefix srcs/parsing/, $(SRCS_PARSING_FILES))
+
+OBJS_MAIN = $(SRCS_MAIN:.c=.o)
+
+OBJS_UTILS = $(SRCS_UTILS:.c=.o)
+
+OBJS_PARSING = $(SRCS_PARSING:.c=.o)
+
+OBJS = $(OBJS_MAIN) $(OBJS_PARSING) $(OBJS_UTILS)
 
 ###
 

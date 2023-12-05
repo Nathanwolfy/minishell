@@ -10,7 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/common.h"
+#include "../../includes/common.h"
+
+int	ft_isspace(int c)
+{
+	return (('\t' <= c && c <= '\r') || c == ' ');
+}
+
+int	ft_is_sq(int c)
+{
+	return (c == '\'');
+}
+
+int	ft_is_dq(int c)
+{
+	return (c == '\"');
+}
 
 void	free_split(char **split)
 {
@@ -22,16 +37,16 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	print_tree(t_list **tree)
+void	print_tree(t_token **tree)
 {
-	t_list *l;
+	t_token	*l;
 
 	if (!tree)
 		return ;
 	l = *tree;
 	while (l)
 	{
-		printf("%s\n", (char *)l->content);
+		printf("%s, type = %d\n", l->content, l->type);
 		l = l->next;
 	}
 }

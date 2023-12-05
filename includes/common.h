@@ -13,7 +13,7 @@
 #ifndef COMMON_H
 # define COMMON_H
 
-#include "../libft/libft.h"
+# include "../libft/libft.h"
 
 # include <stdio.h>
 # include <readline/readline.h>
@@ -36,10 +36,36 @@
 
 # define PROMPT "minishell: "
 
+typedef struct s_token
+{
+	char			*content;
+	int				type;
+	struct s_token	*next;
+}	t_token;
+
+typedef enum e_token_type
+{
+	T_PIPE,
+	T_REDIRECT_IN,
+	T_REDIRECT_OUT,
+	T_HERE_DOC,
+	T_REDIRECT_APP,
+	T_WORD
+}	t_token_type;
+
 void	prompt(void);
 void	free_split(char **split);
-void	lexer1(char *line, int to, t_list **tree);
-void	print_tree(t_list **tree);
+void	lexer1(char *line, int to, t_token **tree);
+void	print_tree(t_token **tree);
+
+int		ft_isspace(int c);
+int		ft_is_sq(int c);
+int		ft_is_dq(int c);
+
+void	ft_tokendelone(t_token *lst, void (*del)(void*));
+void	ft_tokenclear(t_token **lst, void (*del)(void*));
+t_token	*ft_tokennew(void *content, int type);
+t_token	*ft_tokenlast(t_token *lst);
+void	ft_tokenadd_back(t_token **lst, t_token *new);
 
 #endif
-

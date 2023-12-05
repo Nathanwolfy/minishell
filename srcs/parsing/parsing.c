@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/common.h"
+#include "../../includes/common.h"
 
 /*
 Possibilities : commands, options, ', ", $ (?), |, <, <<, >, >>
@@ -26,21 +26,6 @@ cat infile | grep "< ouch $TEST" > outfile
 cmd opt pipe cmd opt (ENV?) redir file (?)
 */
 
-static int	ft_isspace(int c)
-{
-	return (('\t' <= c && c <= '\r') || c == ' ');
-}
-
-static int	ft_is_sq(int c)
-{
-	return (c == '\'');
-}
-
-static int	ft_is_dq(int c)
-{
-	return (c == '\"');
-}
-
 static int	ft_word_size_adapted(char *str, int (*f)(int))
 {
 	int	size;
@@ -51,7 +36,7 @@ static int	ft_word_size_adapted(char *str, int (*f)(int))
 	return (size);
 }
 
-int	count_words_cmd(char *line, int to)
+static int	count_words_cmd(char *line, int to)
 {
 	int	ct;
 	int	size;
@@ -78,7 +63,33 @@ int	count_words_cmd(char *line, int to)
 	return (ct);
 }
 
-void	lexer1(char *line, int to, t_list **tree)
+void	add_to_tree(char *line, int k, t_token **tree, int type)
+{
+	lexer1(line, k - 1, tree);
+	ft_tokenadd_back(tree, ft_tokennew(NULL, type));
+	if (type == T_PIPE || type == T_REDIRECT_IN || type == T_REDIRECT_OUT)
+		lexer1(&line[k + 1], ft_strlen(&line[k + 1]), tree);
+	else
+		lexer1(&line[k + 2], ft_strlen(&line[k + 2]), tree);
+}
+
+int		check_for_operator(char *line, int k, t_token **tree)
+{
+	if (line[k] == '|') //what if last char
+		return (add_to_tree(line, k, tree, T_PIPE), 1);
+	else if (!ft_strncmp(&line[k], ">>", 2))
+		return (add_to_tree(line, k, tree, T_REDIRECT_APP), 1);
+	else if (!ft_strncmp(&line[k], "<<", 2))
+		return (add_to_tree(line, k, tree, T_HERE_DOC), 1);
+	else if (line[k] == '<')
+		return (add_to_tree(line, k, tree, T_REDIRECT_IN), 1);
+	else if (line[k] == '>')
+		return (add_to_tree(line, k, tree, T_REDIRECT_OUT), 1);
+	else
+		return (0);
+}
+
+void	lexer1(char *line, int to, t_token **tree)
 {
 	int	sq;
 	int	dq;
@@ -87,50 +98,22 @@ void	lexer1(char *line, int to, t_list **tree)
 	sq = 0;
 	dq = 0;
 	k = 0;
-	k = 0;
 	while (line[k] && k < to)
 	{
 		if (line[k] == '\'' && !dq)
 			sq = (1 - sq);
 		else if (line[k] == '\"' && !sq)
 			dq = (1 - dq);
-		else if (line[k] == '|' && !sq && !dq) //what if last char
-		{
-			lexer1(line, k - 1, tree);
-			//printf("pipe\n");
-			ft_lstadd_back(tree, ft_lstnew(ft_strdup("pipe")));
-			lexer1(&line[k + 1], ft_strlen(&line[k + 1]), tree);
+		else if (check_for_operator(line, k, tree) && !sq && !dq) //what if last char
 			return ;
-		}
-		else if (line[k] == '<' && !sq && !dq)
-		{
-			lexer1(line, k - 1, tree);
-			//printf("<\n");
-			ft_lstadd_back(tree, ft_lstnew(ft_strdup("<")));
-			lexer1(&line[k + 1], ft_strlen(&line[k + 1]), tree);
-			return ;
-		}
-		else if (line[k] == '>' && !sq && !dq)
-		{
-			lexer1(line, k - 1, tree);
-			//printf(">\n");
-			ft_lstadd_back(tree, ft_lstnew(ft_strdup(">")));
-			lexer1(&line[k + 1], ft_strlen(&line[k + 1]), tree);
-			return ;
-		}
 		k++;
 	}
-	/*if (sq)
-		printf("unclosed single quote");
-	if (dq)
-		printf("unclosed double quote");*/
-	//handle unclosed quotes
-	//count words
-	k = 0;
-	while (k < count_words_cmd(line, to))
+	if (sq || dq) //better handle
+		printf("unclosed quote\n");
+	else
 	{
-		//printf("words\n");
-		ft_lstadd_back(tree, ft_lstnew(ft_strdup("words")));
-		k++;
+		k = -1;
+		while (++k < count_words_cmd(line, to))
+			ft_tokenadd_back(tree, ft_tokennew(ft_strdup("words"), T_WORD));
 	}
 }
