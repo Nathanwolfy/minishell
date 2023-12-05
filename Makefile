@@ -5,9 +5,9 @@ SRCS_MAIN_FILES = minishell.c \
 
 SRCS_UTILS_FILES = utils.c
 
-SRCS_PARSING_FILES = parsing.c \
+SRCS_PARSING_FILES = lexing.c \
 						ft_token.c \
-						ft_split_spaces.c
+						ft_split_adapted.c
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 

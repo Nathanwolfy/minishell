@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_readline.c                                    :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -17,7 +17,6 @@ void	exec_cmd(char *cmd)
 	printf("%s\n", cmd);
 }
 
-
 void	prompt(void)
 {
 	char	*line;
@@ -29,9 +28,9 @@ void	prompt(void)
 	while (running)
 	{
 		line = readline(PROMPT);
-		//parsing of line
-		lexer1(line, ft_strlen(line) + 1, &tree);
-		//add to history if no here doc
+		if (!line)
+			return ;
+		lexer(line, ft_strlen(line) + 1, &tree); //add to history if no here doc
 		print_tree(&tree);
 		add_history(line);
 		ft_tokenclear(&tree, &free);

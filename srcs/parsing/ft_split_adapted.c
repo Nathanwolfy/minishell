@@ -12,46 +12,55 @@
 
 #include "../../includes/common.h"
 
-static int	ft_isspace(int c)
+static int	ft_word_size_adapted(char *str, int (*f)(int))
 {
-	return (('\t' <= c && c <= '\r') || c == ' ');
-}
-
-static size_t	ft_word_size(char *str)
-{
-	size_t	size;
+	int	size;
 
 	size = 0;
-	while (*str && !ft_isspace(*str))
-	{
+	while (str[size] && !((*f)(str[size])))
 		size++;
-		str++;
-	}
 	return (size);
 }
 
-static size_t	ft_word_count(char *str)
+static int	get_size_adapted(char *line, int i)
 {
-	size_t	ct;
-	size_t	size;
+	int	size;
+
+	if (line[i] == '\'')
+		size = ft_word_size_adapted(&line[i + 1], &ft_is_sq) + 2;
+	else if (line[i] == '\"')
+		size = ft_word_size_adapted(&line[i + 1], &ft_is_dq) + 2;
+	else
+		size = ft_word_size_adapted(&line[i], &ft_isspace);
+	return (size);
+}
+
+static int	count_words_cmd(char *line, int to)
+{
+	int	ct;
+	int	size;
+	int	j;
 
 	ct = 0;
-	while (*str)
+	j = 0;
+	while (line[j] && j < to)
 	{
-		while (*str && ft_isspace(*str))
-			str++;
-		size = ft_word_size(str);
-		str += size;
+		while (line[j] && ft_isspace(line[j]))
+			j++;
+		size = get_size_adapted(line, j);
+		j += size;
 		if (size != 0)
 			ct++;
+		else
+			return (ct);
 	}
 	return (ct);
 }
 
-static char	*ft_strdup_len(char *str, size_t len)
+static char	*ft_strdup_len(char *str, int len)
 {
 	char	*ptr;
-	size_t	k;
+	int		k;
 
 	k = 0;
 	ptr = malloc(sizeof(char) * (len + 1));
@@ -70,31 +79,30 @@ static char	*ft_strdup_len(char *str, size_t len)
 	}
 }
 
-char	**ft_split_spaces(char *s)
+char	**ft_split_adapted(char *line, int to)
 {
 	char	**table;
-	size_t	size;
-	size_t	i;
+	int		ct;
+	int		k;
 
-	i = 0;
-	if (!s)
+	ct = 0;
+	k = 0;
+	if (!line)
 		return (NULL);
-	table = malloc(sizeof(char *) * (ft_word_count(s) + 1));
+	table = malloc(sizeof(char *) * (count_words_cmd(line, to) + 1));
 	if (table == NULL)
 		return (NULL);
-	while (*s)
+	while (line[k] && k < to)
 	{
-		while (*s && ft_isspace(*s))
-			s++;
-		size = ft_word_size(s);
-		if (size != 0)
-		{
-			table[i] = ft_strdup_len(s, size);
-			if (table[i++] == NULL)
-				return (free_split(table), NULL);
-		}
-		s += size;
+		while (line[k] && ft_isspace(line[k]))
+			k++;
+		if (get_size_adapted(line, k) == 0)
+			break ;
+		table[ct] = ft_strdup_len(&line[k], get_size_adapted(line, k));
+		if (table[ct++] == NULL)
+			return (free_split(table), NULL);
+		k += get_size_adapted(line, k);
 	}
-	table[i] = 0;
+	table[ct] = 0;
 	return (table);
 }

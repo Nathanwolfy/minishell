@@ -54,13 +54,14 @@ typedef enum e_token_type
 }	t_token_type;
 
 void	prompt(void);
-void	free_split(char **split);
-void	lexer1(char *line, int to, t_token **tree);
-void	print_tree(t_token **tree);
+void	lexer(char *line, int to, t_token **tree);
+char	**ft_split_adapted(char *line, int to);
 
 int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
+void	free_split(char **split);
+void	print_tree(t_token **tree);
 
 void	ft_tokendelone(t_token *lst, void (*del)(void*));
 void	ft_tokenclear(t_token **lst, void (*del)(void*));
