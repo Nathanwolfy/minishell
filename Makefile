@@ -7,6 +7,7 @@ SRCS_UTILS_FILES = utils.c
 
 SRCS_PARSING_FILES = lexing.c \
 						ft_token.c \
+						ft_stash.c \
 						ft_split_adapted.c
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))

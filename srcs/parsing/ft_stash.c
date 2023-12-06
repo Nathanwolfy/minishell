@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:18 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/06 17:31:34 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:45:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_stashclear(t_stash **lst, void (*del)(void*))
 	lst = NULL;
 }
 
-t_stash	*ft_stashnew(void **content)
+t_stash	*ft_stashnew(char **content)
 {
 	t_stash	*l;
 

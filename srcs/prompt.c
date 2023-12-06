@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/06 17:28:43 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:44:45 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	prompt(void)
 		print_tree(&tree);
 		add_history(line);
 		ft_tokenclear(&tree, &free);
-		ft_stashclear(&stash, &free_split);
+		ft_stashclear(&stash, NULL); //&free_split);
 		stash = NULL;
 		tree = NULL;
 		free(line);
