@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/01 15:27:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:28:43 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void	prompt(void)
 	char	*line;
 	int		running;
 	t_token	*tree;
+	t_stash	*stash;
 
 	running = 1;
 	tree = NULL;
+	stash = NULL;
 	while (running)
 	{
 		line = readline(PROMPT);
@@ -34,6 +36,8 @@ void	prompt(void)
 		print_tree(&tree);
 		add_history(line);
 		ft_tokenclear(&tree, &free);
+		ft_stashclear(&stash, &free_split);
+		stash = NULL;
 		tree = NULL;
 		free(line);
 	}

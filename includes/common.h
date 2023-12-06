@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   common.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/30 16:03:07 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:23:40 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_stash
+{
+	char			**cmd;
+	int				fdin;
+	int				fdout;
+	struct s_stash	*next;
+}	t_stash;
+
 typedef enum e_token_type
 {
 	T_PIPE,
@@ -68,5 +76,12 @@ void	ft_tokenclear(t_token **lst, void (*del)(void*));
 t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
+
+void	ft_stashdelone(t_stash *lst, void (*del)(void*));
+void	ft_stashclear(t_stash **lst, void (*del)(void*));
+t_stash	*ft_stashnew(void **content);
+t_stash	*ft_stashlast(t_stash *lst);
+void	ft_stashadd_back(t_stash **lst, t_stash *new);
+
 
 #endif
