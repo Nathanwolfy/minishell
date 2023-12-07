@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 14:20:32 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:15:06 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,29 @@ typedef struct s_tree
 
 typedef enum e_token_type
 {
+	T_END=-1,
+	T_WORD,
 	T_PIPE,
 	T_REDIRECT_IN,
 	T_REDIRECT_OUT,
 	T_HERE_DOC,
-	T_REDIRECT_APP,
-	T_WORD
+	T_REDIRECT_APP
 }	t_token_type;
+
+typedef enum e_sequence_type
+{
+	S_CMD=1000,
+	S_PIPE,
+	S_REDIR
+}	t_sequence_type;
 
 void	prompt(void);
 void	lexer(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
+
+//void	parser(t_token **token, t_tree **ast);
+
+void	interpreter(t_tree **ast, t_tree *node);
 
 int		ft_isspace(int c);
 int		ft_is_sq(int c);

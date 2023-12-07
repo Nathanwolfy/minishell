@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:53:32 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 14:18:04 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:24:01 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	add_to_token(char *line, int k, t_token **token, int type)
 {
 	lexer(line, k - 1, token);
 	ft_tokenadd_back(token, ft_tokennew(NULL, type)); //handle malloc errors
-	if (type == T_PIPE || type == T_REDIRECT_IN || type == T_REDIRECT_OUT)
+	if (type == T_PIPE || type == T_REDIRECT_IN || type == T_REDIRECT_OUT) //what if last char
 		lexer(&line[k + 1], ft_strlen(&line[k + 1]), token);
 	else
 		lexer(&line[k + 2], ft_strlen(&line[k + 2]), token);
@@ -82,7 +82,7 @@ void	lexer(char *line, int to, t_token **token)
 			sq = (1 - sq);
 		else if (line[k] == '\"' && !sq)
 			dq = (1 - dq);
-		else if (!sq && !dq && check_for_operator(line, k, token)) //what if last char
+		else if (!sq && !dq && check_for_operator(line, k, token))
 			return ;
 		k++;
 	}
