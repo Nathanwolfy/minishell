@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/16 16:56:08 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:42:12 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,24 @@ void	print_tree(t_token **tree)
 	while (l)
 	{
 		printf("%s, type = %d\n", l->content, l->type);
+		l = l->next;
+	}
+}
+
+void	print_stash(t_stash **stash)
+{
+	t_stash	*l;
+	int		p;
+
+	if (!stash)
+		return ;
+	l = *stash;
+	while (l)
+	{
+		printf("fdin_type : %d, fdout_type :%d\n", l->fdin_type, l->fdout_type);
+		p = 0;
+		while (l->cmd && l->cmd[p])
+			printf("%s\n", l->cmd[p++]);
 		l = l->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_token.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
-/*   Updated: 2023/10/18 17:37:59 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:01:01 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_token	*ft_tokennew(void *content, int type)
 {
 	t_token	*l;
 
-	l = malloc(sizeof(t_token));
+	l = ft_calloc(sizeof(t_token), 1);
 	if (!l)
 		return (NULL);
 	l->content = content;

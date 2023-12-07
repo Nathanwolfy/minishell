@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/06 18:44:45 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:43:26 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,11 @@ void	prompt(void)
 		if (!line)
 			return ;
 		lexer(line, ft_strlen(line) + 1, &tree); //add to history if no here doc
-		print_tree(&tree);
+		parser(&stash, &tree);
+		print_stash(&stash);
 		add_history(line);
 		ft_tokenclear(&tree, &free);
-		ft_stashclear(&stash, NULL); //&free_split);
+		ft_stashclear(&stash);
 		stash = NULL;
 		tree = NULL;
 		free(line);

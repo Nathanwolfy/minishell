@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_spaces.c                                  :+:      :+:    :+:   */
+/*   ft_split_adapted.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlederge <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:50:52 by nlederge          #+#    #+#             */
-/*   Updated: 2023/11/17 16:50:53 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:00:37 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**ft_split_adapted(char *line, int to)
 	k = 0;
 	if (!line)
 		return (NULL);
-	table = malloc(sizeof(char *) * (count_words_cmd(line, to) + 1));
+	table = ft_calloc(sizeof(char *), count_words_cmd(line, to) + 1);
 	if (table == NULL)
 		return (NULL);
 	while (line[k] && k < to)

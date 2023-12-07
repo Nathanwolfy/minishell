@@ -6,30 +6,30 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:18 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/06 18:45:41 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:43:06 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/common.h"
 
-void	ft_stashdelone(t_stash *lst, void (*del)(void*))
+void	ft_stashdelone(t_stash *lst)
 {
-	if (!lst || !del)
+	if (!lst)
 		return ;
-	(*del)(lst->cmd);
+	free_split(lst->cmd);
 	free(lst);
 }
 
-void	ft_stashclear(t_stash **lst, void (*del)(void*))
+void	ft_stashclear(t_stash **lst)
 {
 	t_stash	*tmp;
 
-	if (!lst || !del)
+	if (!lst)
 		return ;
 	while (*lst != NULL)
 	{
 		tmp = (*lst)->next;
-		ft_stashdelone(*lst, del);
+		ft_stashdelone(*lst);
 		*lst = tmp;
 	}
 	lst = NULL;
@@ -39,12 +39,12 @@ t_stash	*ft_stashnew(char **content)
 {
 	t_stash	*l;
 
-	l = malloc(sizeof(t_stash));
+	l = ft_calloc(sizeof(t_stash), 1);
 	if (!l)
 		return (NULL);
 	l->cmd = content;
-	l->fdin = STDIN_FILENO;
-	l->fdout = STDOUT_FILENO;
+	l->fdin_type = STDIN_FILENO; //better defs
+	l->fdout_type = STDOUT_FILENO; //better defs
 	l->next = NULL;
 	return (l);
 }

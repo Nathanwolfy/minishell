@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/06 18:45:46 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:42:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_token
 typedef struct s_stash
 {
 	char			**cmd;
-	int				fdin;
-	int				fdout;
+	int				fdin_type;
+	int				fdout_type;
 	struct s_stash	*next;
 }	t_stash;
 
@@ -65,11 +65,14 @@ void	prompt(void);
 void	lexer(char *line, int to, t_token **tree);
 char	**ft_split_adapted(char *line, int to);
 
+void	parser(t_stash **stash, t_token **tree);
+
 int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
 void	print_tree(t_token **tree);
+void	print_stash(t_stash **stash);
 
 void	ft_tokendelone(t_token *lst, void (*del)(void*));
 void	ft_tokenclear(t_token **lst, void (*del)(void*));
@@ -77,8 +80,8 @@ t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
 
-void	ft_stashdelone(t_stash *lst, void (*del)(void*));
-void	ft_stashclear(t_stash **lst, void (*del)(void*));
+void	ft_stashdelone(t_stash *lst);
+void	ft_stashclear(t_stash **lst);
 t_stash	*ft_stashnew(char **content);
 t_stash	*ft_stashlast(t_stash *lst);
 void	ft_stashadd_back(t_stash **lst, t_stash *new);
