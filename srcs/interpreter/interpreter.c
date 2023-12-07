@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:26:04 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 15:35:43 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:49:36 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,41 +29,40 @@ t_tree	*find_parent(t_tree **ast, t_tree *needle, t_tree *curr)
 	return (NULL);
 }
 
-char	**find_args(t_tree **ast, t_tree *node)
+char	*find_complete_cmd(t_tree **ast, t_tree *node)
 {
 	t_tree	*parent;
-	char	**args;
-	char	*temp1;
-	char	*temp2;
+	char	*temp;
+	char	*cmd;
 
 	if (!ast || !node)
 		return (NULL);
 	parent = find_parent(ast, node, *ast);
 	if (!parent)
 		return (NULL);
-	temp1 = ft_strjoin(node->content, ' ');
-	if (!temp1)
+	temp = ft_strjoin(node->content, ' ');
+	if (!temp)
 		return (NULL);
-	temp2 = ft_strjoin(temp1, (parent->right)->content);
-	free(temp1);
-	if (!temp2)
+	cmd = ft_strjoin(temp, (parent->right)->content);
+	free(temp);
+	if (!cmd)
 		return (NULL);
-	args = ft_split_adapted(temp2, ft_strlen(temp2));
-	free(temp2);
-	if (!args)
-		return (NULL);
-	return (args);
+	return (cmd);
 }
 
 void	exec_simple_cmd(t_tree **ast, t_tree *node)
 {
+	char	*cmd;
 	char	**args;
 
 	if (!node)
 		return ;
-	args = find_args(ast, node);
-	if (!args)
+	cmd = find_complete_cmd(ast, node);
+	if (!cmd)
 		return ;
+	args = check_get_cmd(cmd);
+	if (!args) //handle errors
+		return (free(cmd));
 	
 }
 
