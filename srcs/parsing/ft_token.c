@@ -6,30 +6,30 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 11:01:01 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:20:58 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/common.h"
 
-void	ft_tokendelone(t_token *lst, void (*del)(void*))
+void	ft_tokendelone(t_token *lst)
 {
-	if (!lst || !del)
+	if (!lst)
 		return ;
-	(*del)(lst->content);
+	free(lst->content);
 	free(lst);
 }
 
-void	ft_tokenclear(t_token **lst, void (*del)(void*))
+void	ft_tokenclear(t_token **lst)
 {
 	t_token	*tmp;
 
-	if (!lst || !del)
+	if (!lst)
 		return ;
 	while (*lst != NULL)
 	{
 		tmp = (*lst)->next;
-		ft_tokendelone(*lst, del);
+		ft_tokendelone(*lst);
 		*lst = tmp;
 	}
 	lst = NULL;

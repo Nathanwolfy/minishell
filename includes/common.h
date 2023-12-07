@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 14:18:26 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:20:32 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_tree
+{
+	char			*content;
+	int				type;
+	struct s_tree	*left;
+	struct s_tree	*right;
+}	t_tree;
+
 typedef enum e_token_type
 {
 	T_PIPE,
@@ -63,8 +71,8 @@ int		ft_is_dq(int c);
 void	free_split(char **split);
 void	print_token(t_token **token);
 
-void	ft_tokendelone(t_token *lst, void (*del)(void*));
-void	ft_tokenclear(t_token **lst, void (*del)(void*));
+void	ft_tokendelone(t_token *lst);
+void	ft_tokenclear(t_token **lst);
 t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);

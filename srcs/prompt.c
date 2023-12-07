@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 14:17:51 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:21:03 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	prompt(void)
 			return ;
 		lexer(line, ft_strlen(line) + 1, &token); //add to history if no here doc
 		add_history(line);
-		ft_tokenclear(&token, &free);
+		ft_tokenclear(&token);
 		token = NULL;
 		free(line);
 	}
