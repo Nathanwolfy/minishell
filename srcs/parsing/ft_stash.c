@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:18 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 11:43:06 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:50:28 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ t_stash	*ft_stashnew(char **content)
 		return (NULL);
 	l->cmd = content;
 	l->fdin_type = STDIN_FILENO; //better defs
+	l->filein_name = NULL;
 	l->fdout_type = STDOUT_FILENO; //better defs
+	l->fileout_name = NULL;
 	l->next = NULL;
 	return (l);
 }

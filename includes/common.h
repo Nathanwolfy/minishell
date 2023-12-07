@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 11:42:41 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:52:04 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ typedef struct s_stash
 {
 	char			**cmd;
 	int				fdin_type;
+	char			*filein_name;
 	int				fdout_type;
+	char			*fileout_name;
 	struct s_stash	*next;
 }	t_stash;
 

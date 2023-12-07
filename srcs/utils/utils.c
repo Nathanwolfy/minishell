@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 11:42:12 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 11:51:42 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	print_stash(t_stash **stash)
 	l = *stash;
 	while (l)
 	{
-		printf("fdin_type : %d, fdout_type :%d\n", l->fdin_type, l->fdout_type);
+		printf("fdin_type : %d, filein_name %s\n", l->fdin_type, l->filein_name);
+		printf("fdout_type : %d, fileout_name %s\n", l->fdout_type, l->fileout_name);
 		p = 0;
 		while (l->cmd && l->cmd[p])
 			printf("%s\n", l->cmd[p++]);
