@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 13:44:03 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:18:16 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	free_split(char **split)
 	free(split);
 }
 
-void	print_tree(t_token **tree)
+void	print_token(t_token **token)
 {
 	t_token	*l;
 
-	if (!tree)
+	if (!token)
 		return ;
-	l = *tree;
+	l = *token;
 	while (l)
 	{
 		printf("%s, type = %d\n", l->content, l->type);

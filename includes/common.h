@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 13:43:33 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/07 14:18:26 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ typedef enum e_token_type
 }	t_token_type;
 
 void	prompt(void);
-void	lexer(char *line, int to, t_token **tree);
+void	lexer(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
 
 int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
-void	print_tree(t_token **tree);
+void	print_token(t_token **token);
 
 void	ft_tokendelone(t_token *lst, void (*del)(void*));
 void	ft_tokenclear(t_token **lst, void (*del)(void*));
