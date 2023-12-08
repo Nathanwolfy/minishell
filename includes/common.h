@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 15:15:06 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:51:46 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
-void	print_token(t_token **token);
+void	print_tokens(t_token **tokens);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);

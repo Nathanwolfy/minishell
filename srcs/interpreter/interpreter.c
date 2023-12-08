@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:26:04 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 15:49:36 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:48:21 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*find_complete_cmd(t_tree **ast, t_tree *node)
 	parent = find_parent(ast, node, *ast);
 	if (!parent)
 		return (NULL);
-	temp = ft_strjoin(node->content, ' ');
+	temp = ft_strjoin(node->content, " ");
 	if (!temp)
 		return (NULL);
 	cmd = ft_strjoin(temp, (parent->right)->content);
@@ -60,7 +60,7 @@ void	exec_simple_cmd(t_tree **ast, t_tree *node)
 	cmd = find_complete_cmd(ast, node);
 	if (!cmd)
 		return ;
-	args = check_get_cmd(cmd);
+	args = NULL; //check_get_cmd(cmd);
 	if (!args) //handle errors
 		return (free(cmd));
 	
