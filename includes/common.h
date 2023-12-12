@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/08 16:51:46 by nlederge         ###   ########.fr       */
+/*   Updated: 2023/12/12 13:57:44 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_tree
+typedef struct s_ast_node
 {
-	char			*content;
-	int				type;
-	struct s_tree	*left;
-	struct s_tree	*right;
-}	t_tree;
+	int					type;
+	char				*content;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}	t_ast_node;
 
 typedef enum e_token_type
 {
