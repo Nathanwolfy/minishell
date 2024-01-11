@@ -6,11 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/08 16:51:23 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:20:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/common.h"
+#include "common.h"
 
 int	ft_isspace(int c)
 {
@@ -38,14 +38,15 @@ void	free_split(char **split)
 }
 
 void	print_tokens(t_token **tokens)
-{
-	t_token	*t;
-	if (!tokens)
-		return ;
-	t = *tokens;
-	while(t)
-	{
-		printf("content = %s, type = %d\n", t->content, t->type);
-		t = t->next;
-	}
-}
+ {
+ 	t_token	*t;
+
+ 	if (!tokens)
+ 		return ;
+ 	t = *tokens;
+ 	while(t)
+ 	{
+ 		printf("content = %s, type = %d\n", t->content, t->type);
+ 		t = t->next;
+ 	}
+ }

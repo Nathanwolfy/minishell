@@ -6,11 +6,20 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 14:26:04 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/08 16:48:21 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:12:23 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/common.h"
+#include "common.h"
+
+/*
+Backus-Naur-Form (BNF) grammar:
+	<all>        ::=  <newline>
+	<pipeline>   ::=  <comp_cmd> { '|' <comp_cmd> }
+	<comp_cmd> ::=  { ( <redirect> | <word> ) }
+	<redirect>   ::=  ( '<' | '>' | '<<' | '>>' ) <word>
+	<word>       ::=  ( any character except certain special characters + env var)
+*/
 
 t_tree	*find_parent(t_tree **ast, t_tree *needle, t_tree *curr)
 {

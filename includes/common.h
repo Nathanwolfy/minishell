@@ -46,11 +46,11 @@ typedef struct s_token
 
 typedef struct s_tree
 {
-	int					type;
-	char				*content;
-	struct s_ast_node	*parent;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
+	char			*content;
+	int				type;
+	struct s_tree	*parent;
+	struct s_tree	*left;
+	struct s_tree	*right;
 }	t_tree;
 
 typedef struct	s_ast_data
@@ -86,16 +86,14 @@ typedef enum e_rules
 }	t_rules;
 
 void	prompt(void);
-void	lexer(char *line, int to, t_token **token);
+int		lexer(char *line, t_token **token);
+int		lexer_rec(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
-
-void	interpreter(t_tree **ast, t_tree *node);
 
 int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
-void	print_tokens(t_token **tokens);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
@@ -114,5 +112,15 @@ void	consume_token(t_token **token_stream);
 int		is_token_content(t_token *t, char *content);
 int		is_token_type(t_token *t, int type);
 int		is_io_file(t_token *t);
+
+int		unclosed_quotes_code(int sq, int dq);
+int		print_error_lexing_code(int code);
+
+void	ft_treeclear(t_tree **lst);
+t_tree	*ft_treenew(void *content, int type);
+
+int		check_dless(t_tree *tree);
+void	print_ast(t_tree *tree, int indent_ct, char side);
+
 
 #endif

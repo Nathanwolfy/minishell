@@ -6,11 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/08 10:56:51 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:24:14 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/common.h"
+#include "common.h"
 
 void	exec_cmd(char *cmd)
 {
@@ -22,23 +22,25 @@ void	prompt(void)
 	char	*line;
 	int		running;
 	t_token	*token;
-	//t_tree	*ast;
+	t_tree	*ast;
 
 	running = 1;
 	token = NULL;
-	//ast = NULL;
+	ast = NULL;
 	while (running)
 	{
 		line = readline(PROMPT);
 		if (!line)
 			return ;
-		lexer(line, ft_strlen(line) + 1, &token); //add to history if no here doc
-		//ast = parser(&token);
-		//interpreter(&ast, ast);
-		ast_builder(&token);
-		add_history(line);
-		ft_tokenclear(&token);
-		token = NULL;
+		running = lexer(line, &token);
+		if (!running)
+			{ast = ast_builder(&token);
+			}
+		if (!running || check_dless(ast) == 0)
+			add_history(line);
+		running = 1;
 		free(line);
+		ft_tokenclear(&token);
+		ft_treeclear(&ast);
 	}
 }
