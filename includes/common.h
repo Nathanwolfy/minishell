@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/12 13:57:44 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:20:41 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,40 +40,54 @@ typedef struct s_token
 {
 	char			*content;
 	int				type;
+	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_ast_node
+typedef struct s_tree
 {
 	int					type;
 	char				*content;
+	struct s_ast_node	*parent;
 	struct s_ast_node	*left;
 	struct s_ast_node	*right;
-}	t_ast_node;
+}	t_tree;
+
+typedef struct	s_ast_data
+{
+	t_token	*lookahead;
+	t_token	**token_stream;
+}	t_ast_data;
 
 typedef enum e_token_type
 {
 	T_END=-1,
 	T_WORD,
 	T_PIPE,
-	T_REDIRECT_IN,
-	T_REDIRECT_OUT,
-	T_HERE_DOC,
-	T_REDIRECT_APP
+	T_RET_FROM,
+	T_RET_TO,
+	T_DLESS,
+	T_DGREAT
 }	t_token_type;
 
-typedef enum e_sequence_type
+typedef enum e_rules
 {
-	S_CMD=1000,
-	S_PIPE,
-	S_REDIR
-}	t_sequence_type;
+	R_PIPE_SEQUENCE=1000,
+	R_SIMPLE_CMD,
+	R_CMD_NAME,
+	R_CMD_WORD,
+	R_CMD_PREFIX,
+	R_CMD_SUFFIX,
+	R_IO_REDIRECT,
+	R_IO_FILE,
+	R_IO_HERE,
+	R_FILENAME,
+	R_HERE_END
+}	t_rules;
 
 void	prompt(void);
 void	lexer(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
-
-//void	parser(t_token **token, t_tree **ast);
 
 void	interpreter(t_tree **ast, t_tree *node);
 
@@ -88,5 +102,17 @@ void	ft_tokenclear(t_token **lst);
 t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
+
+/*		AST		*/
+
+t_tree	*ast_builder(t_token **t);
+t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right);
+void	consume_token(t_token **token_stream);
+
+/*			AST - utils		*/
+
+int		is_token_content(t_token *t, char *content);
+int		is_token_type(t_token *t, int type);
+int		is_io_file(t_token *t);
 
 #endif

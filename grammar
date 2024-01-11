@@ -9,12 +9,12 @@ command_sequence	:	command
 					|	command_sequence	"&&"	command	//	bonus
 					|	command_sequence	"||"	command	//	bonus
 					;
-command				:	simple_command
-					|	pipe_sequence
+command				:	pipe_sequence
 					;
 pipe_sequence		:	simple_command	pipe_sequence_prime
 					;
 pipe_sequence_prime	:	PIPE	simple_command	pipe_sequence_prime
+					|	void
 					;
 simple_command		:	cmd_prefix	cmd_word	cmd_suffix
 					|	cmd_prefix	cmd_word

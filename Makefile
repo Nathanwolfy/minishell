@@ -7,7 +7,10 @@ SRCS_UTILS_FILES = utils.c
 
 SRCS_PARSING_FILES = lexing.c \
 						ft_token.c \
-						ft_split_adapted.c
+						ft_split_adapted.c			\
+					 ast_tree/ast_builder.c			\
+					 ast_tree/ast_builder_utils.c	\
+					 ast_tree/parse_functions.c		\
 
 SRCS_INTERPRETER_FILES = interpreter.c
 
@@ -58,7 +61,7 @@ RM = rm -rf
 ###
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@ 
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
@@ -73,7 +76,7 @@ clean:
 
 fclean: clean
 	@make fclean -C $(DIR_libft)
-	@$(RM) $(NAME) 
+	@$(RM) $(NAME)
 
 re: fclean all
 
