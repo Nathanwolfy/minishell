@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:53:32 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 16:10:13 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:36:57 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,48 @@ cat infile | grep "< ouch $TEST" > outfile
 T_WORD T_WORD T_PIPE T_WORD T_WORD T_RET_TO T_WORD
 */
 
-void	add_to_token(char *line, int k, t_token **token, int type)
+int	add_operator_to_token(char *line, int k, t_token **token, int type)
 {
 	t_token	*new_token;
+	int		res;
 
-	lexer_rec(line, k - 1, token);
+	res = lexer_rec(line, k - 1, token);
+	if (res < 0)
+		return (res);
 	new_token = ft_tokennew(NULL, type);
 	if (!new_token)
-		return ;//handle malloc errors
+		return (-1);
 	ft_tokenadd_back(token, new_token);
 	if (type == T_PIPE || type == T_RET_TO || type == T_RET_FROM)
-		lexer_rec(&line[k + 1], ft_strlen(&line[k + 1]), token);
+		return (lexer_rec(&line[k + 1], ft_strlen(&line[k + 1]), token));
 	else
-		lexer_rec(&line[k + 2], ft_strlen(&line[k + 2]), token);
+		return (lexer_rec(&line[k + 2], ft_strlen(&line[k + 2]), token));
 }
 
-void	add_words_to_token(char *line, int to, t_token **token)
+int		check_for_operator(char *line, int k, t_token **token)
+{
+	int	res;
+
+	res = 0;
+	if (line[k] == '|')
+		res = add_operator_to_token(line, k, token, T_PIPE);
+	else if (!ft_strncmp(&line[k], ">>", 2))
+		res = add_operator_to_token(line, k, token, T_DGREAT);
+	else if (!ft_strncmp(&line[k], "<<", 2))
+		res = add_operator_to_token(line, k, token, T_DLESS);
+	else if (line[k] == '<')
+		res = add_operator_to_token(line, k, token, T_RET_FROM);
+	else if (line[k] == '>')
+		res = add_operator_to_token(line, k, token, T_RET_TO);
+	else
+		return (0);
+	if (res < 0)
+		return (res);
+	else
+		return (1);
+}
+
+int	add_words_to_token(char *line, int to, t_token **token)
 {
 	char	**words;
 	char	*content;
@@ -46,43 +72,28 @@ void	add_words_to_token(char *line, int to, t_token **token)
 
 	words = ft_split_adapted(line, to);
 	if (!words)
-		return ; //handle malloc errors and detect difference from void
+		return (ft_putstr_fd("testing NULL return from split", 2), 0); //handle malloc errors and detect difference from void
 	l = 0;
 	while (words[l])
 	{
 		content = ft_strdup(words[l++]);
 		if (!content)
-			return ; //handle malloc errors
+			return (-1);
 		new_token = ft_tokennew(content, T_WORD);
 		if (!new_token)
-			return ; //handle malloc errors
+			return (-1);
 		ft_tokenadd_back(token, new_token);
 	}
 	free_split(words);
-	
+	return (0);
 }
 
-int		check_for_operator(char *line, int k, t_token **token)
-{
-	if (line[k] == '|')
-		return (add_to_token(line, k, token, T_PIPE), 1);
-	else if (!ft_strncmp(&line[k], ">>", 2))
-		return (add_to_token(line, k, token, T_DGREAT), 1);
-	else if (!ft_strncmp(&line[k], "<<", 2))
-		return (add_to_token(line, k, token, T_DLESS), 1);
-	else if (line[k] == '<')
-		return (add_to_token(line, k, token, T_RET_FROM), 1);
-	else if (line[k] == '>')
-		return (add_to_token(line, k, token, T_RET_TO), 1);
-	else
-		return (0);
-}
-
-void	lexer_rec(char *line, int to, t_token **token)
+int	lexer_rec(char *line, int to, t_token **token)
 {
 	int	sq;
 	int	dq;
 	int	k;
+	int	res;
 
 	sq = 0;
 	dq = 0;
@@ -93,23 +104,30 @@ void	lexer_rec(char *line, int to, t_token **token)
 			sq = (1 - sq);
 		else if (line[k] == '\"' && !sq)
 			dq = (1 - dq);
-		else if (!sq && !dq && check_for_operator(line, k, token))
-			return ;
+		else if (!sq && !dq)
+		{
+			res = check_for_operator(line, k, token);
+			if (res != 0)
+				return (res);
+		}
 		k++;
 	}
 	if (sq || dq)
-		return ; //handle unclosed quotes
-	else
-		add_words_to_token(line, to, token);
+		return (unclosed_quotes_code(sq, dq));
+	return (add_words_to_token(line, to, token));
 }
 
-void	lexer(char *line, t_token **token)
+int	lexer(char *line, t_token **token)
 {
 	t_token	*end_token;
+	int		res;
 
 	end_token = ft_tokennew(NULL, T_END);
 	if (!end_token)
-		return ; //handle malloc errors
-	lexer_rec(line, ft_strlen(line) + 1, token);
+		return (print_error_lexing_code(-1));
+	res = lexer_rec(line, ft_strlen(line) + 1, token);
 	ft_tokenadd_back(token, end_token);
+	if (res < 0)
+		return (print_error_lexing_code(res));
+	return (res);
 }

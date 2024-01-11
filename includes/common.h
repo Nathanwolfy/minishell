@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 17:51:02 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:40:59 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef enum e_token_type
 }	t_token_type;
 
 void	prompt(void);
-void	lexer(char *line, t_token **token);
-void	lexer_rec(char *line, int to, t_token **token);
+int		lexer(char *line, t_token **token);
+int		lexer_rec(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
 
 int		ft_isspace(int c);
@@ -78,6 +78,9 @@ void	ft_tokenclear(t_token **lst);
 t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
+
+int		unclosed_quotes_code(int sq, int dq);
+int		print_error_lexing_code(int code);
 
 void	ft_treeclear(t_tree **lst);
 t_tree	*ft_treenew(void *content, int type);

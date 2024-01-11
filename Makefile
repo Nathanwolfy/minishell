@@ -7,6 +7,7 @@ SRCS_UTILS_FILES = utils.c \
 					utils_tree.c
 
 SRCS_LEXING_FILES = lexing.c \
+						lexing_utils.c \
 						ft_token.c \
 						ft_split_adapted.c
 

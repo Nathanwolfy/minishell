@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 17:41:52 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:20:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,3 +36,17 @@ void	free_split(char **split)
 		free(split[i++]);
 	free(split);
 }
+
+void	print_tokens(t_token **tokens)
+ {
+ 	t_token	*t;
+
+ 	if (!tokens)
+ 		return ;
+ 	t = *tokens;
+ 	while(t)
+ 	{
+ 		printf("content = %s, type = %d\n", t->content, t->type);
+ 		t = t->next;
+ 	}
+ }
