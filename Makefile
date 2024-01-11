@@ -9,12 +9,12 @@ SRCS_UTILS_FILES = utils.c \
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c \
 						ft_token.c \
-						ft_split_adapted.c			\
-					 ast_tree/ast_builder.c			\
-					 ast_tree/ast_builder_utils.c	\
-					 ast_tree/parse_functions.c		\
+						ft_split_adapted.c
 
-SRCS_PARSING_FILES = ft_tree.c
+SRCS_PARSING_FILES = ft_tree.c \
+						ast_tree/ast_builder.c			\
+						ast_tree/ast_builder_utils.c	\
+						ast_tree/parse_functions.c
 
 SRCS_INTERPRETER_FILES = interpreter.c
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ast_builder_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/11 17:41:32 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:49:56 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/common.h"
+#include "common.h"
 
 int	is_io_file(t_token *t)
 {

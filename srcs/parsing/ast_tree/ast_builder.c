@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ast_builder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:54:04 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/11 18:22:23 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:49:52 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/common.h"
+#include "common.h"
 
 void	consume_token(t_token **token_stream)
 {
