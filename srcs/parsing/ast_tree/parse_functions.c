@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:33:30 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/11 18:17:11 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/11 18:35:18 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_tree	*parse_simple_cmd(t_token **token_stream)
 	{
 		cmd_node = create_node(R_CMD_NAME, (*token_stream)->content, cmd_prefix, NULL);
 		if (!cmd_node)
-			return (free_tree(cmd_prefix), NULL); // malloc error
+			return (ft_treeclear(&cmd_prefix), NULL); // malloc error
 		consume_token(token_stream);
 		return (parse_cmd_suffix(token_stream, cmd_node));
 	}
@@ -125,11 +125,11 @@ t_tree	*parse_pipe_sequence_prime(t_token **token_stream, t_tree *left)
 
 	pipe_node = create_node(R_PIPE_SEQUENCE, NULL, left, NULL);
 	if (!pipe_node)
-		return(free_tree(left), NULL); // malloc error
+		return(ft_treeclear(&left), NULL); // malloc error
 	consume_token(d);
 	pipe_node->right = parse_simple_cmd(d);
 	if (!pipe_node->right)
-		return (free_tree(pipe_node), NULL);
+		return (ft_treeclear(&pipe_node), NULL);
 	if (is_token_type(*token_stream, T_PIPE)
 		return (parse_pipe_sequence_prime(d, pipe_node));
 	return (pipe_node);
