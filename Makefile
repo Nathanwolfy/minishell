@@ -9,6 +9,8 @@ SRCS_LEXING_FILES = lexing.c \
 						ft_token.c \
 						ft_split_adapted.c
 
+SRCS_PARSING_FILES = ft_tree.c
+
 SRCS_INTERPRETER_FILES = interpreter.c
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
@@ -16,6 +18,8 @@ SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 SRCS_UTILS = $(addprefix srcs/utils/, $(SRCS_UTILS_FILES))
 
 SRCS_LEXING = $(addprefix srcs/lexing/, $(SRCS_LEXING_FILES))
+
+SRCS_PARSING = $(addprefix srcs/parsing/, $(SRCS_PARSING_FILES))
 
 SRCS_INTERPRETER = $(addprefix srcs/interpreter/, $(SRCS_INTERPRETER_FILES))
 
@@ -25,9 +29,11 @@ OBJS_UTILS = $(SRCS_UTILS:.c=.o)
 
 OBJS_LEXING = $(SRCS_LEXING:.c=.o)
 
+OBJS_PARSING = $(SRCS_PARSING:.c=.o)
+
 OBJS_INTERPRETER = $(SRCS_INTERPRETER:.c=.o)
 
-OBJS = $(OBJS_MAIN) $(OBJS_UTILS) $(OBJS_LEXING) $(OBJS_INTERPRETER)
+OBJS = $(OBJS_MAIN) $(OBJS_UTILS) $(OBJS_LEXING) $(OBJS_PARSING) $(OBJS_INTERPRETER) 
 
 ###
 

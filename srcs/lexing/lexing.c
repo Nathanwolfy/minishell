@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:53:32 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 15:19:55 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:10:13 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void	add_to_token(char *line, int k, t_token **token, int type)
 {
 	t_token	*new_token;
 
-	lexer(line, k - 1, token);
+	lexer_rec(line, k - 1, token);
 	new_token = ft_tokennew(NULL, type);
 	if (!new_token)
-		return ; //handle malloc errors
+		return ;//handle malloc errors
 	ft_tokenadd_back(token, new_token);
 	if (type == T_PIPE || type == T_RET_TO || type == T_RET_FROM)
-		lexer(&line[k + 1], ft_strlen(&line[k + 1]), token);
+		lexer_rec(&line[k + 1], ft_strlen(&line[k + 1]), token);
 	else
-		lexer(&line[k + 2], ft_strlen(&line[k + 2]), token);
+		lexer_rec(&line[k + 2], ft_strlen(&line[k + 2]), token);
 }
 
 void	add_words_to_token(char *line, int to, t_token **token)
@@ -78,7 +78,7 @@ int		check_for_operator(char *line, int k, t_token **token)
 		return (0);
 }
 
-void	lexer(char *line, int to, t_token **token)
+void	lexer_rec(char *line, int to, t_token **token)
 {
 	int	sq;
 	int	dq;
@@ -101,4 +101,15 @@ void	lexer(char *line, int to, t_token **token)
 		return ; //handle unclosed quotes
 	else
 		add_words_to_token(line, to, token);
+}
+
+void	lexer(char *line, t_token **token)
+{
+	t_token	*end_token;
+
+	end_token = ft_tokennew(NULL, T_END);
+	if (!end_token)
+		return ; //handle malloc errors
+	lexer_rec(line, ft_strlen(line) + 1, token);
+	ft_tokenadd_back(token, end_token);
 }

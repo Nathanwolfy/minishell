@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 15:09:58 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:07:34 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,24 @@ typedef enum e_token_type
 }	t_token_type;
 
 void	prompt(void);
-void	lexer(char *line, int to, t_token **token);
+void	lexer(char *line, t_token **token);
+void	lexer_rec(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
 
 int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
-void	print_tokens(t_token **tokens);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
 t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
+
+void	ft_treeclear(t_tree **lst);
+t_tree	*ft_treenew(void *content, int type);
+
+void	print_ast(t_tree *tree, int indent_ct, char side);
 
 #endif
