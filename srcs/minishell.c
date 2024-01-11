@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 16:10:42 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 17:49:57 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,6 @@ int	main(void)
 	print_ast(pipe, 0, 0);
 	ft_treeclear(&pipe);
 	*/
+	//prompt();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 16:07:34 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 17:51:02 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	ft_tokenadd_back(t_token **lst, t_token *new);
 void	ft_treeclear(t_tree **lst);
 t_tree	*ft_treenew(void *content, int type);
 
+int		check_dless(t_tree *tree);
 void	print_ast(t_tree *tree, int indent_ct, char side);
 
 #endif

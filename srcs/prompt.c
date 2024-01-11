@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 16:08:27 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 17:51:05 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,23 @@ void	prompt(void)
 	char	*line;
 	int		running;
 	t_token	*token;
-	//t_tree	*ast;
+	t_tree	*ast;
 
 	running = 1;
 	token = NULL;
-	//ast = NULL;
+	ast = NULL;
 	while (running)
 	{
 		line = readline(PROMPT);
 		if (!line)
 			return ;
-		lexer(line, &token); //add to history if no here doc
+		lexer(line, &token);
 		//ast = parser(&token);
 		//interpreter(&ast, ast);
-		//print_tokens(&token);
-		add_history(line);
-		ft_tokenclear(&token);
-		token = NULL;
+		if (check_dless(ast) == 0)
+			add_history(line);
 		free(line);
+		ft_tokenclear(&token);
+		ft_treeclear(&ast);
 	}
 }

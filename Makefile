@@ -3,7 +3,8 @@ NAME = minishell
 SRCS_MAIN_FILES = minishell.c \
 					prompt.c
 
-SRCS_UTILS_FILES = utils.c
+SRCS_UTILS_FILES = utils.c \
+					utils_tree.c
 
 SRCS_LEXING_FILES = lexing.c \
 						ft_token.c \
