@@ -144,6 +144,7 @@ t_tree	*parse_pipe_sequence(t_token **token_stream)
 		return (NULL);
 	if (is_token_type(*token_stream, T_PIPE))
 		return (parse_pipe_sequence_prime(d, a));
+	return (a);
 }
 
 t_tree	*parse_cmd_sequence(t_token **token_stream)
