@@ -14,15 +14,13 @@ pipe_sequence		:	simple_command	pipe_sequence_prime
 pipe_sequence_prime	:	PIPE	simple_command	pipe_sequence_prime
 					|	void
 					;
-simple_command		:	cmd_prefix	cmd_word	cmd_suffix
-					|	cmd_prefix	cmd_word
+simple_command		:	cmd_prefix	cmd_name	cmd_suffix
+					|	cmd_prefix	cmd_name
 					|	cmd_prefix
 					|	cmd_name	cmd_suffix
 					|	cmd_name
 					;
 cmd_name			:	WORD	//	terminal
-					;
-cmd_word			:	WORD	//	terminal
 					;
 cmd_prefix			:	io_redirect
 					|	cmd_prefix	io_redirect
