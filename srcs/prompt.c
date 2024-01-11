@@ -6,11 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/08 16:54:39 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 16:08:27 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/common.h"
+#include "common.h"
 
 void	exec_cmd(char *cmd)
 {
@@ -32,10 +32,10 @@ void	prompt(void)
 		line = readline(PROMPT);
 		if (!line)
 			return ;
-		lexer(line, ft_strlen(line) + 1, &token); //add to history if no here doc
+		lexer(line, &token); //add to history if no here doc
 		//ast = parser(&token);
 		//interpreter(&ast, ast);
-		print_tokens(&token);
+		//print_tokens(&token);
 		add_history(line);
 		ft_tokenclear(&token);
 		token = NULL;

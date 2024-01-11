@@ -6,11 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 15:41:55 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 15:48:16 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:12:27 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/common.h"
+#include "common.h"
 
 char	**check_get_cmd(char *cmdin)
 {

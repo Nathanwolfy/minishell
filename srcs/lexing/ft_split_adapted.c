@@ -6,11 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:50:52 by nlederge          #+#    #+#             */
-/*   Updated: 2023/12/07 11:00:37 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/11 15:12:19 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/common.h"
+#include "common.h"
 
 static int	ft_word_size_adapted(char *str, int (*f)(int))
 {
