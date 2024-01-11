@@ -5,11 +5,9 @@
 command_line		:	command_sequence	NEWLINE
 					|	command_sequence	EOF
 					;
-command_sequence	:	command
+command_sequence	:	pipe_sequence
 					|	command_sequence	"&&"	command	//	bonus
 					|	command_sequence	"||"	command	//	bonus
-					;
-command			:	pipe_sequence
 					;
 pipe_sequence		:	simple_command	pipe_sequence_prime
 					;
