@@ -34,7 +34,7 @@ void	prompt(void)
 			return ;
 		running = lexer(line, &token);
 		if (!running)
-			{//ast = parser(&token);
+			{ast = ast_builder(&token);
 			}
 		if (!running || check_dless(ast) == 0)
 			add_history(line);
