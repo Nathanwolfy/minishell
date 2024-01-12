@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:33:30 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 16:38:37 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:42:14 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ t_tree	*parse_io_file(t_token **token_stream)
 	if (!*token_stream)
 		return (NOT_FOUND);
 	if ((*token_stream)->type == T_RET_TO)
-		io_file_node = create_node(R_IO_FILE, ">", NULL, NULL);
+		io_file_node = create_node(R_IO_FILE_TO, NULL, NULL, NULL);
 	else if ((*token_stream)->type == T_RET_FROM)
-		io_file_node = create_node(R_IO_FILE, "<", NULL, NULL);
+		io_file_node = create_node(R_IO_FILE_FROM, NULL, NULL, NULL);
 	else if ((*token_stream)->type == T_DGREAT)
-		io_file_node = create_node(R_IO_FILE, ">>", NULL, NULL);
+		io_file_node = create_node(R_IO_FILE_DGREAT, NULL, NULL, NULL);
 	else
 		return (NOT_FOUND);
 	if (!io_file_node)
 		return (NULL);
 	consume_token(token_stream);
 	if (!is_token_type((*token_stream), T_WORD))
-		return (free(io_file_node), NOT_FOUND);
+		return (ft_treeclear(&io_file_node), NOT_FOUND);
 	io_file_node->right = create_node(R_FILENAME, (*token_stream)->content, NULL, NULL);
 	if (!io_file_node->right)
-		return (free(io_file_node), NULL);
+		return (ft_treeclear(&io_file_node), NULL);
 	return (io_file_node);
 }
 
@@ -46,10 +46,10 @@ t_tree	*parse_io_here(t_token **token_stream)
 		return (NULL);
 	consume_token(token_stream);
 	if (!is_token_type(*token_stream, T_WORD))
-		return (free(io_here_node), NOT_FOUND);
+		return (ft_treeclear(&io_here_node), NOT_FOUND);
 	io_here_node->right = create_node(R_HERE_END, (*token_stream)->content, NULL, NULL);
 	if (!io_here_node->right)
-		return (free(io_here_node), NULL);
+		return (ft_treeclear(&io_here_node), NULL);
 	consume_token(token_stream);
 	return (io_here_node);
 }
@@ -64,33 +64,27 @@ t_tree	*parse_io_redirect(t_token **token_stream)
 		return (NOT_FOUND);
 }
 
-/*t_tree	*parse_cmd_suffix(t_token **token_stream, t_tree *prev)
+t_tree	*parse_cmd_suffix(t_token **token_stream, t_tree *prev)
 {
 	t_tree	*suffix_node;
 
-	if (is_token_type((*token_stream), T_WORD))
+	suffix_node = parse_io_redirect(token_stream);
+	if (!suffix_node)
+		return (ft_treeclear(&prev), NULL);
+	else if (suffix_node == NOT_FOUND)
 	{
-		if (!prev)
-			return (NULL); // diff from malloc
-		suffix_node = create_node(R_CMD_WORD, (*token_stream)->content, NULL, NULL);
+		if ((*token_stream)->type != T_WORD)
+			return (prev);
+		suffix_node = create_node(R_CMD_SUFFIX, (*token_stream)->content, NULL, NULL);
 		if (!suffix_node)
-			return (NULL);
-		prev->right = suffix_node;
+			return (ft_treeclear(&prev), NULL);
+		add_node_to_bottom_right(prev, suffix_node);
 		consume_token(token_stream);
-		if (is_token_type(*token_stream, T_WORD))
-			suffix_node->right = parse_cmd_suffix(token_stream,
-		return (parse_cmd_suffix(token_stream, suffix_node));
-	{
-	else
-	{
-		suffix_node = parse_io_redirect(token_stream);
-		if (!suffix_node)
-			return (prev); // diff from malloc
-		suffix_node->left = prev;
-		return (suffix_node);
+		return (parse_cmd_suffix(token_stream, prev));
 	}
-	return (su
-}*/
+	suffix_node->left = prev;
+	return (parse_cmd_suffix(token_stream, suffix_node));
+}
 
 t_tree	*parse_cmd_prefix(t_token **token_stream, t_tree *left)
 {
@@ -118,11 +112,14 @@ t_tree	*parse_simple_cmd(t_token **token_stream)
 		return (NULL);
 	if (is_token_type(*token_stream, T_WORD))
 	{
-		cmd_node = create_node(R_CMD_NAME, (*token_stream)->content, cmd_prefix, NULL);
+		if (cmd_prefix == NOT_FOUND)
+			cmd_node = create_node(R_CMD_NAME, (*token_stream)->content, NULL, NULL);
+		else
+			cmd_node = create_node(R_CMD_NAME, (*token_stream)->content, cmd_prefix, NULL);
 		if (!cmd_node)
 			return (ft_treeclear(&cmd_prefix), NULL); // malloc error
 		consume_token(token_stream);
-		return (cmd_node); //(parse_cmd_suffix(token_stream, cmd_node));
+		return (parse_cmd_suffix(token_stream, cmd_node));
 	}
 	return (cmd_prefix);
 }

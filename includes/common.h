@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 16:28:24 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:42:06 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ typedef enum e_rules
 	R_CMD_PREFIX,
 	R_CMD_SUFFIX,
 	R_IO_REDIRECT,
-	R_IO_FILE,
+	R_IO_FILE_TO,
+	R_IO_FILE_FROM,
+	R_IO_FILE_DGREAT,
 	R_IO_HERE,
 	R_FILENAME,
 	R_HERE_END
@@ -114,6 +116,7 @@ t_tree	*parse_cmd_line(t_token **token_stream);
 
 int		is_token_type(t_token *t, int type);
 int		is_io_file(t_token *t);
+void	add_node_to_bottom_right(t_tree *main, t_tree *new_node);
 
 int		unclosed_quotes_code(int sq, int dq);
 int		print_error_lexing_code(int code);
