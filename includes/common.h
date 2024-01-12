@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 14:19:15 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:28:24 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ft_tokenclear(t_token **lst);
 t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
+void	print_tokens(t_token **tokens);
 
 /*		AST		*/
 

@@ -6,15 +6,15 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 15:48:05 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:21:35 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-static void	ft_treedelone(t_tree *lst)
+void	ft_treedelone(t_tree *lst)
 {
-	if (!lst)
+	if (!lst || lst == NOT_FOUND)
 		return ;
 	if (lst->content)
 		free(lst->content);

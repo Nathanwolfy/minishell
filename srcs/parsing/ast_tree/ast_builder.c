@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:54:04 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 15:20:05 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:31:27 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ t_tree	*ast_builder(t_token **t)
 		return (NULL);
 	*token_stream = *t;
 	ast = parse_cmd_line(token_stream);
+	free(token_stream);
 	return (ast);
 }
