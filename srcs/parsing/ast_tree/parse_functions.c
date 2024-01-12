@@ -155,7 +155,11 @@ t_tree	*parse_pipe_sequence(t_token **token_stream)
 	else if (a == NOT_FOUND)
 		return (NOT_FOUND);
 	if (is_token_type(*token_stream, T_PIPE))
+<<<<<<< HEAD
 		return (parse_pipe_sequence_prime(token_stream, a));
+=======
+		return (parse_pipe_sequence_prime(d, a));
+>>>>>>> origin/main
 	return (a);
 }
 
