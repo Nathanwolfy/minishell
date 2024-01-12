@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 15:12:24 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:48:05 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_treeclear(t_tree **lst)
 	t_tree	*tmp_left;
 	t_tree	*tmp_right;
 
-	if (!lst)
+	if (!lst || !(*lst) || (*lst) == NOT_FOUND)
 		return ;
 	tmp_left = (*lst)->left;
 	tmp_right = (*lst)->right;

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:33:30 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 15:05:39 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:49:07 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,14 @@ t_tree	*parse_cmd_prefix(t_token **token_stream, t_tree *left)
 	t_tree	*prefix_node;
 
 	prefix_node = parse_io_redirect(token_stream);
-	if (prefix_node)
-		prefix_node->left = left;
+	if (!prefix_node)
+		return (NULL);
 	else if (prefix_node == NOT_FOUND && !left)
 		return (NOT_FOUND);
 	else if (prefix_node == NOT_FOUND)
 		return (left);
-	else if (!prefix_node)
-		return (NULL);
+	else if (prefix_node)
+		prefix_node->left = left;
 	return (parse_cmd_prefix(token_stream, prefix_node));
 }
 
@@ -116,15 +116,13 @@ t_tree	*parse_simple_cmd(t_token **token_stream)
 	cmd_prefix = parse_cmd_prefix(token_stream, NULL);
 	if (!cmd_prefix)
 		return (NULL);
-	else if (cmd_prefix == NOT_FOUND)
-		return (NOT_FOUND);
-	else if (is_token_type(*token_stream, T_WORD))
+	if (is_token_type(*token_stream, T_WORD))
 	{
 		cmd_node = create_node(R_CMD_NAME, (*token_stream)->content, cmd_prefix, NULL);
 		if (!cmd_node)
 			return (ft_treeclear(&cmd_prefix), NULL); // malloc error
 		consume_token(token_stream);
-		return (NULL); //(parse_cmd_suffix(token_stream, cmd_node));
+		return (cmd_node); //(parse_cmd_suffix(token_stream, cmd_node));
 	}
 	return (cmd_prefix);
 }
@@ -175,5 +173,5 @@ t_tree	*parse_cmd_line(t_token **token_stream)
 	ast = parse_cmd_sequence(token_stream);
 	if (is_token_type(*token_stream, T_END))
 		return (ast);
-	return (NULL);	// maybe needs to be freed
+	return (ast);	// maybe needs to be freed
 }

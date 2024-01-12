@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 17:41:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 17:51:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:46:05 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	print_tree_node(t_tree *node, int indent_ct, char side)
 {
 	int	i;
 
-	if (!node)
+	if (!node || node == NOT_FOUND)
 		return ;
 	i = -1;
 	while (++i < indent_ct)
@@ -33,7 +33,7 @@ static void	print_tree_node(t_tree *node, int indent_ct, char side)
 
 void	print_ast(t_tree *tree, int indent_ct, char side)
 {
-	if (!tree)
+	if (!tree || tree == NOT_FOUND)
 		return ;
 	print_tree_node(tree, indent_ct, side);
 	print_ast(tree->left, indent_ct + 1, 'l');
@@ -42,7 +42,7 @@ void	print_ast(t_tree *tree, int indent_ct, char side)
 
 int	check_dless(t_tree *tree)
 {
-	if (!tree)
+	if (!tree || tree == NOT_FOUND)
 		return (0);
 	if (tree->type == T_DGREAT) //modify token to sequence
 		return (1);
