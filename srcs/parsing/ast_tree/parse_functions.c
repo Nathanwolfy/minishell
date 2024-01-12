@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:33:30 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 14:37:56 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:05:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_tree	*parse_simple_cmd(t_token **token_stream)
 		if (!cmd_node)
 			return (ft_treeclear(&cmd_prefix), NULL); // malloc error
 		consume_token(token_stream);
-		return (parse_cmd_suffix(token_stream, cmd_node));
+		return (NULL); //(parse_cmd_suffix(token_stream, cmd_node));
 	}
 	return (cmd_prefix);
 }
@@ -136,11 +136,11 @@ t_tree	*parse_pipe_sequence_prime(t_token **token_stream, t_tree *left)
 	pipe_node = create_node(R_PIPE_SEQUENCE, NULL, left, NULL);
 	if (!pipe_node)
 		return(ft_treeclear(&left), NULL); // malloc error
-	consume_token(d);
-	pipe_node->right = parse_simple_cmd(d);
+	consume_token(token_stream);
+	pipe_node->right = parse_simple_cmd(token_stream);
 	if (!pipe_node->right)
 		return (ft_treeclear(&pipe_node), NULL);
-	if (is_token_type(*token_stream, T_PIPE)
+	if (is_token_type(*token_stream, T_PIPE))
 		return (parse_pipe_sequence_prime(token_stream, pipe_node));
 	return (pipe_node);
 }
@@ -155,11 +155,7 @@ t_tree	*parse_pipe_sequence(t_token **token_stream)
 	else if (a == NOT_FOUND)
 		return (NOT_FOUND);
 	if (is_token_type(*token_stream, T_PIPE))
-<<<<<<< HEAD
 		return (parse_pipe_sequence_prime(token_stream, a));
-=======
-		return (parse_pipe_sequence_prime(d, a));
->>>>>>> origin/main
 	return (a);
 }
 

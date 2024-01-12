@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 15:00:14 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:02:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	consume_token(t_token **token_stream)
 
 int	is_token_type(t_token *t, int type)
 {
-	if (token && token->type == type)
+	if (t && t->type == type)
 		return (1);
 	return (0);
 }

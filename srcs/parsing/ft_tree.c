@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 15:57:18 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:12:24 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static void	ft_treedelone(t_tree *lst)
 {
 	if (!lst)
 		return ;
-	free(lst->content);
+	if (lst->content)
+		free(lst->content);
 	free(lst);
 }
 

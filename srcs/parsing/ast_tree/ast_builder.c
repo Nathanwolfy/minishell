@@ -6,17 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:54:04 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/11 18:49:52 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:06:17 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-void	consume_token(t_token **token_stream)
-{
-	if (*token_stream)
-		*token_stream = (*token_stream)->next;
-}
 
 t_tree	*ast_builder(t_token **t)
 {
@@ -28,4 +22,5 @@ t_tree	*ast_builder(t_token **t)
 		return (NULL);
 	*token_stream = *t;
 	ast = parse_cmd_line(token_stream);
+	return (ast);
 }
