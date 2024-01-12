@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 18:20:41 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:19:15 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include <term.h>
 
 # define PROMPT "minishell: "
+# define NOT_FOUND (t_tree *)-1
 
 typedef struct s_token
 {
@@ -106,10 +107,10 @@ void	ft_tokenadd_back(t_token **lst, t_token *new);
 t_tree	*ast_builder(t_token **t);
 t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right);
 void	consume_token(t_token **token_stream);
+t_tree	*parse_cmd_line(t_token **token_stream);
 
 /*			AST - utils		*/
 
-int		is_token_content(t_token *t, char *content);
 int		is_token_type(t_token *t, int type);
 int		is_io_file(t_token *t);
 

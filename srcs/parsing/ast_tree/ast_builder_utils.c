@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/11 18:49:56 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:13:08 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,9 @@ void	consume_token(t_ast_data *d)
 		d->lookahead = NULL;
 }
 
-int	is_token_content(t_token *t, char *content)
-{
-	int	i;
-
-	i = 0;
-	while (t->content[i] || content[i])
-	{
-		if (t->content[i] != content[i])
-			return (0);
-	}
-	return (1);
-}
-
 int	is_token_type(t_token *t, int type)
 {
-	if (token->type == type)
+	if (token && token->type == type)
 		return (1);
 	return (0);
 }
