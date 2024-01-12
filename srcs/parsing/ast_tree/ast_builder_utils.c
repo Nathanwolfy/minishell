@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 14:13:08 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/12 15:00:14 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right)
 	return (node);
 }
 
-void	consume_token(t_ast_data *d)
+void	consume_token(t_token **token_stream)
 {
-	d->(*token_stream) = d->(*token_stream)->next;
-	if (d->(*token_stream))
-		d->lookahead = d->(*token_stream)->next;
-	else
-		d->lookahead = NULL;
+	if (*token_stream)
+		*token_stream = (*token_stream)->next;
 }
 
 int	is_token_type(t_token *t, int type)
