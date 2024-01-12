@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:54:04 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 16:31:27 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:48:33 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_tree	*ast_builder(t_token **t)
 	t_tree	*ast;
 	t_token	**token_stream;
 
-	token_stream = malloc(sizeof(t_token *));
+	token_stream = ft_calloc(1, sizeof(t_token *));
 	if (!token_stream)
 		return (NULL);
 	*token_stream = *t;

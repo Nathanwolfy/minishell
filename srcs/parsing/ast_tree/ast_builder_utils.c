@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 16:30:39 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:48:45 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right)
 {
 	t_tree	*node;
 
-	node = malloc(sizeof(t_tree));
+	node = ft_calloc(1, sizeof(t_tree));
 	if (!node)
 		return (NULL);
 	node->type = type;

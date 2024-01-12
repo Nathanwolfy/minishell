@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 16:30:05 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 17:01:42 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,11 @@ void	prompt(void)
 		if (!running)
 		{
 			ast = ast_builder(&token);
+			print_ast(ast, 0, 0);
 		}
 		if (!running || check_dless(ast) == 0)
 			add_history(line);
 		running = 1;
-		print_tokens(&token);
-		//print_ast(ast, 0, 0);
 		free(line);
 		ft_tokenclear(&token);
 		ft_treeclear(&ast);
