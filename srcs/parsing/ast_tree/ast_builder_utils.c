@@ -6,11 +6,23 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 15:32:36 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/12 16:30:39 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+
+void	add_node_to_bottom_right(t_tree *main, t_tree *new_node)
+{
+	t_tree	*target;
+
+	if (!main)
+		return ;
+	target = main;
+	while (target->right != NULL)
+		target = target->right;
+	target->right = new_node;
+}
 
 int	is_io_file(t_token *t)
 {
