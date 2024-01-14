@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:38:21 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 18:41:38 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/14 18:01:44 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ int	unclosed_quotes_code(int sq, int dq)
 
 int	print_error_lexing_code(int code)
 {
+	//Add error code message
 	return (code);
 }

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:50:52 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/11 15:12:19 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/14 18:07:19 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static char	*ft_strdup_len(char *str, int len)
 	int		k;
 
 	k = 0;
-	ptr = malloc(sizeof(char) * (len + 1));
+	ptr = ft_calloc(len + 1, sizeof(char));
 	if (!ptr)
 		return (NULL);
 	else
