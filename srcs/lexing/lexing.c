@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:53:32 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 17:02:20 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/14 11:25:11 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ int		check_for_operator(char *line, int k, t_token **token)
 	else if (line[k] == '>')
 		res = add_operator_to_token(line, k, token, T_RET_TO);
 	else
-		return (0);
-	if (res < 0)
-		return (res);
-	else
-		return (-2);
+		return (1);
+	return (res);
 }
 
 int	add_words_to_token(char *line, int to, t_token **token)
@@ -107,7 +104,7 @@ int	lexer_rec(char *line, int to, t_token **token)
 		else if (!sq && !dq)
 		{
 			res = check_for_operator(line, k, token);
-			if (res != 0)
+			if (res != 1)
 				return (res);
 		}
 		k++;

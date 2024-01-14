@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 16:42:06 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/14 11:15:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,15 @@ typedef enum e_rules
 }	t_rules;
 
 void	prompt(void);
+
+/*		TOKENS AND LEXING		*/
+
 int		lexer(char *line, t_token **token);
 int		lexer_rec(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
+
+int		unclosed_quotes_code(int sq, int dq);
+int		print_error_lexing_code(int code);
 
 int		ft_isspace(int c);
 int		ft_is_sq(int c);
@@ -117,9 +123,6 @@ t_tree	*parse_cmd_line(t_token **token_stream);
 int		is_token_type(t_token *t, int type);
 int		is_io_file(t_token *t);
 void	add_node_to_bottom_right(t_tree *main, t_tree *new_node);
-
-int		unclosed_quotes_code(int sq, int dq);
-int		print_error_lexing_code(int code);
 
 void	ft_treeclear(t_tree **lst);
 t_tree	*ft_treenew(void *content, int type);

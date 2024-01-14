@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 17:01:42 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/14 11:26:27 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	prompt(void)
 		if (!line)
 			return ;
 		running = lexer(line, &token);
-		print_tokens(&token);
+		//print_tokens(&token);
 		if (!running)
 		{
 			ast = ast_builder(&token);
