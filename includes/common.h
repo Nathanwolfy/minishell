@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/14 11:15:41 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:02:35 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,18 @@ void	print_tokens(t_token **tokens);
 t_tree	*ast_builder(t_token **t);
 t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right);
 void	consume_token(t_token **token_stream);
+
+/*		AST - parse_functions	*/
+
 t_tree	*parse_cmd_line(t_token **token_stream);
+t_tree	*parse_simple_cmd(t_token **token_stream);
 
 /*			AST - utils		*/
 
 int		is_token_type(t_token *t, int type);
 int		is_io_file(t_token *t);
 void	add_node_to_bottom_right(t_tree *main, t_tree *new_node);
-
+void	add_node_to_bottom_left(t_tree *main, t_tree *new_node);
 void	ft_treeclear(t_tree **lst);
 t_tree	*ft_treenew(void *content, int type);
 
