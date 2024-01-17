@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/15 12:02:35 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/17 08:19:19 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ void	consume_token(t_token **token_stream);
 
 t_tree	*parse_cmd_line(t_token **token_stream);
 t_tree	*parse_simple_cmd(t_token **token_stream);
+t_tree	*parse_io_redirect(t_token **token_stream);
 
 /*			AST - utils		*/
 
