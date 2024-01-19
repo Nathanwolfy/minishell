@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/15 12:02:35 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/19 10:13:16 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,17 @@ typedef struct	s_ast_data
 	t_token	*lookahead;
 	t_token	**token_stream;
 }	t_ast_data;
+
+typedef struct s_cmd_infos
+{
+	int		is_piped;
+	char	wr;
+	int 	pipefd[2];
+	int		*fds_in;
+	int		fds_in_size;
+	int		*fds_out;
+	int		fds_out_size;
+}	t_cmd_infos;
 
 typedef enum e_token_type
 {
@@ -134,5 +145,13 @@ t_tree	*ft_treenew(void *content, int type);
 int		check_dless(t_tree *tree);
 void	print_ast(t_tree *tree, int indent_ct, char side);
 
+/*		INTERPRETER		*/
+
+int		interpreter(t_tree **ast);
+
+/*		INTERPRETER - UTILS		*/
+
+void	reset_cmd_infos(t_cmd_infos *infos);
+int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 
 #endif
