@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/19 10:13:16 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:56:38 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/time.h>
@@ -69,6 +70,7 @@ typedef struct s_cmd_infos
 	int		fds_in_size;
 	int		*fds_out;
 	int		fds_out_size;
+	int		child_pid;
 }	t_cmd_infos;
 
 typedef enum e_token_type
@@ -153,5 +155,12 @@ int		interpreter(t_tree **ast);
 
 void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
+void	close_fds(t_cmd_infos *infos, int notlast);
+void	manage_fds_for_cmd(t_cmd_infos *infos);
+
+/*		INTERPRETER - REDIRECTS		*/
+
+int		add_io_file_to(t_tree *node, t_cmd_infos *infos);
+int		add_io_file_from(t_tree *node, t_cmd_infos *infos);
 
 #endif
