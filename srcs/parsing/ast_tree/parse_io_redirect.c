@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:18:25 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/23 10:45:29 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:21:43 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,22 @@ t_tree	*parse_infile(t_ast_data *d)
 		return (node);
 	node->left = left;
 	return (node);
+}
+t_tree	*parse_io_file_arg(t_ast_data *d, t_tree *prev)
+{
+	t_tree *new_node;
+
+	if (!prev->left || prev->left->type != R_CMD_NAME)
+		return (ft_treeclear(&prev), NULL);
+	while (is_token_type(*(d->stream), T_WORD))
+	{
+		new_node = create_node(R_CMD_SUFFIX, (*(d->stream))->content, NULL, NULL);
+		if (!new_node)
+			return (ft_treeclear(&prev), NULL);
+		add_node_to_bottom_right(prev->left, new_node);
+		consume_token(d);
+	}
+	return (prev);
 }
 
 t_tree	*parse_io_file(t_ast_data *d)
