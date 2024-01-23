@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/22 16:56:38 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:08:07 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_cmd_infos
 	int		fds_in_size;
 	int		*fds_out;
 	int		fds_out_size;
-	int		child_pid;
+	pid_t	child_pid;
 }	t_cmd_infos;
 
 typedef enum e_token_type
@@ -157,6 +157,7 @@ void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
+int		launch_child_process(t_tree *node, t_cmd_infos *infos);
 
 /*		INTERPRETER - REDIRECTS		*/
 

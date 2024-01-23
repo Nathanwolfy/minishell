@@ -17,7 +17,10 @@ SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/ast_builder_utils2.c	\
 						ast_tree/parse_functions.c
 
-SRCS_INTERPRETER_FILES = interpreter.c
+SRCS_INTERPRETER_FILES = interpreter.c \
+							interpreter_redirects.c \
+							cmd_process.c \
+							cmd_infos_utils.c
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 
