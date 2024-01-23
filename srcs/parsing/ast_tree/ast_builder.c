@@ -6,22 +6,35 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:54:04 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/12 16:48:33 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:33:29 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
+void	free_ast_data(t_ast_data *d)
+{
+	if (!d)
+		return ;
+	if (d->stream)
+		free(d->stream);
+	free(d);
+}
+
 t_tree	*ast_builder(t_token **t)
 {
-	t_tree	*ast;
-	t_token	**token_stream;
+	t_tree		*ast;
+	t_ast_data	*d;
 
-	token_stream = ft_calloc(1, sizeof(t_token *));
-	if (!token_stream)
+	d = malloc(sizeof(t_ast_data));
+	if (!d)
 		return (NULL);
-	*token_stream = *t;
-	ast = parse_cmd_line(token_stream);
-	free(token_stream);
+	d->stream = malloc(sizeof(t_token *));
+	if (!d->stream)
+		return (free(d), NULL);
+	d->count = 0;
+	*(d->stream) = *t;
+	ast = parse_cmd_line(d);
+	free_ast_data(d);
 	return (ast);
 }
