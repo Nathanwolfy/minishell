@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 17:26:38 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:41:53 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	**check_get_cmd(char **cmdin)
 	int		k;
 
 	k = 0;
-	paths = ft_split(getenv("PATH"), ':'); //careful env -I
+	paths = ft_split(getenv("PATH"), ':'); //careful env -I + use our envp or getenv
 	if (!paths) //what to do in this case
 		return (free_split(cmdin), NULL);
 	while (paths[k])
@@ -93,10 +93,9 @@ static char	**recreate_and_get_cmd(t_tree *node)
 	return (cmd);
 }
 
-int	launch_child_process(t_tree *node, t_cmd_infos *infos)
+int	launch_child_process(t_tree *node, t_cmd_infos *infos, char *envp[])
 {
 	char	**cmd;
-	char	**envp; //how to get it ??
 
 	//write(2, "launch_child_process\n", 22);
 	if (!node)

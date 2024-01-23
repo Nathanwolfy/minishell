@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 17:08:07 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:41:15 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,15 @@ typedef enum e_rules
 	R_HERE_END
 }	t_rules;
 
-void	prompt(void);
+void	prompt(char *envp[]);
+
+/*		UTILS		*/
+
+int		ft_isspace(int c);
+int		ft_is_sq(int c);
+int		ft_is_dq(int c);
+void	free_split(char **split);
+char	**copy_envp(char *old_envp[]);
 
 /*		TOKENS AND LEXING		*/
 
@@ -111,11 +119,6 @@ char	**ft_split_adapted(char *line, int to);
 
 int		unclosed_quotes_code(int sq, int dq);
 int		print_error_lexing_code(int code);
-
-int		ft_isspace(int c);
-int		ft_is_sq(int c);
-int		ft_is_dq(int c);
-void	free_split(char **split);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
@@ -149,7 +152,7 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 
 /*		INTERPRETER		*/
 
-int		interpreter(t_tree **ast);
+int		interpreter(t_tree **ast, char *envp[]);
 
 /*		INTERPRETER - UTILS		*/
 
@@ -157,7 +160,7 @@ void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
-int		launch_child_process(t_tree *node, t_cmd_infos *infos);
+int		launch_child_process(t_tree *node, t_cmd_infos *infos, char *envp[]);
 
 /*		INTERPRETER - REDIRECTS		*/
 

@@ -4,7 +4,8 @@ SRCS_MAIN_FILES = minishell.c \
 					prompt.c
 
 SRCS_UTILS_FILES = utils.c \
-					utils_tree.c
+					utils_tree.c \
+					utils_envp.c
 
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c \
