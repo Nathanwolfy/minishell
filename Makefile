@@ -16,7 +16,9 @@ SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/ast_builder.c			\
 						ast_tree/ast_builder_utils.c	\
 						ast_tree/ast_builder_utils2.c	\
-						ast_tree/parse_functions.c
+						ast_tree/parse_functions.c		\
+						ast_tree/parse_simple_cmd.c		\
+						ast_tree/parse_io_redirect.c
 
 SRCS_INTERPRETER_FILES = interpreter.c \
 							interpreter_redirects.c \

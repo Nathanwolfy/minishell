@@ -57,8 +57,8 @@ typedef struct s_tree
 
 typedef struct	s_ast_data
 {
-	t_token	*lookahead;
-	t_token	**token_stream;
+	int		count;
+	t_token	**stream;
 }	t_ast_data;
 
 typedef struct s_cmd_infos
@@ -131,12 +131,13 @@ void	print_tokens(t_token **tokens);
 
 t_tree	*ast_builder(t_token **t);
 t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right);
-void	consume_token(t_token **token_stream);
+void	consume_token(t_ast_data *d);
 
 /*		AST - parse_functions	*/
 
-t_tree	*parse_cmd_line(t_token **token_stream);
-t_tree	*parse_simple_cmd(t_token **token_stream);
+t_tree	*parse_cmd_line(t_ast_data *d);
+t_tree	*parse_simple_cmd(t_ast_data *d);
+t_tree	*parse_io_redirect(t_ast_data *d);
 
 /*			AST - utils		*/
 
@@ -145,6 +146,7 @@ int		is_io_file(t_token *t);
 void	add_node_to_bottom_right(t_tree *main, t_tree *new_node);
 void	add_node_to_bottom_left(t_tree *main, t_tree *new_node);
 void	ft_treeclear(t_tree **lst);
+void	free_ast_data(t_ast_data *d);
 t_tree	*ft_treenew(void *content, int type);
 
 int		check_dless(t_tree *tree);
