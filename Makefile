@@ -4,7 +4,8 @@ SRCS_MAIN_FILES = minishell.c \
 					prompt.c
 
 SRCS_UTILS_FILES = utils.c \
-					utils_tree.c
+					utils_tree.c \
+					utils_envp.c
 
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c \
@@ -19,7 +20,10 @@ SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/parse_simple_cmd.c		\
 						ast_tree/parse_io_redirect.c
 
-SRCS_INTERPRETER_FILES = interpreter.c
+SRCS_INTERPRETER_FILES = interpreter.c \
+							interpreter_redirects.c \
+							cmd_process.c \
+							cmd_infos_utils.c
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 

@@ -6,18 +6,13 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/14 18:06:45 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:48:12 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-void	exec_cmd(char *cmd)
-{
-	printf("%s\n", cmd);
-}
-
-void	prompt(void)
+void	prompt(char *envp[])
 {
 	char	*line;
 	int		running;
@@ -36,9 +31,10 @@ void	prompt(void)
 		if (!running)
 		{
 			ast = ast_builder(&token);
-			print_ast(ast, 0, 0);
+			//print_ast(ast, 0, 0);
+			interpreter(&ast, envp);
 		}
-		if (!running || check_dless(ast) == 0)
+		if (!running && check_dless(ast) == 0)
 			add_history(line);
 		running = 1;
 		free(line);

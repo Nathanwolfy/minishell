@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 18:33:09 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:41:15 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <readline/history.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/time.h>
@@ -60,6 +61,18 @@ typedef struct	s_ast_data
 	t_token	**stream;
 }	t_ast_data;
 
+typedef struct s_cmd_infos
+{
+	int		is_piped;
+	char	wr;
+	int 	pipefd[2];
+	int		*fds_in;
+	int		fds_in_size;
+	int		*fds_out;
+	int		fds_out_size;
+	pid_t	child_pid;
+}	t_cmd_infos;
+
 typedef enum e_token_type
 {
 	T_END=-1,
@@ -88,7 +101,15 @@ typedef enum e_rules
 	R_HERE_END
 }	t_rules;
 
-void	prompt(void);
+void	prompt(char *envp[]);
+
+/*		UTILS		*/
+
+int		ft_isspace(int c);
+int		ft_is_sq(int c);
+int		ft_is_dq(int c);
+void	free_split(char **split);
+char	**copy_envp(char *old_envp[]);
 
 /*		TOKENS AND LEXING		*/
 
@@ -98,11 +119,6 @@ char	**ft_split_adapted(char *line, int to);
 
 int		unclosed_quotes_code(int sq, int dq);
 int		print_error_lexing_code(int code);
-
-int		ft_isspace(int c);
-int		ft_is_sq(int c);
-int		ft_is_dq(int c);
-void	free_split(char **split);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
@@ -136,5 +152,21 @@ t_tree	*ft_treenew(void *content, int type);
 int		check_dless(t_tree *tree);
 void	print_ast(t_tree *tree, int indent_ct, char side);
 
+/*		INTERPRETER		*/
+
+int		interpreter(t_tree **ast, char *envp[]);
+
+/*		INTERPRETER - UTILS		*/
+
+void	reset_cmd_infos(t_cmd_infos *infos);
+int		add_fd(t_cmd_infos *infos, char in_out, int fd);
+void	close_fds(t_cmd_infos *infos, int notlast);
+void	manage_fds_for_cmd(t_cmd_infos *infos);
+int		launch_child_process(t_tree *node, t_cmd_infos *infos, char *envp[]);
+
+/*		INTERPRETER - REDIRECTS		*/
+
+int		add_io_file_to(t_tree *node, t_cmd_infos *infos);
+int		add_io_file_from(t_tree *node, t_cmd_infos *infos);
 
 #endif
