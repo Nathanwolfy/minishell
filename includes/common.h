@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 18:41:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:47:04 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ typedef struct	s_ast_data
 
 typedef struct s_cmd_infos
 {
-	int		is_piped;
-	char	wr;
-	int 	pipefd[2];
+	int		pipein;
+	int		use_pipein;
+	int		pipeout;
+	int		use_pipeout;
 	int		*fds_in;
 	int		fds_in_size;
 	int		*fds_out;
@@ -168,5 +169,6 @@ int		launch_child_process(t_tree *node, t_cmd_infos *infos, char *envp[]);
 
 int		add_io_file_to(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_from(t_tree *node, t_cmd_infos *infos);
+int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
 
 #endif

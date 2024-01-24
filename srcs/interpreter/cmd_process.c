@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 18:41:53 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:03:30 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,7 @@ int	launch_child_process(t_tree *node, t_cmd_infos *infos, char *envp[])
 	manage_fds_for_cmd(infos);
 	//write(2, "fds for cmd managed\n", 21);
 	//print_cmd(cmd);
-	if (execve(cmd[0], cmd, envp) < 0) //need to copy envp variable or not ?
+	if (execve(cmd[0], cmd, envp) < 0)
 		return (free_split(cmd), close_fds(infos, 0), 0); //exit properly in case of errors
 	return (0);
 }
-
-//no env : env -I
