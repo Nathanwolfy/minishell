@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 18:52:47 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:54:30 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int argc, char *argv[], char *old_envp[])
 {
 	char	**envp;
 
-	if (argc < 1 || !argv || !old_envp) //env -I needs to be handled
+	if (argc < 1 || !argv || !old_envp || !(old_envp[0])) //env -i needs to be handled
 		return (1); //handle correctly + what to do with argc and envp
 	envp = copy_envp(old_envp);
 	if (!envp)

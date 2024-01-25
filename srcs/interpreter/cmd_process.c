@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/24 16:03:30 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:55:02 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	cmd_split_count(t_tree *node)
 	return (ct);
 }
 
-void	print_cmd(char **cmd)
+/*void	print_cmd(char **cmd)
 {
 	int	k;
 
@@ -61,7 +61,7 @@ void	print_cmd(char **cmd)
 	ft_putendl_fd("checking cmd :", STDERR_FILENO);
 	while (cmd[k])
 		ft_putendl_fd(cmd[k++], STDERR_FILENO);
-}
+}*/
 
 static char	**recreate_and_get_cmd(t_tree *node)
 {
@@ -72,8 +72,6 @@ static char	**recreate_and_get_cmd(t_tree *node)
 
 	ct = cmd_split_count(node);
 	cmd = ft_calloc(ct + 1, sizeof(char *));
-	//ft_putnbr_fd(ct, STDERR_FILENO);
-	//ft_putendl_fd("", STDERR_FILENO);
 	if (!cmd)
 		return (NULL);
 	j = 0;
@@ -93,20 +91,16 @@ static char	**recreate_and_get_cmd(t_tree *node)
 	return (cmd);
 }
 
-int	launch_child_process(t_tree *node, t_cmd_infos *infos, char *envp[])
+int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[])
 {
 	char	**cmd;
 
-	//write(2, "launch_child_process\n", 22);
 	if (!node)
 		return (close_fds(infos, 0), -9); //define clean error codes
 	cmd = recreate_and_get_cmd(node); //differentiate error and at which step
 	if (!cmd)
 		return (close_fds(infos, 0), -1); //exit properly child process
-	//write(2, "cmd recreated\n", 15);
 	manage_fds_for_cmd(infos);
-	//write(2, "fds for cmd managed\n", 21);
-	//print_cmd(cmd);
 	if (execve(cmd[0], cmd, envp) < 0)
 		return (free_split(cmd), close_fds(infos, 0), 0); //exit properly in case of errors
 	return (0);

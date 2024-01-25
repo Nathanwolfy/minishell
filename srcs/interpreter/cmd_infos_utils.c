@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:49:19 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 16:52:06 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:30:11 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	reset_cmd_infos(t_cmd_infos *infos)
 {
 	if (!infos)
 		return ;
-	infos->is_piped = 0;
-	infos->wr = '\0';
-	infos->pipefd[0] = -1;
-	infos->pipefd[1] = -1;
+	infos->pipe_readfd = -1;
+	infos->use_pipe_read = 0;
+	infos->pipe_writefd = -1;
+	infos->use_pipe_write = 0;
 	if (infos->fds_in)
 		free(infos->fds_in);
 	infos->fds_in = NULL;
