@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/25 17:53:07 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/26 14:39:03 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,11 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 /*		INTERPRETER		*/
 
 int		interpreter(t_tree **ast, char *envp[]);
+int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[]);
+
+/*		INTERPRETER - PIPES		*/
+
+int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out);
 
 /*		INTERPRETER - UTILS		*/
 
