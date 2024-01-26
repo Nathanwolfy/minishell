@@ -6,25 +6,66 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/25 17:55:02 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/26 17:00:42 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-static char	**check_get_cmd(char **cmdin)
+static char	*ft_strjoin_slash(char *s1, char *s2, int addslash)
+{
+	char	*join;
+	size_t	size;
+	size_t	i;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	size = ft_strlen(s1) + ft_strlen(s2);
+	i = 0;
+	join = malloc(sizeof(char) * (size + 1 + addslash));
+	if (!join)
+		return (NULL);
+	while (*s1)
+		join[i++] = *(s1++);
+	if (addslash)
+		join[i++] = '/';
+	while (*s2)
+		join[i++] = *(s2++);
+	join[i] = '\0';
+	return (join);
+}
+
+static char	*find_path_var(char *envp[])
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp("PATH", envp[i], 4)) //better handle ?
+			return (&envp[i][5]);
+		i++;
+	}
+	return (NULL);
+}
+
+static char	**check_get_cmd(char **cmdin, char **envp)
 {
 	char	**paths;
 	char	*tmp;
 	int		k;
 
 	k = 0;
-	paths = ft_split(getenv("PATH"), ':'); //careful env -I + use our envp or getenv
+	paths = ft_split(find_path_var(envp), ':');
 	if (!paths) //what to do in this case
 		return (free_split(cmdin), NULL);
 	while (paths[k])
 	{
-		tmp = ft_strjoin(paths[k], cmdin[0]);
+		tmp = ft_strjoin_slash(paths[k], cmdin[0], 1);
 		if (!tmp)
 			return (NULL);
 		if (access(tmp, F_OK | X_OK) == 0)
@@ -32,8 +73,12 @@ static char	**check_get_cmd(char **cmdin)
 		free(tmp);
 		k++;
 	}
-	free_split(NULL);
-	return (NULL);
+	tmp = ft_strjoin_slash("", cmdin[0], 0);
+	if (!tmp)
+		return (NULL);
+	if (access(tmp, F_OK | X_OK) == 0)
+		return (free(cmdin[0]), cmdin[0] = tmp, cmdin);
+	return (free_split(NULL), free(tmp), NULL);
 }
 
 static int	cmd_split_count(t_tree *node)
@@ -51,19 +96,7 @@ static int	cmd_split_count(t_tree *node)
 	return (ct);
 }
 
-/*void	print_cmd(char **cmd)
-{
-	int	k;
-
-	k = 0;
-	if (!cmd)
-		return ;
-	ft_putendl_fd("checking cmd :", STDERR_FILENO);
-	while (cmd[k])
-		ft_putendl_fd(cmd[k++], STDERR_FILENO);
-}*/
-
-static char	**recreate_and_get_cmd(t_tree *node)
+static char	**recreate_and_get_cmd(t_tree *node, char **envp)
 {
 	int		ct;
 	int		j;
@@ -78,16 +111,13 @@ static char	**recreate_and_get_cmd(t_tree *node)
 	it = node;
 	while (j < ct)
 	{
-		if (j == 0)
-			cmd[j] = ft_strjoin("/", it->content);
-		else
-			cmd[j] = ft_strdup(it->content);
+		cmd[j] = ft_strdup(it->content);
 		if (!cmd[j++])
 			return(free_split(cmd), NULL);
 		it = it->right;
 	}
 	cmd[j] = NULL;
-	cmd = check_get_cmd(cmd);
+	cmd = check_get_cmd(cmd, envp);
 	return (cmd);
 }
 
@@ -97,7 +127,7 @@ int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[])
 
 	if (!node)
 		return (close_fds(infos, 0), -9); //define clean error codes
-	cmd = recreate_and_get_cmd(node); //differentiate error and at which step
+	cmd = recreate_and_get_cmd(node, envp); //differentiate error and at which step
 	if (!cmd)
 		return (close_fds(infos, 0), -1); //exit properly child process
 	manage_fds_for_cmd(infos);
