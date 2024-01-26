@@ -58,6 +58,7 @@ typedef struct s_tree
 typedef struct	s_ast_data
 {
 	int		count;
+	int		start;
 	t_token	**stream;
 }	t_ast_data;
 

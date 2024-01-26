@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:18:25 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/23 18:21:43 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:07:38 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_tree	*parse_io_file(t_ast_data *d)
 
 	if (!*(d->stream))
 		return (NOT_FOUND);
-	if (((*(d->stream))->type == T_RET_TO || (*(d->stream))->type == T_RET_FROM) && !d->count)
+	if (((*(d->stream))->type == T_RET_TO || (*(d->stream))->type == T_RET_FROM) && d->start)
 		return (parse_infile(d));
 	else if ((*(d->stream))->type == T_RET_TO)
 		io_file_node = create_node(R_IO_FILE_TO, NULL, NULL, NULL);
