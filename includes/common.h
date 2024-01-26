@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/26 14:39:03 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/26 15:49:20 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_token
 {
 	char			*content;
 	int				type;
+	int				handle_expansion;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -50,6 +51,7 @@ typedef struct s_tree
 {
 	char			*content;
 	int				type;
+	int				handle_expansion;
 	struct s_tree	*parent;
 	struct s_tree	*left;
 	struct s_tree	*right;
@@ -118,13 +120,14 @@ char	**copy_envp(char *old_envp[]);
 int		lexer(char *line, t_token **token);
 int		lexer_rec(char *line, int to, t_token **token);
 char	**ft_split_adapted(char *line, int to);
+int		check_token_quotes(t_token **token);
 
 int		unclosed_quotes_code(int sq, int dq);
 int		print_error_lexing_code(int code);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
-t_token	*ft_tokennew(void *content, int type);
+t_token	*ft_tokennew(void *content, int type, int handle_expansion);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
 void	print_tokens(t_token **tokens);

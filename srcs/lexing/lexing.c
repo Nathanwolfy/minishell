@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:53:32 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/14 11:25:11 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/26 15:41:43 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	add_operator_to_token(char *line, int k, t_token **token, int type)
 	res = lexer_rec(line, k - 1, token);
 	if (res < 0)
 		return (res);
-	new_token = ft_tokennew(NULL, type);
+	new_token = ft_tokennew(NULL, type, 0);
 	if (!new_token)
 		return (-1);
 	ft_tokenadd_back(token, new_token);
@@ -76,7 +76,7 @@ int	add_words_to_token(char *line, int to, t_token **token)
 		content = ft_strdup(words[l++]);
 		if (!content)
 			return (-1);
-		new_token = ft_tokennew(content, T_WORD);
+		new_token = ft_tokennew(content, T_WORD, 1);
 		if (!new_token)
 			return (-1);
 		ft_tokenadd_back(token, new_token);
@@ -119,11 +119,14 @@ int	lexer(char *line, t_token **token)
 	t_token	*end_token;
 	int		res;
 
-	end_token = ft_tokennew(NULL, T_END);
+	end_token = ft_tokennew(NULL, T_END, 0);
 	if (!end_token)
 		return (print_error_lexing_code(-1));
 	res = lexer_rec(line, ft_strlen(line) + 1, token);
 	ft_tokenadd_back(token, end_token);
+	if (res < 0)
+		return (print_error_lexing_code(res));
+	res = check_token_quotes(token);
 	if (res < 0)
 		return (print_error_lexing_code(res));
 	return (res);
