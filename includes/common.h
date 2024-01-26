@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 18:33:09 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:08:06 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_tree
 typedef struct	s_ast_data
 {
 	int		count;
+	int		start;
 	t_token	**stream;
 }	t_ast_data;
 

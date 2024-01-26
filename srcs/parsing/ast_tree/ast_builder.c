@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:54:04 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/23 10:33:29 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:10:28 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_tree	*ast_builder(t_token **t)
 	if (!d->stream)
 		return (free(d), NULL);
 	d->count = 0;
+	d->start = 1;
 	*(d->stream) = *t;
 	ast = parse_cmd_line(d);
 	free_ast_data(d);

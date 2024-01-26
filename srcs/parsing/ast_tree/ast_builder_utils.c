@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/23 10:34:27 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/26 10:09:42 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ void	consume_token(t_ast_data *d)
 		return ;
 	if (*(d->stream))
 	{
+		if ((*(d->stream))->type == T_PIPE)
+			d->start = 1;
+		else
+			d->start = 0;
 		*(d->stream) = (*(d->stream))->next;
 		d->count += 1;
 	}
