@@ -1,26 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   utils_envp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/25 16:54:30 by nlederge         ###   ########.fr       */
+/*   Created: 2024/01/23 18:33:27 by nlederge          #+#    #+#             */
+/*   Updated: 2024/01/23 18:48:25 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	main(int argc, char *argv[], char *old_envp[])
+static int	count_split(char *old_envp[])
+{
+	int	k;
+
+	if (!old_envp)
+		return (0);
+	k = 0;
+	while (old_envp[k])
+		k++;
+	return (k);
+}
+
+char	**copy_envp(char *old_envp[])
 {
 	char	**envp;
+	int		ct;
+	int		l;
 
-	if (argc < 1 || !argv || !old_envp || !(old_envp[0])) //env -i needs to be handled
-		return (1); //handle correctly + what to do with argc and envp
-	envp = copy_envp(old_envp);
+	ct = count_split(old_envp);
+	envp = ft_calloc(ct + 1, sizeof(char *));
 	if (!envp)
-		return (1); //define clean error codes
-	prompt(envp);
-	return (0);
+		return (NULL);
+	l = 0;
+	while (l < ct)
+	{
+		envp[l] = ft_strdup(old_envp[l]);
+		if (!envp[l])
+			return (free_split(envp), NULL);
+		l++;
+	}
+	envp[l] = NULL;
+	return (envp);
 }

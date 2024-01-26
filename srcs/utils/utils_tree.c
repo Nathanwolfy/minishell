@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 17:41:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 15:46:05 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:59:34 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_dless(t_tree *tree)
 {
 	if (!tree || tree == NOT_FOUND)
 		return (0);
-	if (tree->type == T_DGREAT) //modify token to sequence
+	if (tree->type == R_IO_HERE)
 		return (1);
 	return (check_dless(tree->left) + check_dless(tree->right));
 }
