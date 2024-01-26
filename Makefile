@@ -22,6 +22,7 @@ SRCS_PARSING_FILES = ft_tree.c \
 
 SRCS_INTERPRETER_FILES = interpreter.c \
 							interpreter_redirects.c \
+							interpreter_pipes.c \
 							cmd_process.c \
 							cmd_infos_utils.c
 
