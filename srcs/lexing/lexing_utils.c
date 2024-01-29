@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:38:21 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/26 15:49:04 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:05:35 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	check_content_quotes(t_token *node)
 		return (0);
 	word = node->content; 
 	if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
-		return (node->handle_expansion = 0, 1);
+		return (1);
 	if (word[0] == '\"' && word[ft_strlen(word) - 1] == '\"')
 		return (2);
 	return (0);
