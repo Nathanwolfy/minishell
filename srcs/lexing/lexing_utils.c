@@ -6,62 +6,84 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:38:21 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/26 15:49:04 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/30 19:26:14 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	unclosed_quotes_code(int sq, int dq)
+int	simple_quotes_loop(char *line, int *k, int *table)
 {
-	if (sq)
-		return (-2);
-	else if (dq)
-		return (-3);
-	return (-4);
-}
-
-int	print_error_lexing_code(int code)
-{
-	//Add error code message
-	return (code);
-}
-
-static int	check_content_quotes(t_token *node)
-{
-	char	*word;
-
-	if (!(node->content) || node->type != T_WORD)
-		return (0);
-	word = node->content; 
-	if (word[0] == '\'' && word[ft_strlen(word) - 1] == '\'')
-		return (node->handle_expansion = 0, 1);
-	if (word[0] == '\"' && word[ft_strlen(word) - 1] == '\"')
-		return (2);
+	while (line[*k] && line[*k] != '\'')
+		table[(*k)++] = 1;
+	if (line[*k] == '\'')
+		table[(*k)++] = 1;
+	else if (!line[*k])
+		return (-1);
 	return (0);
 }
 
-int	check_token_quotes(t_token **token)
+int	double_quotes_loop(char *line, int *k, int *table)
 {
-	t_token	*node;
-	char	*temp;
-	int		res;
+	while (line[*k] && line[*k] != '\"')
+		table[(*k)++] = 1;
+	if (line[*k] == '\"')
+		table[(*k)++] = 1;
+	else if (!line[*k])
+		return (-2);
+	return (0);
+}
 
-	if (!token)
-		return (-1); //define clear malloc codes
-	node = *token;
-	while (node)
+int	quote_sequence(int *table, char *line)
+{
+	int k;
+
+	k = 0;
+	while (line[k])
 	{
-		res = check_content_quotes(node);
-		if (res > 0)
+		if (line[k] == '\'')
 		{
-			temp = ft_substr(node->content, 1, ft_strlen(node->content) - 2);
-			if (!temp)
+			table[k++] = 1;
+			if (simple_quotes_loop(line, &k, table) < 0)
 				return (-1);
-			free(node->content);
-			node->content = temp;
 		}
-		node = node->next;
+		else if (line[k] == '\"')
+		{
+			table[k++] = 1;
+			if (double_quotes_loop(line, &k, table) < 0)
+				return (-2);
+		}
+		else
+			k++;
+	}
+	return (0);
+}
+
+int	operator_sequence(int *table, char *line)
+{
+	int k;
+
+	k = 0;
+	while (line[k])
+	{
+		if (line[k] == '|')
+			table[k++] = 3;
+		else if (line[k] == '<' && line[k + 1] != '<')
+			table[k++] = 5;
+		else if (line[k] == '>' && line[k + 1] != '>')
+			table[k++] = 6;
+		else if (line[k] == '<' && line[k + 1] == '<')
+		{
+			table[k++] = 7;
+			table[k++] = 7;
+		}
+		else if (line[k] == '>' && line[k + 1] == '>')
+		{
+			table[k++] = 8;
+			table[k++] = 8;
+		}
+		else
+			k++;
 	}
 	return (0);
 }

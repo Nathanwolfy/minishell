@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 17:41:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/26 15:48:05 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:50:57 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ static void	print_tree_node(t_tree *node, int indent_ct, char side)
 		ft_putstr_fd("right: ", 1);
 	ft_putstr_fd("type: ", 1);
 	ft_putnbr_fd(node->type, 1);
-	ft_putstr_fd("expansion: ", 1);
-	ft_putnbr_fd(node->handle_expansion, 1);
 	ft_putstr_fd(" - content: ", 1);
 	ft_putendl_fd(node->content, 1);
 }
