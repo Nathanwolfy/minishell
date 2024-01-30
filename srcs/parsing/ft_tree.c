@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/12 16:54:58 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/30 19:08:05 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_tree	*ft_treenew(void *content, int type)
 {
 	t_tree	*l;
 
-	l = ft_calloc(sizeof(t_tree), 1);
+	l = ft_calloc(1, sizeof(t_tree));
 	if (!l)
 		return (NULL);
 	l->content = content;

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 15:41:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/29 15:06:00 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/30 19:06:24 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	ft_tokendelone(t_token *lst)
 {
 	if (!lst)
 		return ;
-	free(lst->content);
+	if (lst->content)
+		free(lst->content);
+	lst->content = NULL;
 	free(lst);
 }
 
@@ -39,7 +41,7 @@ t_token	*ft_tokennew(void *content, int type)
 {
 	t_token	*l;
 
-	l = ft_calloc(sizeof(t_token), 1);
+	l = ft_calloc(1, sizeof(t_token));
 	if (!l)
 		return (NULL);
 	l->content = content;

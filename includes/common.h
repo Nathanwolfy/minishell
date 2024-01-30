@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/29 15:06:12 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:57:21 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,28 +108,25 @@ void	prompt(char *envp[]);
 
 /*		UTILS		*/
 
-int		ft_isspace(int c);
-int		ft_is_sq(int c);
-int		ft_is_dq(int c);
 void	free_split(char **split);
 char	**copy_envp(char *old_envp[]);
+//void	print_tokens(t_token **tokens);
+void	print_table(int *table, int len);
 
 /*		TOKENS AND LEXING		*/
 
 int		lexer(char *line, t_token **token);
-int		lexer_rec(char *line, int to, t_token **token);
-char	**ft_split_adapted(char *line, int to);
-int		check_token_quotes(t_token **token);
 
-int		unclosed_quotes_code(int sq, int dq);
-int		print_error_lexing_code(int code);
+int		simple_quotes_loop(char *line, int *k, int *table);
+int		double_quotes_loop(char *line, int *k, int *table);
+int		quote_sequence(int *table, char *line);
+int		operator_sequence(int *table, char *line);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
 t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
-void	print_tokens(t_token **tokens);
 
 /*		AST		*/
 
