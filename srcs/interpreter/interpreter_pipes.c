@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:05:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/26 14:42:46 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:47:48 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	manage_fds_pipe_right(t_cmd_infos *infos, int pipefd[2], int pipefd_
 		add_fd(infos, 'o', pipefd_out);
 }
 
-int	set_up_pipes(t_tree *node, char *envp[], int pipefd_out)
+int	set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int isfirst)
 {
 	int			pipefd[2];
 	pid_t		pipe_pid;
@@ -63,7 +63,7 @@ int	set_up_pipes(t_tree *node, char *envp[], int pipefd_out)
 		if ((node->left)->type != R_PIPE_SEQUENCE)
 			return (set_up_pipe_left(node, envp, pipefd, pipefd_out));
 		else
-			return (close(pipefd[0]), set_up_pipes(node->left, envp, pipefd[1]));
+			return (close(pipefd[0]), set_up_pipes(node->left, envp, pipefd[1], 0));
 	}
 	else
 	{

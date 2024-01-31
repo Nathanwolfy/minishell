@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:58:01 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 12:53:37 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:26:19 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	other_chars_sequence(int *table, char *line)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	while (line[k])
@@ -88,8 +88,7 @@ static int	tokenize(int *table, char *line, t_token **token)
 	return (res);
 }
 
-#include <limits.h>
-int lexer(char *line, t_token **token)
+int	lexer(char *line, t_token **token)
 {
 	t_token	*end_token;
 	int		*table;

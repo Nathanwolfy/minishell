@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:38:21 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 13:21:48 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:25:48 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,11 @@
 int	print_error_lexer(int code)
 {
 	if (code == -1)
-		ft_putendl_fd("minishell: syntax error in simple quotes", STDERR_FILENO);
+		ft_putendl_fd("minishell: syntax error in simple quotes", \
+		STDERR_FILENO);
 	else if (code == -2)
-		ft_putendl_fd("minishell: syntax error in double quotes", STDERR_FILENO);
+		ft_putendl_fd("minishell: syntax error in double quotes", \
+		STDERR_FILENO);
 	else if (code != 0)
 	{
 		print_error_from_errno();
@@ -58,7 +60,7 @@ int	double_quotes_loop(char *line, int *k, int *table)
 
 int	quote_sequence(int *table, char *line)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	while (line[k])
@@ -83,7 +85,7 @@ int	quote_sequence(int *table, char *line)
 
 int	operator_sequence(int *table, char *line)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	while (line[k])

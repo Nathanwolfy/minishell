@@ -6,13 +6,13 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/26 14:39:12 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:49:15 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[])
+int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst)
 {
 	int	res;
 
@@ -20,7 +20,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[])
 	if (!node)
 		return (-1);
 	if (node->type == R_CMD_NAME)
-		res = launch_cmd_sequence(node, infos, envp);
+		res = launch_cmd_sequence(node, infos, envp, isfirst);
 	else if (node->type == R_IO_FILE_TO)
 		res = add_io_file_to(node, infos);
 	else if (node->type == R_IO_FILE_FROM)
@@ -30,7 +30,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[])
 	if (res < 0)
 		return (res);
 	else
-		return (execute_job(node->left, infos, envp));
+		return (execute_job(node->left, infos, envp, isfirst));
 }
 
 int	interpreter(t_tree **ast, char *envp[])
@@ -41,25 +41,15 @@ int	interpreter(t_tree **ast, char *envp[])
 
 	if (!ast)
 		return (-1);
-	child_pid = fork();
-	if (child_pid < 0)
-		return (-6); //define clean error codes
-	else if (child_pid == 0)
+	if ((*ast)->type != R_PIPE_SEQUENCE)
 	{
-		if ((*ast)->type != R_PIPE_SEQUENCE)
-		{
-			infos = ft_calloc(1, sizeof(t_cmd_infos));
-			if (!infos)
-				return (-2); //define clear error codes
-			reset_cmd_infos(infos);
-			res = execute_job(*ast, infos, envp);
-		}
-		else
-			res = set_up_pipes(*ast, envp, -1);
-		res = res + 1;
-		exit(0);
+		infos = ft_calloc(1, sizeof(t_cmd_infos));
+		if (!infos)
+			return (-2); //define clear error codes
+		reset_cmd_infos(infos);
+		res = execute_job(*ast, infos, envp, 1);
 	}
 	else
-		waitpid(child_pid, NULL, 0);
-	return (0);
+		res = set_up_pipes(*ast, envp, -1, 1);
+	return (res);
 }

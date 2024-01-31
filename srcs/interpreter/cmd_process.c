@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/26 17:00:42 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:49:45 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static char	**recreate_and_get_cmd(t_tree *node, char **envp)
 	return (cmd);
 }
 
-int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[])
+int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst)
 {
 	char	**cmd;
 

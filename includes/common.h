@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 13:04:42 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 14:50:13 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,11 +163,11 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 /*		INTERPRETER		*/
 
 int		interpreter(t_tree **ast, char *envp[]);
-int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[]);
+int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst);
 
 /*		INTERPRETER - PIPES		*/
 
-int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out);
+int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int isfirst);
 
 /*		INTERPRETER - UTILS		*/
 
@@ -175,7 +175,7 @@ void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
-int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[]);
+int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst);
 
 /*		INTERPRETER - REDIRECTS		*/
 
