@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 16:51:40 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:12:53 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef struct s_token
 {
 	char			*content;
 	int				type;
-	int				handle_expansion;
 	struct s_token	*prev;
 	struct s_token	*next;
 }	t_token;
@@ -112,6 +111,7 @@ void	prompt(t_token *token, t_tree *ast, char *envp[]);
 
 int		print_error_from_errno(void);
 int		print_error_lexer(int code);
+int		print_error_interpreter(int code);
 
 /*		UTILS		*/
 
@@ -125,16 +125,13 @@ char	**copy_envp(char *old_envp[]);
 /*		TOKENS AND LEXING		*/
 
 int		lexer(char *line, t_token **token);
-int		lexer_rec(char *line, int to, t_token **token);
-char	**ft_split_adapted(char *line, int to);
-int		check_token_quotes(t_token **token);
 
-int		unclosed_quotes_code(int sq, int dq);
-int		print_error_lexing_code(int code);
+int		quote_sequence(int *table, char *line);
+int		operator_sequence(int *table, char *line);
 
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
-t_token	*ft_tokennew(void *content, int type, int handle_expansion);
+t_token	*ft_tokennew(void *content, int type);
 t_token	*ft_tokenlast(t_token *lst);
 void	ft_tokenadd_back(t_token **lst, t_token *new);
 void	print_tokens(t_token **tokens);
@@ -167,11 +164,11 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 /*		INTERPRETER		*/
 
 int		interpreter(t_tree **ast, char *envp[]);
-int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst);
+int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain);
 
 /*		INTERPRETER - PIPES		*/
 
-int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int isfirst);
+int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int ismain);
 
 /*		INTERPRETER - UTILS		*/
 
@@ -179,7 +176,7 @@ void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
-int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst);
+int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain);
 
 /*		INTERPRETER - REDIRECTS		*/
 

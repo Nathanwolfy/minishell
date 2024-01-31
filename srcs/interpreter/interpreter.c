@@ -6,13 +6,22 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 14:49:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:13:08 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst)
+int	print_error_interpreter(int code)
+{
+	if (code == -2)
+		ft_putendl_fd("minishell: interpreter: missing ast", STDERR_FILENO);
+	else if (code == -3)
+		ft_putendl_fd("minishell: interpreter: missing shiet", STDERR_FILENO);
+	return (code);
+}
+
+int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain)
 {
 	int	res;
 
@@ -20,7 +29,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst)
 	if (!node)
 		return (-1);
 	if (node->type == R_CMD_NAME)
-		res = launch_cmd_sequence(node, infos, envp, isfirst);
+		res = launch_cmd_sequence(node, infos, envp, ismain);
 	else if (node->type == R_IO_FILE_TO)
 		res = add_io_file_to(node, infos);
 	else if (node->type == R_IO_FILE_FROM)
@@ -30,22 +39,27 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst)
 	if (res < 0)
 		return (res);
 	else
-		return (execute_job(node->left, infos, envp, isfirst));
+		return (execute_job(node->left, infos, envp, ismain));
 }
+
+/*
+0 : success
+-1 : all types of errors handled by errno
+-2 : missing ast
+*/
 
 int	interpreter(t_tree **ast, char *envp[])
 {
 	int			res;
 	t_cmd_infos	*infos;
-	pid_t 		child_pid;
 
 	if (!ast)
-		return (-1);
+		return (-2);
 	if ((*ast)->type != R_PIPE_SEQUENCE)
 	{
 		infos = ft_calloc(1, sizeof(t_cmd_infos));
 		if (!infos)
-			return (-2); //define clear error codes
+			return (-1);
 		reset_cmd_infos(infos);
 		res = execute_job(*ast, infos, envp, 1);
 	}

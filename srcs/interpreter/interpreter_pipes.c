@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:05:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 14:47:48 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 17:38:01 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	set_up_pipe_left(t_tree *node, char **envp, int pipefd[2], int pipefd
 	add_fd(infos, 'o', pipefd[1]);
 	if (pipefd_out != -1)
 		close(pipefd_out);
-	return (execute_job(node->left, infos, envp));
+	return (execute_job(node->left, infos, envp, 0));
 }
 
 static void	manage_fds_pipe_right(t_cmd_infos *infos, int pipefd[2], int pipefd_out)
@@ -47,7 +47,7 @@ static void	manage_fds_pipe_right(t_cmd_infos *infos, int pipefd[2], int pipefd_
 		add_fd(infos, 'o', pipefd_out);
 }
 
-int	set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int isfirst)
+int	set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int ismain)
 {
 	int			pipefd[2];
 	pid_t		pipe_pid;
@@ -72,6 +72,6 @@ int	set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int isfirst)
 			return (close_all_pipefds(pipefd, pipefd_out), -2); //define clear error codes exit here ?
 		manage_fds_pipe_right(infos, pipefd, pipefd_out);
 		waitpid(pipe_pid, NULL, 0);
-		return (execute_job(node->right, infos, envp));
+		return (execute_job(node->right, infos, envp, ismain));
 	}
 }

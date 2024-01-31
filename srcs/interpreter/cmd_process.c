@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 14:49:45 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:14:48 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,11 +121,11 @@ static char	**recreate_and_get_cmd(t_tree *node, char **envp)
 	return (cmd);
 }
 
-int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isfirst)
+int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain)
 {
 	char	**cmd;
 
-	if (!node)
+	if (!node || ismain > 3) //remove ismain > 3
 		return (close_fds(infos, 0), -9); //define clean error codes
 	cmd = recreate_and_get_cmd(node, envp); //differentiate error and at which step
 	if (!cmd)
