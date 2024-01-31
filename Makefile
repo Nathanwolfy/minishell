@@ -1,7 +1,8 @@
 NAME = minishell
 
 SRCS_MAIN_FILES = minishell.c \
-					prompt.c	\
+					prompt.c \
+					errors.c
 
 SRCS_UTILS_FILES = utils.c \
 					utils_tree.c \

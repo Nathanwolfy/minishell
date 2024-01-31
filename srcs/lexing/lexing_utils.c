@@ -6,11 +6,33 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:38:21 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/30 19:26:14 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:21:48 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+
+/*
+0 : nothing
+-1 : error in simple quotes
+-2 : error in double quotes
+-3 : error in malloc
+-4 : missing line
+*/
+
+int	print_error_lexer(int code)
+{
+	if (code == -1)
+		ft_putendl_fd("minishell: syntax error in simple quotes", STDERR_FILENO);
+	else if (code == -2)
+		ft_putendl_fd("minishell: syntax error in double quotes", STDERR_FILENO);
+	else if (code != 0)
+	{
+		print_error_from_errno();
+		errno = 0;
+	}
+	return (code);
+}
 
 int	simple_quotes_loop(char *line, int *k, int *table)
 {

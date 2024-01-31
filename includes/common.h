@@ -34,6 +34,7 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
+# include <errno.h>
 
 # define PROMPT "minishell: "
 # define NOT_FOUND (t_tree *)-1
@@ -105,7 +106,12 @@ typedef enum e_rules
 	R_HERE_END
 }	t_rules;
 
-void	prompt(char *envp[]);
+void	prompt(t_token *token, t_tree *ast, char *envp[]);
+
+/*		ERRORS		*/
+
+int		print_error_from_errno(void);
+int		print_error_lexer(int code);
 
 /*		UTILS		*/
 
@@ -113,6 +119,7 @@ int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
+char	**create_envp(void);
 char	**copy_envp(char *old_envp[]);
 
 /*		TOKENS AND LEXING		*/
