@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:58:01 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/30 19:27:39 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 12:53:37 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,7 @@ static int	tokenize(int *table, char *line, t_token **token)
 	return (res);
 }
 
-/*
-0 : nothing
--1 : error in simple quotes
--2 : error in double quotes
--3 : error in malloc
--4 : missing line
-*/
-
+#include <limits.h>
 int lexer(char *line, t_token **token)
 {
 	t_token	*end_token;

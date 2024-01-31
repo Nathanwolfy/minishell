@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:33:27 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/23 18:48:25 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:13:50 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,20 @@ char	**copy_envp(char *old_envp[])
 		l++;
 	}
 	envp[l] = NULL;
+	return (envp);
+}
+
+char	**create_envp(void) //how to increase SHELL level ?
+{
+	char	**envp;
+	char	cwd[1000];
+
+	envp = ft_calloc(4, sizeof(char *));
+	if (!envp)
+		return (NULL);
+	envp[0] = ft_strdup(getcwd(cwd, 1000));
+	envp[1] = ft_strdup("SHLVL=1");
+	envp[2] = ft_strdup("_=/usr/bin/env"); //or "_=./minishell"
+	envp[3] = NULL;
 	return (envp);
 }

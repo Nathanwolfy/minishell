@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/30 18:57:21 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:04:42 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # include <termios.h>
 # include <curses.h>
 # include <term.h>
+# include <errno.h>
 
 # define PROMPT "minishell: "
 # define NOT_FOUND (t_tree *)-1
@@ -104,11 +105,17 @@ typedef enum e_rules
 	R_HERE_END
 }	t_rules;
 
-void	prompt(char *envp[]);
+void	prompt(t_token *token, t_tree *ast, char *envp[]);
+
+/*		ERRORS		*/
+
+int		print_error_from_errno(void);
+int		print_error_lexer(int code);
 
 /*		UTILS		*/
 
 void	free_split(char **split);
+char	**create_envp(void);
 char	**copy_envp(char *old_envp[]);
 //void	print_tokens(t_token **tokens);
 void	print_table(int *table, int len);
