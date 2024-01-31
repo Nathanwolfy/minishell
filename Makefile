@@ -1,7 +1,7 @@
 NAME = minishell
 
 SRCS_MAIN_FILES = minishell.c \
-					prompt.c
+					prompt.c	\
 
 SRCS_UTILS_FILES = utils.c \
 					utils_tree.c \
@@ -23,7 +23,9 @@ SRCS_INTERPRETER_FILES = interpreter.c \
 							interpreter_redirects.c \
 							interpreter_pipes.c \
 							cmd_process.c \
-							cmd_infos_utils.c
+							cmd_infos_utils.c \
+							quote_formating.c \
+								quote_formating_helper.c \
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 

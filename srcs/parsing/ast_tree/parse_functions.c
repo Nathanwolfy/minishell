@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:33:30 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/23 10:34:42 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/31 11:10:01 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_tree	*parse_pipe_sequence_prime(t_ast_data *d, t_tree *left)
 
 	pipe_node = create_node(R_PIPE_SEQUENCE, NULL, left, NULL);
 	if (!pipe_node)
-		return(ft_treeclear(&left), NULL); // malloc error
+		return(ft_treeclear(&left), NULL);
 	consume_token(d);
 	pipe_node->right = parse_simple_cmd(d);
 	if (!pipe_node->right)
@@ -58,5 +58,5 @@ t_tree	*parse_cmd_line(t_ast_data *d)
 	ast = parse_cmd_sequence(d);
 	if (is_token_type(*(d->stream), T_END))
 		return (ast);
-	return (ast);	// maybe needs to be freed
+	return (ft_treeclear(&ast), NULL);
 }

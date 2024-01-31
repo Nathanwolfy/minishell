@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:17:22 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/23 18:30:12 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:49:12 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_tree	*parse_simple_cmd(t_ast_data *d)
 		else
 			cmd_node = create_node(R_CMD_NAME, (*(d->stream))->content, cmd_prefix, NULL);
 		if (!cmd_node)
-			return (ft_treeclear(&cmd_prefix), NULL); // malloc error
+			return (ft_treeclear(&cmd_prefix), NULL);
 		consume_token(d);
 		return (parse_cmd_suffix(d, cmd_node));
 	}
