@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/01 16:53:45 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/01 17:00:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,6 @@ int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isma
 			return (free_split(cmd), close_fds(infos, 0), 0); //exit properly in case of errors	
 	}
 	else if (ismain && fork_pid > 0)
-		return (waitpid(fork_pid, &infos->status, 0), close_fds(infos, 0), ft_putendl_fd("waitpid", STDERR_FILENO), 0); //define clean error codes
+		return (close_fds(infos, 0), waitpid(fork_pid, &infos->status, 0), wait(NULL), 0); //define clean error codes
 	return (errno); //are we sure about this ?
 }
