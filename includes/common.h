@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 18:12:53 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:50:07 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_cmd_infos
 	int		*fds_out;
 	int		fds_out_size;
 	pid_t	child_pid;
+	int		status;
 }	t_cmd_infos;
 
 typedef enum e_token_type

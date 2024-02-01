@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 18:14:48 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:53:45 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,26 @@ static char	**recreate_and_get_cmd(t_tree *node, char **envp)
 int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain)
 {
 	char	**cmd;
+	pid_t	fork_pid;
 
-	if (!node || ismain > 3) //remove ismain > 3
-		return (close_fds(infos, 0), -9); //define clean error codes
-	cmd = recreate_and_get_cmd(node, envp); //differentiate error and at which step
-	if (!cmd)
-		return (close_fds(infos, 0), -1); //exit properly child process
-	manage_fds_for_cmd(infos);
-	if (execve(cmd[0], cmd, envp) < 0)
-		return (free_split(cmd), close_fds(infos, 0), 0); //exit properly in case of errors
-	return (0);
+	if (ismain) //check also for built-ins
+		fork_pid = fork();
+	else
+		fork_pid = 0;
+	if (fork_pid < 0)
+		return (close_fds(infos, 0), -6); //define clean error codes
+	else if (fork_pid == 0)
+	{
+		if (!node)
+			return (close_fds(infos, 0), -9); //define clean error codes
+		cmd = recreate_and_get_cmd(node, envp); //differentiate error and at which step
+		if (!cmd)
+			return (close_fds(infos, 0), -1); //exit properly child process
+		manage_fds_for_cmd(infos);
+		if (execve(cmd[0], cmd, envp) < 0)
+			return (free_split(cmd), close_fds(infos, 0), 0); //exit properly in case of errors	
+	}
+	else if (ismain && fork_pid > 0)
+		return (waitpid(fork_pid, &infos->status, 0), close_fds(infos, 0), ft_putendl_fd("waitpid", STDERR_FILENO), 0); //define clean error codes
+	return (errno); //are we sure about this ?
 }
