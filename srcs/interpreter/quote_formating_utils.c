@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/02 11:21:05 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/02 12:02:03 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	get_env_len(char *old, int *flags, int *i, char **envp)
 		return (0);
 	index = get_env_index(old + *i + 1, var_len, envp);
 	if (index == -1)
+	{
+		*i += var_len + 1;
 		return (0);
+	}
 	j = 0;
 	while (envp[index][j] != '=')
 		j++;

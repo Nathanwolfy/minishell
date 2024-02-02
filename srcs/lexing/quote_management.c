@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/02 11:23:25 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/02 12:02:53 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char	*lexer_expand_var_replace_quotes(char *line, char **envp)
 		return (NULL); //error
 	lexer_set_flags(line, flags, envp);
 	new = copy_flagged(line, flags, envp);
-	for (int i = 0; line[i]; i++)
-		printf("%c : %d\n", line[i], flags[i]);
+	//for (int i = 0; line[i]; i++)
+	//	printf("%c : %d\n", line[i], flags[i]);
 	return (free(flags), new);
 }

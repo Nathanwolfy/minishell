@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:38:21 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 13:25:48 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/02 11:29:51 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	print_error_lexer(int code)
 
 int	simple_quotes_loop(char *line, int *k, int *table)
 {
-	while (line[*k] && line[*k] != '\'')
+	while (line[*k] && line[*k] != SQUOTE)
 		table[(*k)++] = 1;
-	if (line[*k] == '\'')
+	if (line[*k] == SQUOTE)
 		table[(*k)++] = 1;
 	else if (!line[*k])
 		return (-1);
@@ -49,9 +49,9 @@ int	simple_quotes_loop(char *line, int *k, int *table)
 
 int	double_quotes_loop(char *line, int *k, int *table)
 {
-	while (line[*k] && line[*k] != '\"')
+	while (line[*k] && line[*k] != DQUOTE)
 		table[(*k)++] = 1;
-	if (line[*k] == '\"')
+	if (line[*k] == DQUOTE)
 		table[(*k)++] = 1;
 	else if (!line[*k])
 		return (-2);
@@ -65,13 +65,13 @@ int	quote_sequence(int *table, char *line)
 	k = 0;
 	while (line[k])
 	{
-		if (line[k] == '\'')
+		if (line[k] == SQUOTE)
 		{
 			table[k++] = 1;
 			if (simple_quotes_loop(line, &k, table) < 0)
 				return (-1);
 		}
-		else if (line[k] == '\"')
+		else if (line[k] == DQUOTE)
 		{
 			table[k++] = 1;
 			if (double_quotes_loop(line, &k, table) < 0)
