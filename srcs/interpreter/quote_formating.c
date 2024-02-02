@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/31 15:46:07 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/02 10:58:14 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	set_flags(char *old, int *flags, char **envp)
 	}
 }
 
-static int	get_flagged_len(char *old, int *flags)
+int	get_flagged_len(char *old, int *flags)
 {
 	int	i;
 	int	len;
@@ -71,7 +71,7 @@ static int	get_flagged_len(char *old, int *flags)
 	return (len);
 }
 
-static char	*copy_flagged(char *old, int *flags, char **envp)
+char	*copy_flagged(char *old, int *flags, char **envp)
 {
 	int		len;
 	int		i;
