@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_formating_helper.c                           :+:      :+:    :+:   */
+/*   quote_formating_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/31 15:44:39 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/02 12:02:03 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-static int	get_var_len(char *old, int *i)
+int	get_var_len(char *old, int *i)
 {
 	int	cursor;
 
 	cursor = *i + 1;
 	if (ft_isdigit(old[cursor]))
 	{
-		while (ft_isdigit(old[cursor]))
-			cursor++;
-		*i = cursor - 1;
+		*i = cursor + 1;
 		return (-1);;
 	}
 	while (ft_isalpha(old[cursor]) || ft_isdigit(old[cursor]) || old[cursor] == '_')
@@ -29,7 +27,7 @@ static int	get_var_len(char *old, int *i)
 	return (cursor - *i - 1);
 }
 
-static int	get_env_index(char *var, int len, char **envp)
+int	get_env_index(char *var, int len, char **envp)
 {
 	int	index;
 
@@ -60,7 +58,10 @@ int	get_env_len(char *old, int *flags, int *i, char **envp)
 		return (0);
 	index = get_env_index(old + *i + 1, var_len, envp);
 	if (index == -1)
+	{
+		*i += var_len + 1;
 		return (0);
+	}
 	j = 0;
 	while (envp[index][j] != '=')
 		j++;
@@ -94,7 +95,6 @@ void	copy_env_var(char *old, char *new, int *i, char **envp)
 
 void	format_dquote_loop(char *old, int *flags, int *i, char **envp)
 {
-	(void)envp;
 	flags[*i] = 0;
 	while (old[++(*i)])
 	{

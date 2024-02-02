@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/01 16:50:07 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/02 11:07:11 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 
 # define PROMPT "minishell: "
 # define NOT_FOUND (t_tree *)-1
+# define DQUOTE (char)-1000
+# define SQUOTE (char)-1001
 
 typedef struct s_token
 {
@@ -126,6 +128,7 @@ char	**copy_envp(char *old_envp[]);
 /*		TOKENS AND LEXING		*/
 
 int		lexer(char *line, t_token **token);
+char	*lexer_expand_var_replace_quotes(char *line, char **envp);
 
 int		quote_sequence(int *table, char *line);
 int		operator_sequence(int *table, char *line);
@@ -185,11 +188,15 @@ int		add_io_file_to(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_from(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
 
-/*		INTERPRETER - QUOTE FORMATING		*/
+/*		QUOTE FORMATING		*/
 
 void	format_dquote_loop(char *old, int *flags, int *i, char **envp);
 void	copy_env_var(char *old, char *new, int *i, char **envp);
 int		get_env_len(char *old, int *flags, int *i, char **envp);
+int		get_var_len(char *old, int *i);
+int		get_env_index(char *var, int len, char **envp);
 char	*format_quote(char *old, char **envp);
+char	*copy_flagged(char *old, int *flags, char **envp);
+int		get_flagged_len(char *old, int *flags);
 
 #endif

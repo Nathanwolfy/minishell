@@ -9,8 +9,9 @@ SRCS_UTILS_FILES = utils.c \
 					utils_envp.c
 
 SRCS_LEXING_FILES = lexing.c \
-						lexing_utils.c \
-						ft_token.c
+						lexing_utils.c	\
+						ft_token.c		\
+						quote_management.c
 
 SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/ast_builder.c			\
@@ -48,7 +49,7 @@ OBJS_PARSING = $(SRCS_PARSING:.c=.o)
 
 OBJS_INTERPRETER = $(SRCS_INTERPRETER:.c=.o)
 
-OBJS = $(OBJS_MAIN) $(OBJS_UTILS) $(OBJS_LEXING) $(OBJS_PARSING) $(OBJS_INTERPRETER) 
+OBJS = $(OBJS_MAIN) $(OBJS_UTILS) $(OBJS_LEXING) $(OBJS_PARSING) $(OBJS_INTERPRETER)
 
 ###
 
@@ -81,7 +82,7 @@ INCLUDES = ./includes
 ###
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@ 
+	@$(CC) $(CFLAGS) -I$(INCLUDES) -c $< -o $@
 
 all: $(NAME)
 
