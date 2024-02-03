@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/02 16:44:08 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/02 18:20:20 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
 /*		INTERPRETER - BUILTINS		*/
 
 int		builtin_export(t_tree *node, char ***envp);
-int		builtin_env(char ***envp);
+void	builtin_env(char **envp);
 
 /*		QUOTE FORMATING		*/
 

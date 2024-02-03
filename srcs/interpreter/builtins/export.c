@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/02 15:49:00 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/03 10:24:10 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,26 +75,63 @@ static char	**append_envp(char *old_envp[], char *content)
 	return (envp);
 }
 
-static int	print_declare_envp(char **envp)
+static int	env_cmp(char *s1, char *s2)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (envp[i])
+	while (s1[i] && s1[i] != '=' && s1[i] == s2[i])
+		i++;
+	return ((int)s1[i] - (int)s2[i]);
+}
+
+static void	sort_env(char **env)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	if (!env)
+		return ;
+	while (env[i + 1])
+	{
+		if (env_cmp(env[i], env[i + 1]) > 0)
+		{
+			tmp = env[i + 1];
+			env[i + 1] = env[i];
+			env[i] = tmp;
+			i = 0;
+		}
+		else
+			i++;
+	}
+}
+
+static int	print_declare_envp(char **envp)
+{
+	char	**envp_cpy;
+	int		i;
+	int		j;
+
+	i = 0;
+	envp_cpy = copy_envp(envp);
+	if (!envp_cpy)
+		return (-1);
+	sort_env(envp_cpy);
+	while (envp_cpy[i])
 	{
 		write(1, "declare -x ", 11);
 		j = -1;
-		while (envp[i][++j])
+		while (envp_cpy[i][++j])
 		{
-			write(1, &envp[i][j], 1);
-			if (envp[i][j] == '=')
+			write(1, &envp_cpy[i][j], 1);
+			if (envp_cpy[i][j] == '=')
 				write(1, "\"", 1);
 		}
 		write(1, "\"\n", 2);
 		i++;
 	}
-	return (0);
+	return (free_split(envp_cpy), 0);
 }
 
 static int	check_format(char *content)
@@ -102,12 +139,21 @@ static int	check_format(char *content)
 	int	i;
 
 	i = 0;
-	if ((!content || !content[i]) && printf("minishell: export: `': not a valid identifier\n"))
+	if (!content || (!ft_isalpha(content[i]) && content[i] != '_'))
+	{
+		printf("minishell: export: `%s': not a valid identifier\n", content);
 		return (-1);
+	}
 	while (content[i])
 	{
 		if (content[i] == '=')
 			return (0);
+		if (!ft_isalpha(content[i]) && !ft_isdigit(content[i])
+			&& content[i] != '_')
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", content);
+			return (-1);
+		}
 		i++;
 	}
 	return (-1);
@@ -136,3 +182,18 @@ int	builtin_export(t_tree *node, char ***envp)
 		return (-1);
 	return (0);
 }
+
+/*int	main(int argc, char **argv, char **env)
+{
+	t_tree	*node;
+	t_tree	*node1;
+
+	(void)argc;
+	node1 = create_node(T_WORD, argv[1], NULL, NULL);
+	node = create_node(T_WORD, "export", NULL, node1);
+//	builtin_env(env);
+//	printf("SADASDADASDASD\n");
+	builtin_export(node, &env);
+//	printf("SDADSDASDASDASD\n");
+//	builtin_env(env);
+}*/
