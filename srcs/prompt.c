@@ -6,11 +6,25 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/04 12:42:33 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/04 12:46:51 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+
+static void	free_lines(char *line, char *old_line)
+{
+	if (line)
+	{
+		free(line);
+		line = NULL;
+	}
+	if (old_line)
+	{
+		free(old_line);
+		old_line = NULL;
+	}
+}
 
 void	prompt(t_token *token, t_tree *ast, char *envp[])
 {
@@ -33,9 +47,9 @@ void	prompt(t_token *token, t_tree *ast, char *envp[])
 			ft_tokenclear(&token);
 			ft_treeclear(&ast);
 		}
-		add_history(old_line);
-		free(line); //what if not created
-		free(old_line);
+		if (old_line)
+			add_history(old_line);
+		free_lines(line, old_line);
 		running = 1;
 	}
 }

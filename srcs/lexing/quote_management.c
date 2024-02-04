@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/04 12:41:29 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/04 12:45:11 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char	*lexer_expand_var_replace_quotes(char *line, char **envp)
 	char	*copy;
 	char	*new;
 
+	if (!line)
+		return (NULL);
 	flags = ft_calloc(ft_strlen(line), sizeof(int));
 	if (!flags)
 		return (NULL); //error
