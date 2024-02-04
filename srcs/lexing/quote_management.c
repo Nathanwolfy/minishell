@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_management.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/02 13:32:59 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/04 12:41:29 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,18 @@ static void	lexer_set_flags(char *line, int *flags, char **envp)
 char	*lexer_expand_var_replace_quotes(char *line, char **envp)
 {
 	int		*flags;
+	char	*copy;
 	char	*new;
 
 	flags = ft_calloc(ft_strlen(line), sizeof(int));
 	if (!flags)
 		return (NULL); //error
-	lexer_set_flags(line, flags, envp);
-	new = copy_flagged(line, flags, envp);
+	copy = ft_strdup(line);
+	if (!copy)
+		return (free(flags), NULL);
+	lexer_set_flags(copy, flags, envp);
+	new = copy_flagged(copy, flags, envp);
 	//for (int i = 0; line[i]; i++)
 	//	printf("%c : %d\n", line[i], flags[i]);
-	return (free(flags), free(line), new);
+	return (free(flags), free(copy), new);
 }
