@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/02 14:22:34 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 17:09:23 by ehickman         ###   ########.fr       */
+/*   Created: 2024/02/06 14:05:33 by ehickman          #+#    #+#             */
+/*   Updated: 2024/02/06 14:15:33 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	builtin_env(char **env)
+int	builtin_pwd(void)
 {
-	int	i;
+	char	buffer[PATH_MAX];
+	size_t	size;
 
-	i = 0;
-	while (env[i])
-	{
-		ft_putendl_fd(env[i], 1);
-		i++;
-	}
+	size = PATH_MAX;
+	if (getcwd(buffer, size) == NULL)
+		return (-1);
+	printf("%s\n", buffer);
 	return (0);
 }

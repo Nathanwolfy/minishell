@@ -6,23 +6,11 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/03 10:24:10 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:57:31 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-static int	count_split(char *old_envp[])
-{
-	int	k;
-
-	if (!old_envp)
-		return (0);
-	k = 0;
-	while (old_envp[k])
-		k++;
-	return (k);
-}
 
 static int	modify_env_value(char **envp, char *content)
 {
@@ -30,13 +18,13 @@ static int	modify_env_value(char **envp, char *content)
 	int		var_name_len;
 	int		i;
 
-	var_name_len = 0;
-	while (content[var_name_len] && content[var_name_len] != '=')
-		var_name_len++;
+	var_name_len = get_var_name_len(content);
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], content, var_name_len) == 0)
+		if ((int)ft_strlen(envp[i]) >= var_name_len
+			&& envp[i][var_name_len] == '='
+			&& ft_strncmp(envp[i], content, var_name_len) == 0)
 		{
 			new = ft_strdup(content);
 			if (!new)
@@ -56,7 +44,7 @@ static char	**append_envp(char *old_envp[], char *content)
 	int		ct;
 	int		l;
 
-	ct = count_split(old_envp);
+	ct = get_double_arr_len(old_envp);
 	envp = ft_calloc(ct + 2, sizeof(char *));
 	if (!envp)
 		return (NULL);
@@ -134,66 +122,43 @@ static int	print_declare_envp(char **envp)
 	return (free_split(envp_cpy), 0);
 }
 
-static int	check_format(char *content)
+int	builtin_export(char **cmd, char ***envp)
 {
-	int	i;
-
-	i = 0;
-	if (!content || (!ft_isalpha(content[i]) && content[i] != '_'))
-	{
-		printf("minishell: export: `%s': not a valid identifier\n", content);
-		return (-1);
-	}
-	while (content[i])
-	{
-		if (content[i] == '=')
-			return (0);
-		if (!ft_isalpha(content[i]) && !ft_isdigit(content[i])
-			&& content[i] != '_')
-		{
-			printf("minishell: export: `%s': not a valid identifier\n", content);
-			return (-1);
-		}
-		i++;
-	}
-	return (-1);
-}
-
-int	builtin_export(t_tree *node, char ***envp)
-{
-	char	*formated;
+	int		i;
 	int		r_val;
 
-	if (!node || !envp || !*envp)
+	if (!cmd || !envp || !*envp)
 		return (-1);
-	if (!node->right)
+	if (!cmd[0])
 		return (print_declare_envp(*envp));
-	formated = format_quote(node->right->content, *envp);
-	if (!formated)
-		return (-1);
-	if (check_format(node->right->content) == -1) // if there is no = just return
-		return (0);
-	r_val = modify_env_value(*envp, node->right->content);
-	if (r_val == -1)
-		return (-1);
-	else if (r_val == 1)
-		*envp = append_envp(*envp, node->right->content);
-	if (!*envp)
-		return (-1);
+	i = 0;
+	while (cmd[i])
+	{
+		if (check_env_var_format(cmd[i], "export") == -1) // if there is no = just return
+			return (0);
+		r_val = modify_env_value(*envp, cmd[i]);
+		if (r_val == -1)
+			return (-1);
+		else if (r_val == 1)
+			*envp = append_envp(*envp, cmd[i]);
+		if (!*envp)
+			return (-1);
+		i++;
+	}
 	return (0);
 }
 
 /*int	main(int argc, char **argv, char **env)
 {
-	t_tree	*node;
-	t_tree	*node1;
+	char **cmd;
 
-	(void)argc;
-	node1 = create_node(T_WORD, argv[1], NULL, NULL);
-	node = create_node(T_WORD, "export", NULL, node1);
-//	builtin_env(env);
-//	printf("SADASDADASDASD\n");
-	builtin_export(node, &env);
-//	printf("SDADSDASDASDASD\n");
-//	builtin_env(env);
+	cmd = ft_calloc(5, sizeof(char *));
+	cmd[0] = NULL;
+	for (int i = 1; i < argc; i++)
+		cmd[i - 1] = argv[i];
+	builtin_env(env);
+	printf("SADASDADASDASD\n");
+	builtin_export(cmd, &env);
+	printf("SDADSDASDASDASD\n");
+	builtin_env(env);
 }*/

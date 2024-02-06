@@ -26,6 +26,7 @@
 # include <sys/time.h>
 # include <sys/resource.h>
 # include <sys/wait.h>
+# include <sys/param.h>
 # include <signal.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -170,13 +171,6 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 int		interpreter(t_tree **ast, char *envp[]);
 int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain);
 
-/*		INTERPRETER - BUILT-INS		*/
-
-int		exec_builtin(int is_builtin, t_tree *node, char *envp[]);
-int		check_builtins(char *cmd);
-int		builtin_export(t_tree *node, char ***envp);
-int		builtin_env(char **envp);
-
 /*		INTERPRETER - PIPES		*/
 
 int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int ismain);
@@ -195,6 +189,19 @@ int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int ism
 int		add_io_file_to(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_from(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
+
+/*		INTERPRETER - BUILTINS		*/
+
+int		exec_builtin(int is_builtin, t_tree *node, char *envp[]);
+int		check_builtins(char *cmd);
+int		check_env_var_format(char *content, char *cmd);
+int		get_var_name_len(char *var);
+int		get_double_arr_len(char **var);
+int		builtin_export(char **cmd, char ***envp);
+void	builtin_env(char **envp);
+int		builtin_unset(char **cmd, char ***envp);
+int		builtin_echo(char **cmd);
+int		builtin_pwd(void);
 
 /*		QUOTE FORMATING		*/
 

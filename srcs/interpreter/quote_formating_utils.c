@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/02 12:02:03 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:07:10 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,11 @@ void	copy_env_var(char *old, char *new, int *i, char **envp)
 	while (new[new_i] != 0)
 		new_i++;
 	var_len = get_var_len(old, i);
+	if (!var_len)
+		return ;
 	index = get_env_index(old + *i + 1, var_len, envp);
+	if (index == -1)
+		return ;
 	env_i = 0;
 	while (envp[index][env_i] != '=')
 		env_i++;

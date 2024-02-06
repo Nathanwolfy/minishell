@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/02 10:58:14 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:41:48 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ char	*copy_flagged(char *old, int *flags, char **envp)
 	char	*new;
 
 	len = get_flagged_len(old, flags);
+	if (len == 0)
+		return ((char *)-1);
 	new = ft_calloc(len + 1, sizeof(char));
 	if (!new)
 		return (NULL);
@@ -113,31 +115,3 @@ char	*format_quote(char *old, char **envp)
 	new = copy_flagged(old, flags, envp);
 	return (free(flags), new);
 }
-
-/*int	main(int argc, char **argv, char **env)
-{
-	(void)argc;
-	(void)argv;
-	printf("|  BASIC QUOTE TESTS  |\n");
-	printf("\"\'\" => %s\n", format_quote("\"\'\"", env));
-	printf("\"test1\" => %s\n", format_quote("\"test1\"", env));
-	printf("\"\'test2\" => %s\n", format_quote("\"\'test2\"", env));
-	printf("\"\'test3\'\" => %s\n", format_quote("\"\'test3\'\"", env));
-	printf("\'\"test4\' => %s\n", format_quote("\'\"test4\'", env));
-	printf("\'\"\"tes\'\'t5\' => %s\n", format_quote("\'\"\"tes\'\'t5\'", env));
-	printf("mini\'test6\' => %s\n", format_quote("mini\'test6\'", env));
-	printf("\"mini\'test7\'\" => %s\n", format_quote("\"mini\'test7\'\"", env));
-	printf("\"mini\'test8\" => %s\n", format_quote("\"mini\'test8\"", env));
-	printf("|  ENV VAR TESTS  |\n");
-	printf("\"$OUI test8\" => %s\n", format_quote("\"$OUI test8\"", env));
-	printf("\"$OUItest8\" => %s\n", format_quote("\"$OUItest8\"", env));
-	printf("\"$1OUI test9\" => %s\n", format_quote("\"$1OUI test9\"", env));
-	printf("\"mini\'\'$ test10\" => %s\n", format_quote("\"mini\'\'$ test10\"", env));
-	printf("$ (avec espace) => %s\n", format_quote("$ (avec espace)", env));
-	printf("$$ => %s\n", format_quote("$$", env));
-	printf("$OUI => %s\n", format_quote("$OUI", env));
-	printf("$$OUI => %s\n", format_quote("$$OUI", env));
-	printf("$$$OUI => %s\n", format_quote("$$$OUI", env));
-	printf("\'$OUI\' => %s\n", format_quote("\'$OUI\'", env));
-	printf("\"$OUI\" => %s\n", format_quote("\"$OUI\"", env));
-}*/

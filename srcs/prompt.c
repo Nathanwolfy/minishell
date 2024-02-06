@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/04 12:46:51 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:40:59 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	prompt(t_token *token, t_tree *ast, char *envp[])
 	{
 		old_line = readline(PROMPT);
 		line = lexer_expand_var_replace_quotes(old_line, envp);
+		if (line == (char *)-1)
+			continue ;
 		running = lexer(line, &token);
 		if (print_error_lexer(running) < 0)
 			ft_tokenclear(&token);
