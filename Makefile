@@ -30,7 +30,9 @@ SRCS_INTERPRETER_FILES = interpreter.c \
 							quote_formating_utils.c
 
 SRCS_BUILTINS_FILES = export.c	\
-						env.c
+						env.c	\
+						builtins_utils.c	\
+						unset.c				\
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 

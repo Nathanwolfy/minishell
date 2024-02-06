@@ -6,23 +6,11 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 09:37:00 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 11:26:05 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-static int	count_split(char *old_envp[])
-{
-	int	k;
-
-	if (!old_envp)
-		return (0);
-	k = 0;
-	while (old_envp[k])
-		k++;
-	return (k);
-}
 
 static int	modify_env_value(char **envp, char *content)
 {
@@ -30,13 +18,13 @@ static int	modify_env_value(char **envp, char *content)
 	int		var_name_len;
 	int		i;
 
-	var_name_len = 0;
-	while (content[var_name_len] && content[var_name_len] != '=')
-		var_name_len++;
+	var_name_len = get_var_name_len(content);
 	i = 0;
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], content, var_name_len) == 0)
+		if ((int)ft_strlen(envp[i]) >= var_name_len
+			&& envp[i][var_name_len] == '='
+			&& ft_strncmp(envp[i], content, var_name_len) == 0)
 		{
 			new = ft_strdup(content);
 			if (!new)
@@ -56,7 +44,7 @@ static char	**append_envp(char *old_envp[], char *content)
 	int		ct;
 	int		l;
 
-	ct = count_split(old_envp);
+	ct = get_double_arr_len(old_envp);
 	envp = ft_calloc(ct + 2, sizeof(char *));
 	if (!envp)
 		return (NULL);
@@ -134,31 +122,6 @@ static int	print_declare_envp(char **envp)
 	return (free_split(envp_cpy), 0);
 }
 
-static int	check_format(char *content)
-{
-	int	i;
-
-	i = 0;
-	if (!content || (!ft_isalpha(content[i]) && content[i] != '_'))
-	{
-		printf("minishell: export: `%s': not a valid identifier\n", content);
-		return (-1);
-	}
-	while (content[i])
-	{
-		if (content[i] == '=')
-			return (0);
-		if (!ft_isalpha(content[i]) && !ft_isdigit(content[i])
-			&& content[i] != '_')
-		{
-			printf("minishell: export: `%s': not a valid identifier\n", content);
-			return (-1);
-		}
-		i++;
-	}
-	return (-1);
-}
-
 int	builtin_export(char **cmd, char ***envp)
 {
 	int		i;
@@ -177,7 +140,7 @@ int	builtin_export(char **cmd, char ***envp)
 			return (-1);
 		free(cmd[i]);
 		cmd[i] = formated;
-		if (check_format(cmd[i]) == -1) // if there is no = just return
+		if (check_env_var_format(cmd[i], "export") == -1) // if there is no = just return
 			return (0);
 		r_val = modify_env_value(*envp, cmd[i]);
 		if (r_val == -1)
