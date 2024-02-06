@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 11:26:05 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:47:33 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,6 @@ int	builtin_export(char **cmd, char ***envp)
 	i = 0;
 	while (cmd[i])
 	{
-		formated = format_quote(cmd[i], *envp);
-		if (!formated)
-			return (-1);
-		free(cmd[i]);
-		cmd[i] = formated;
 		if (check_env_var_format(cmd[i], "export") == -1) // if there is no = just return
 			return (0);
 		r_val = modify_env_value(*envp, cmd[i]);

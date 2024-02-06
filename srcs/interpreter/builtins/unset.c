@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:04:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 12:18:50 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:47:55 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static char	**remove_var(char *var, char **envp)
 	return (dup_envp(envp, index_to_skip));
 }
 
-static int	format_cmd(char **cmd, char **envp)
+/*static int	format_cmd(char **cmd, char **envp)
 {
 	char	*formated;
 	int		i;
@@ -83,7 +83,7 @@ static int	format_cmd(char **cmd, char **envp)
 		i++;
 	}
 	return (0);
-}
+}*/
 
 int	builtin_unset(char **cmd, char ***envp)
 {
@@ -92,8 +92,6 @@ int	builtin_unset(char **cmd, char ***envp)
 	i = 0;
 	if (!cmd || !*cmd || !envp || !*envp)
 		return (0);
-	if (format_cmd(cmd, *envp) == -1)
-		return (-1);
 	while (cmd[i])
 	{
 		if (check_env_var_format(cmd[i], "unset") == -1)
