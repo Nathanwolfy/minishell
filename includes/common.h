@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 21:19:22 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 21:31:40 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
 int		return_status(t_cmd_infos *infos, int res);
-char	**create_envp(void);
+char	**check_mandatory_envp(char *copied_envp[]);
 char	**copy_envp(char *old_envp[]);
 
 /*		TOKENS AND LEXING		*/
