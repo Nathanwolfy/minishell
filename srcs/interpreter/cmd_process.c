@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 18:03:24 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:56:59 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static char	*find_path_var(char *envp[])
 	i = 0;
 	while (envp[i])
 	{
-		if (!ft_strncmp("PATH", envp[i], 4)) //better handle ?
+		if (!ft_strncmp("PATH=", envp[i], 5))
 			return (&envp[i][5]);
 		i++;
 	}
@@ -78,7 +78,7 @@ static char	**check_get_cmd(char **cmdin, char **envp)
 		return (NULL);
 	if (access(tmp, F_OK | X_OK) == 0)
 		return (free(cmdin[0]), cmdin[0] = tmp, cmdin);
-	return (free_split(NULL), free(tmp), NULL);
+	return (free_split(cmdin), free(tmp), NULL);
 }
 
 static int	cmd_split_count(t_tree *node)
@@ -143,10 +143,10 @@ int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isma
 			return (close_fds(infos, 0), -9); //define clean error codes
 		cmd = recreate_and_get_cmd(node, envp, 1); //differentiate error and at which step
 		if (!cmd)
-			return (close_fds(infos, 0), -1); //exit properly child process
+			return (close_fds(infos, 0), exit(CMD_NOT_FOUND), CMD_NOT_FOUND); //exit properly child process
 		manage_fds_for_cmd(infos);
 		if (execve(cmd[0], cmd, envp) < 0)
-			return (free_split(cmd), close_fds(infos, 0), 0); //exit properly in case of errors	
+			return (free_split(cmd), close_fds(infos, 0), exit(1), 1); //exit properly in case of errors	
 	}
 	else if (ismain && fork_pid > 0)
 		return (close_fds(infos, 0), waitpid(fork_pid, &infos->status, 0), wait(NULL), 0); //define clean error codes

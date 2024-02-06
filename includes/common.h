@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 17:53:55 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 21:19:22 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define NOT_FOUND (t_tree *)-1
 # define DQUOTE (char)-1000
 # define SQUOTE (char)-1001
+# define CMD_NOT_FOUND 127
 
 typedef struct s_token
 {
@@ -114,7 +115,7 @@ void	prompt(t_token *token, t_tree *ast, char *envp[]);
 /*		ERRORS		*/
 
 int		print_error_from_errno(void);
-int		print_error_lexer(int code);
+int		print_error_lexer(int code, int *exit_status);
 int		print_error_interpreter(int code);
 
 /*		UTILS		*/
@@ -123,6 +124,7 @@ int		ft_isspace(int c);
 int		ft_is_sq(int c);
 int		ft_is_dq(int c);
 void	free_split(char **split);
+int		return_status(t_cmd_infos *infos, int res);
 char	**create_envp(void);
 char	**copy_envp(char *old_envp[]);
 

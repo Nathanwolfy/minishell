@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 18:13:08 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:57:49 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain)
 
 	res = -2;
 	if (!node)
-		return (-1);
+		return (0);
 	if (node->type == R_CMD_NAME)
 		res = launch_cmd_sequence(node, infos, envp, ismain);
 	else if (node->type == R_IO_FILE_TO)
@@ -62,6 +62,8 @@ int	interpreter(t_tree **ast, char *envp[])
 			return (-1);
 		reset_cmd_infos(infos);
 		res = execute_job(*ast, infos, envp, 1);
+		res = return_status(infos, res);
+		free(infos);
 	}
 	else
 		res = set_up_pipes(*ast, envp, -1, 1);

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/02 11:42:28 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:34:24 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	free_split(char **split)
 	int	i;
 
 	i = 0;
+	if (!split)
+		return ;
 	while (split[i] != 0)
 		free(split[i++]);
 	free(split);
@@ -48,4 +50,12 @@ void	print_table(int *table, int len)
 		k++;
 	}
 	ft_putstr_fd("\n", STDERR_FILENO);
+}
+
+int	return_status(t_cmd_infos *infos, int res)
+{
+	if (WIFEXITED(infos->status))
+		return (WEXITSTATUS(infos->status));
+	else
+		return (res);
 }

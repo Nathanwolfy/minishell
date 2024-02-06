@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:49:19 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/25 17:30:11 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 19:54:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	reset_cmd_infos(t_cmd_infos *infos)
 		free(infos->fds_out);
 	infos->fds_out = NULL;
 	infos->fds_out_size = 0;
+	infos->status = 0;
 }
 
 static void	copy_fds(int *fds_new, int *fds_old, int size)
