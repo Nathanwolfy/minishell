@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 12:01:51 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:59:08 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,6 +196,7 @@ int		get_double_arr_len(char **var);
 int		builtin_export(char **cmd, char ***envp);
 void	builtin_env(char **envp);
 int		builtin_unset(char **cmd, char ***envp);
+int		builtin_echo(char **cmd);
 
 /*		QUOTE FORMATING		*/
 

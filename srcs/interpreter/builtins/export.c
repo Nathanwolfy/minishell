@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 13:47:33 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:57:31 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ static int	print_declare_envp(char **envp)
 int	builtin_export(char **cmd, char ***envp)
 {
 	int		i;
-	char	*formated;
 	int		r_val;
 
 	if (!cmd || !envp || !*envp)
