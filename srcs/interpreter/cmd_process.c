@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/01 17:00:39 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:18:44 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	cmd_split_count(t_tree *node)
 	return (ct);
 }
 
-static char	**recreate_and_get_cmd(t_tree *node, char **envp)
+char	**recreate_and_get_cmd(t_tree *node, char **envp, int do_check_get_cmd)
 {
 	int		ct;
 	int		j;
@@ -117,7 +117,8 @@ static char	**recreate_and_get_cmd(t_tree *node, char **envp)
 		it = it->right;
 	}
 	cmd[j] = NULL;
-	cmd = check_get_cmd(cmd, envp);
+	if (do_check_get_cmd)
+		cmd = check_get_cmd(cmd, envp);
 	return (cmd);
 }
 
@@ -125,18 +126,22 @@ int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isma
 {
 	char	**cmd;
 	pid_t	fork_pid;
+	int		is_builtin;
 
-	if (ismain) //check also for built-ins
+	is_builtin = check_builtins(node->content);
+	if (ismain && is_builtin < 0) //check also for built-ins
 		fork_pid = fork();
 	else
 		fork_pid = 0;
 	if (fork_pid < 0)
 		return (close_fds(infos, 0), -6); //define clean error codes
+	else if (is_builtin >= 0)
+		return (close_fds(infos, 0), exec_builtin(is_builtin, node, envp));
 	else if (fork_pid == 0)
 	{
 		if (!node)
 			return (close_fds(infos, 0), -9); //define clean error codes
-		cmd = recreate_and_get_cmd(node, envp); //differentiate error and at which step
+		cmd = recreate_and_get_cmd(node, envp, 1); //differentiate error and at which step
 		if (!cmd)
 			return (close_fds(infos, 0), -1); //exit properly child process
 		manage_fds_for_cmd(infos);

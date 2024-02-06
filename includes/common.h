@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/02 18:20:20 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:28:40 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,12 +170,20 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 int		interpreter(t_tree **ast, char *envp[]);
 int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain);
 
+/*		INTERPRETER - BUILT-INS		*/
+
+int		exec_builtin(int is_builtin, t_tree *node, char *envp[]);
+int		check_builtins(char *cmd);
+int		builtin_export(t_tree *node, char ***envp);
+int		builtin_env(char **envp);
+
 /*		INTERPRETER - PIPES		*/
 
 int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int ismain);
 
 /*		INTERPRETER - UTILS		*/
 
+char	**recreate_and_get_cmd(t_tree *node, char **envp, int do_check_get_cmd);
 void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
@@ -187,11 +195,6 @@ int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int ism
 int		add_io_file_to(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_from(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
-
-/*		INTERPRETER - BUILTINS		*/
-
-int		builtin_export(t_tree *node, char ***envp);
-void	builtin_env(char **envp);
 
 /*		QUOTE FORMATING		*/
 
