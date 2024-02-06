@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/04 12:45:11 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 16:20:58 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,5 @@ char	*lexer_expand_var_replace_quotes(char *line, char **envp)
 		return (free(flags), NULL);
 	lexer_set_flags(copy, flags, envp);
 	new = copy_flagged(copy, flags, envp);
-	//for (int i = 0; line[i]; i++)
-	//	printf("%c : %d\n", line[i], flags[i]);
 	return (free(flags), free(copy), new);
 }
