@@ -30,6 +30,7 @@ SRCS_INTERPRETER_FILES = interpreter.c \
 							quote_formating_utils.c
 
 SRCS_BUILTINS_FILES = export.c	\
+						manage_builtins.c	\
 						env.c	\
 						builtins_utils.c	\
 						unset.c				\
