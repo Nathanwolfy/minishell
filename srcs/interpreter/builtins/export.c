@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/03 10:24:10 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 09:37:00 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,41 +159,49 @@ static int	check_format(char *content)
 	return (-1);
 }
 
-int	builtin_export(t_tree *node, char ***envp)
+int	builtin_export(char **cmd, char ***envp)
 {
+	int		i;
 	char	*formated;
 	int		r_val;
 
-	if (!node || !envp || !*envp)
+	if (!cmd || !envp || !*envp)
 		return (-1);
-	if (!node->right)
+	if (!cmd[0])
 		return (print_declare_envp(*envp));
-	formated = format_quote(node->right->content, *envp);
-	if (!formated)
-		return (-1);
-	if (check_format(node->right->content) == -1) // if there is no = just return
-		return (0);
-	r_val = modify_env_value(*envp, node->right->content);
-	if (r_val == -1)
-		return (-1);
-	else if (r_val == 1)
-		*envp = append_envp(*envp, node->right->content);
-	if (!*envp)
-		return (-1);
+	i = 0;
+	while (cmd[i])
+	{
+		formated = format_quote(cmd[i], *envp);
+		if (!formated)
+			return (-1);
+		free(cmd[i]);
+		cmd[i] = formated;
+		if (check_format(cmd[i]) == -1) // if there is no = just return
+			return (0);
+		r_val = modify_env_value(*envp, cmd[i]);
+		if (r_val == -1)
+			return (-1);
+		else if (r_val == 1)
+			*envp = append_envp(*envp, cmd[i]);
+		if (!*envp)
+			return (-1);
+		i++;
+	}
 	return (0);
 }
 
 /*int	main(int argc, char **argv, char **env)
 {
-	t_tree	*node;
-	t_tree	*node1;
+	char **cmd;
 
-	(void)argc;
-	node1 = create_node(T_WORD, argv[1], NULL, NULL);
-	node = create_node(T_WORD, "export", NULL, node1);
-//	builtin_env(env);
-//	printf("SADASDADASDASD\n");
-	builtin_export(node, &env);
-//	printf("SDADSDASDASDASD\n");
-//	builtin_env(env);
+	cmd = ft_calloc(5, sizeof(char *));
+	cmd[0] = NULL;
+	for (int i = 1; i < argc; i++)
+		cmd[i - 1] = argv[i];
+	builtin_env(env);
+	printf("SADASDADASDASD\n");
+	builtin_export(cmd, &env);
+	printf("SDADSDASDASDASD\n");
+	builtin_env(env);
 }*/
