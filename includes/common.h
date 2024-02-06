@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 13:59:08 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 14:14:48 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <sys/time.h>
 # include <sys/resource.h>
 # include <sys/wait.h>
+# include <sys/param.h>
 # include <signal.h>
 # include <sys/stat.h>
 # include <dirent.h>
@@ -197,6 +198,7 @@ int		builtin_export(char **cmd, char ***envp);
 void	builtin_env(char **envp);
 int		builtin_unset(char **cmd, char ***envp);
 int		builtin_echo(char **cmd);
+int		builtin_pwd(void);
 
 /*		QUOTE FORMATING		*/
 
