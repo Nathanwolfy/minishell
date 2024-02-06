@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 14:05:33 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 14:15:33 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:51:35 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	builtin_pwd(void)
+int	builtin_pwd(int fd)
 {
 	char	buffer[PATH_MAX];
 	size_t	size;
@@ -20,6 +20,6 @@ int	builtin_pwd(void)
 	size = PATH_MAX;
 	if (getcwd(buffer, size) == NULL)
 		return (-1);
-	printf("%s\n", buffer);
+	ft_putendl_fd(buffer, fd);
 	return (0);
 }

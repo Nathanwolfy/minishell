@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/05 16:18:44 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 18:03:24 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isma
 	if (fork_pid < 0)
 		return (close_fds(infos, 0), -6); //define clean error codes
 	else if (is_builtin >= 0)
-		return (close_fds(infos, 0), exec_builtin(is_builtin, node, envp));
+		return (exec_builtin(is_builtin, node, envp, infos));
 	else if (fork_pid == 0)
 	{
 		if (!node)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 13:57:31 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/06 17:51:11 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static void	sort_env(char **env)
 	}
 }
 
-static int	print_declare_envp(char **envp)
+static int	print_declare_envp(char **envp, int fd)
 {
 	char	**envp_cpy;
 	int		i;
@@ -108,21 +108,21 @@ static int	print_declare_envp(char **envp)
 	sort_env(envp_cpy);
 	while (envp_cpy[i])
 	{
-		write(1, "declare -x ", 11);
+		ft_putstr_fd("declare -x ", fd);
 		j = -1;
 		while (envp_cpy[i][++j])
 		{
-			write(1, &envp_cpy[i][j], 1);
+			ft_putchar_fd(envp_cpy[i][j], fd);
 			if (envp_cpy[i][j] == '=')
-				write(1, "\"", 1);
+				ft_putchar_fd('\"', fd);
 		}
-		write(1, "\"\n", 2);
+		ft_putendl_fd("\"", fd);
 		i++;
 	}
 	return (free_split(envp_cpy), 0);
 }
 
-int	builtin_export(char **cmd, char ***envp)
+int	builtin_export(char **cmd, char ***envp, int fd)
 {
 	int		i;
 	int		r_val;
@@ -130,7 +130,7 @@ int	builtin_export(char **cmd, char ***envp)
 	if (!cmd || !envp || !*envp)
 		return (-1);
 	if (!cmd[0])
-		return (print_declare_envp(*envp));
+		return (print_declare_envp(*envp, fd));
 	i = 0;
 	while (cmd[i])
 	{
