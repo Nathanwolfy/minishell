@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:33:27 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/07 01:10:11 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/07 17:00:43 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ Check for mandatory environment variables :
 - reset PWD whatever the value
 */
 
-char	**check_shlvl(char *copied_envp[]) //keep track of memory but almost done
+/*char	**check_shlvl(char *copied_envp[]) //keep track of memory but almost done
 {
 	char	*shlvl;
 	int		shlvl_value;
@@ -79,18 +79,19 @@ char	**check_shlvl(char *copied_envp[]) //keep track of memory but almost done
 	if (!new_shlvl)
 		return (free(shlvl), NULL);
 	return (free(shlvl), add_envp(copied_envp, new_shlvl));
-}
+}*/
 
 char	**check_mandatory_envp(char *copied_envp[])
 {
-	char	**new_envp;
+	//char	**new_envp;
 
-	new_envp = check_shlvl(copied_envp);
+	return (copied_envp);
+	/*new_envp = check_shlvl(copied_envp);
 	if (!new_envp)
 		return (free_split(copied_envp), NULL);
 	copied_envp = new_envp;
 	new_envp = check_pwd(copied_envp);
 	if (!new_envp)
 		return (free_split(copied_envp), NULL);
-	return (copied_envp);
+	return (copied_envp);*/
 }
