@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 21:31:48 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/06 21:33:04 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ int	main(int argc, char *argv[], char *old_envp[])
 		return (1); //needs to handle signals properly before
 	envp = copy_envp(old_envp);
 	if (!envp)
-		return (print_error_main(), 1); //define clean error codes
+		return (print_error_main(), 1);
 	envp = check_mandatory_envp(envp);
 	if (!envp)
-		return (print_error_main(), 1); //define clean error codes
+		return (print_error_main(), 1);
 	prompt(token, ast, envp);
 	return (0);
 }
