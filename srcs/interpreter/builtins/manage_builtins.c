@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 18:01:47 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/07 18:19:59 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int manage_fds_for_builtins(t_cmd_infos *infos)
 
 static void close_fd_builtin(int fd)
 {
-	if (fd != STDOUT_FILENO)
+	if (fd != STDOUT_FILENO && fd > 0)
 		close(fd);
 }
 
@@ -73,7 +73,7 @@ int	exec_builtin(int is_builtin, t_tree *node, char *envp[], t_cmd_infos *cmd_in
 	fd = manage_fds_for_builtins(cmd_infos);
 	cmd = recreate_and_get_cmd(node, envp, 0);
 	if (!cmd)
-		return (-1); //define error code
+		return (close_fd_builtin(fd), -1); //define error code
 	if (is_builtin == 0)
 		res = builtin_echo(cmd, fd);
 	else if (is_builtin == 1)
