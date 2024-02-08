@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
+/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 17:51:11 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:38:50 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,15 +108,15 @@ static int	print_declare_envp(char **envp, int fd)
 	sort_env(envp_cpy);
 	while (envp_cpy[i])
 	{
-		ft_putstr_fd("declare -x ", fd);
+		ft_putstr_fd("declare -x", fd);
 		j = -1;
 		while (envp_cpy[i][++j])
 		{
 			ft_putchar_fd(envp_cpy[i][j], fd);
 			if (envp_cpy[i][j] == '=')
-				ft_putchar_fd('\"', fd);
+				ft_putchar_fd(envp_cpy[i][j], fd);
 		}
-		ft_putendl_fd("\"", fd);
+		ft_putstr_fd("\"\n", fd);
 		i++;
 	}
 	return (free_split(envp_cpy), 0);
@@ -126,16 +126,22 @@ int	builtin_export(char **cmd, char ***envp, int fd)
 {
 	int		i;
 	int		r_val;
+	int		exit_status;
 
+	exit_status = 0;
 	if (!cmd || !envp || !*envp)
-		return (-1);
-	if (!cmd[0])
+		return (exit_status);
+	if (!cmd[1])
 		return (print_declare_envp(*envp, fd));
-	i = 0;
+	i = 1;
 	while (cmd[i])
 	{
-		if (check_env_var_format(cmd[i], "export") == -1) // if there is no = just return
-			return (0);
+		if (check_env_var_format(cmd[i], "export", fd) == -1)
+		{
+			exit_status = 1;
+			i++;
+			continue ;
+		}
 		r_val = modify_env_value(*envp, cmd[i]);
 		if (r_val == -1)
 			return (-1);
@@ -145,7 +151,7 @@ int	builtin_export(char **cmd, char ***envp, int fd)
 			return (-1);
 		i++;
 	}
-	return (0);
+	return (exit_status);
 }
 
 /*int	main(int argc, char **argv, char **env)

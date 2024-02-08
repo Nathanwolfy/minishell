@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/07 18:19:59 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:25:24 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_builtin(int is_builtin, t_tree *node, char *envp[], t_cmd_infos *cmd_in
 	else if (is_builtin == 3)
 		res = builtin_export(cmd, &envp, fd);
 	else if (is_builtin == 4)
-		res = builtin_unset(cmd, &envp);
+		res = builtin_unset(cmd, &envp, fd);
 	else if (is_builtin == 5)
 		res = builtin_env(envp, fd);
 	else if (is_builtin == 6)

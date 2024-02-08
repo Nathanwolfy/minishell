@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 21:31:40 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:22:31 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,12 +196,12 @@ int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
 
 int		exec_builtin(int is_builtin, t_tree *node, char *envp[], t_cmd_infos *cmd_infos);
 int		check_builtins(char *cmd);
-int		check_env_var_format(char *content, char *cmd);
+int		check_env_var_format(char *content, char *cmd, int fd);
 int		get_var_name_len(char *var);
 int		get_double_arr_len(char **var);
 int		builtin_export(char **cmd, char ***envp, int fd);
 int		builtin_env(char **envp, int fd);
-int		builtin_unset(char **cmd, char ***envp);
+int		builtin_unset(char **cmd, char ***envp, int fd);
 int		builtin_echo(char **cmd, int fd);
 int		builtin_pwd(int fd);
 
