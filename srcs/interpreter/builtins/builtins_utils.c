@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:09:36 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 17:05:25 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:38:31 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,23 @@ int	get_var_name_len(char *var)
 	return (var_name_len);
 }
 
-static void	ft_put_invalid_identifier(char *str, char *str1)
+static void	ft_put_invalid_identifier(char *str, char *str1, int fd)
 {
-	ft_putstr_fd("minishell: ", 1);
-	ft_putstr_fd(str, 1);
-	ft_putstr_fd(": `", 1);
-	ft_putstr_fd(str1, 1);
-	ft_putstr_fd("' : not a valid identifier\n", 1);
+	ft_putstr_fd("minishell: ", fd);
+	ft_putstr_fd(str, fd);
+	ft_putstr_fd(": `", fd);
+	ft_putstr_fd(str1, fd);
+	ft_putstr_fd("' : not a valid identifier\n", fd);
 }
 
-int	check_env_var_format(char *content, char *cmd)
+int	check_env_var_format(char *content, char *cmd, int fd)
 {
 	int	i;
 
 	i = 0;
 	if (!content || (!ft_isalpha(content[i]) && content[i] != '_'))
 	{
-		ft_put_invalid_identifier(cmd, content);
+		ft_put_invalid_identifier(cmd, content, fd);
 		return (-1);
 	}
 	while (content[i])
@@ -60,7 +60,7 @@ int	check_env_var_format(char *content, char *cmd)
 		if (!ft_isalpha(content[i]) && !ft_isdigit(content[i])
 			&& content[i] != '_')
 		{
-			ft_put_invalid_identifier(cmd, content);
+			ft_put_invalid_identifier(cmd, content, fd);
 			return (-1);
 		}
 		i++;
@@ -69,4 +69,3 @@ int	check_env_var_format(char *content, char *cmd)
 		return (0);
 	return (-1);
 }
-

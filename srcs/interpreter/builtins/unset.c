@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:04:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 13:47:55 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 09:30:50 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,35 +67,20 @@ static char	**remove_var(char *var, char **envp)
 	return (dup_envp(envp, index_to_skip));
 }
 
-/*static int	format_cmd(char **cmd, char **envp)
+int	builtin_unset(char **cmd, char ***envp, int fd)
 {
-	char	*formated;
-	int		i;
+	int	i;
+	int	exit_status;
 
-	i = 0;
-	while (cmd[i])
-	{
-		formated = format_quote(cmd[i], envp);
-		if (!formated)
-			return (-1);
-		free(cmd[i]);
-		cmd[i] = formated;
-		i++;
-	}
-	return (0);
-}*/
-
-int	builtin_unset(char **cmd, char ***envp)
-{
-	int		i;
-
-	i = 0;
+	i = 1;
+	exit_status = 0;
 	if (!cmd || !*cmd || !envp || !*envp)
-		return (0);
+		return (exit_status);
 	while (cmd[i])
 	{
-		if (check_env_var_format(cmd[i], "unset") == -1)
+		if (check_env_var_format(cmd[i], "unset", fd) == -1)
 		{
+			exit_status = 1;
 			i++;
 			continue ;
 		}
@@ -104,7 +89,7 @@ int	builtin_unset(char **cmd, char ***envp)
 			return (-1);
 		i++;
 	}
-	return (0);
+	return (exit_status);
 }
 
 /*int	main(int argc, char **argv, char **env)
@@ -122,3 +107,4 @@ int	builtin_unset(char **cmd, char ***envp)
 	printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
 	builtin_env(env);
 }*/
+
