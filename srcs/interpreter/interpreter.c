@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 20:57:49 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:00:58 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	print_error_interpreter(int code)
 	return (code);
 }
 
-int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain)
+int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 {
 	int	res;
 
@@ -48,7 +48,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain)
 -2 : missing ast
 */
 
-int	interpreter(t_tree **ast, char *envp[])
+int	interpreter(t_tree **ast, char **envp[])
 {
 	int			res;
 	t_cmd_infos	*infos;

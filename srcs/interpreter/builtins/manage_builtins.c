@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 09:25:24 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:00:11 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ static void close_fd_builtin(int fd)
 		close(fd);
 }
 
-int	exec_builtin(int is_builtin, t_tree *node, char *envp[], t_cmd_infos *cmd_infos)
+int	exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_infos)
 {
 	int		res;
 	char	**cmd;
 	int		fd;
 
 	fd = manage_fds_for_builtins(cmd_infos);
-	cmd = recreate_and_get_cmd(node, envp, 0);
+	cmd = recreate_and_get_cmd(node, *envp, 0);
 	if (!cmd)
 		return (close_fd_builtin(fd), -1); //define error code
 	if (is_builtin == 0)
@@ -81,11 +81,11 @@ int	exec_builtin(int is_builtin, t_tree *node, char *envp[], t_cmd_infos *cmd_in
 	else if (is_builtin == 2)
 		res = builtin_pwd(fd);
 	else if (is_builtin == 3)
-		res = builtin_export(cmd, &envp, fd);
+		res = builtin_export(cmd, envp, fd);
 	else if (is_builtin == 4)
-		res = builtin_unset(cmd, &envp, fd);
+		res = builtin_unset(cmd, envp, fd);
 	else if (is_builtin == 5)
-		res = builtin_env(envp, fd);
+		res = builtin_env(*envp, fd);
 	else if (is_builtin == 6)
 		res = -1; //implement exit
 	else

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 20:56:59 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 19:59:22 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,13 @@ char	**recreate_and_get_cmd(t_tree *node, char **envp, int do_check_get_cmd)
 	return (cmd);
 }
 
-int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain)
+static int	exit_return(int res)
+{
+	exit(res);
+	return (res);
+}
+
+int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 {
 	char	**cmd;
 	pid_t	fork_pid;
@@ -135,18 +141,20 @@ int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int isma
 		fork_pid = 0;
 	if (fork_pid < 0)
 		return (close_fds(infos, 0), -6); //define clean error codes
-	else if (is_builtin >= 0)
+	else if (is_builtin >= 0 && !ismain)
+		return (exit_return(exec_builtin(is_builtin, node, envp, infos)));
+	else if (is_builtin >= 0 && ismain)
 		return (exec_builtin(is_builtin, node, envp, infos));
 	else if (fork_pid == 0)
 	{
 		if (!node)
 			return (close_fds(infos, 0), -9); //define clean error codes
-		cmd = recreate_and_get_cmd(node, envp, 1); //differentiate error and at which step
+		cmd = recreate_and_get_cmd(node, *envp, 1); //differentiate error and at which step
 		if (!cmd)
 			return (close_fds(infos, 0), exit(CMD_NOT_FOUND), CMD_NOT_FOUND); //exit properly child process
 		manage_fds_for_cmd(infos);
-		if (execve(cmd[0], cmd, envp) < 0)
-			return (free_split(cmd), close_fds(infos, 0), exit(1), 1); //exit properly in case of errors	
+		if (execve(cmd[0], cmd, *envp) < 0)
+			return (free_split(cmd), close_fds(infos, 0), exit_return(1)); //exit properly in case of errors	
 	}
 	else if (ismain && fork_pid > 0)
 		return (close_fds(infos, 0), waitpid(fork_pid, &infos->status, 0), wait(NULL), 0); //define clean error codes

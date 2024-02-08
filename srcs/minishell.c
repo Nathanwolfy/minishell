@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 21:33:04 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:04:04 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ int	main(int argc, char *argv[], char *old_envp[])
 	envp = check_mandatory_envp(envp);
 	if (!envp)
 		return (print_error_main(), 1);
-	prompt(token, ast, envp);
+	prompt(token, ast, &envp);
 	return (0);
 }

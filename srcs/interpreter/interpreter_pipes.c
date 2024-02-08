@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:05:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 20:35:08 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:03:15 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	close_all_pipefds(int pipefd[2], int pipefd_out)
 		close(pipefd_out);
 }
 
-static int	set_up_pipe_left(t_tree *node, char **envp, int pipefd[2], int pipefd_out)
+static int	set_up_pipe_left(t_tree *node, char **envp[], int pipefd[2], int pipefd_out)
 {
 	t_cmd_infos	*infos;
 
@@ -47,7 +47,7 @@ static void	manage_fds_pipe_right(t_cmd_infos *infos, int pipefd[2], int pipefd_
 		add_fd(infos, 'o', pipefd_out);
 }
 
-int	set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int ismain)
+int	set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain)
 {
 	int			pipefd[2];
 	pid_t		pipe_pid;

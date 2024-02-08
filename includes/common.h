@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 15:34:49 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:02:45 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef enum e_rules
 	R_HERE_END
 }	t_rules;
 
-void	prompt(t_token *token, t_tree *ast, char *envp[]);
+void	prompt(t_token *token, t_tree *ast, char **envp[]);
 
 /*		ERRORS		*/
 
@@ -121,8 +121,6 @@ int		print_error_interpreter(int code);
 /*		UTILS		*/
 
 int		ft_isspace(int c);
-int		ft_is_sq(int c);
-int		ft_is_dq(int c);
 void	free_split(char **split);
 int		return_status(t_cmd_infos *infos, int res);
 char	**check_mandatory_envp(char *copied_envp[]);
@@ -171,12 +169,12 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 
 /*		INTERPRETER		*/
 
-int		interpreter(t_tree **ast, char *envp[]);
-int		execute_job(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain);
+int		interpreter(t_tree **ast, char **envp[]);
+int		execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain);
 
 /*		INTERPRETER - PIPES		*/
 
-int		set_up_pipes(t_tree *node, char *envp[], int pipefd_out, int ismain);
+int		set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain);
 
 /*		INTERPRETER - UTILS		*/
 
@@ -185,7 +183,7 @@ void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
-int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char *envp[], int ismain);
+int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain);
 
 /*		INTERPRETER - REDIRECTS		*/
 
@@ -195,7 +193,7 @@ int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
 
 /*		INTERPRETER - BUILTINS		*/
 
-int		exec_builtin(int is_builtin, t_tree *node, char *envp[], t_cmd_infos *cmd_infos);
+int		exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_infos);
 int		check_builtins(char *cmd);
 int		check_env_var_format(char *content, char *cmd, int fd);
 int		get_var_name_len(char *var);
