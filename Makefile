@@ -11,7 +11,9 @@ SRCS_UTILS_FILES = utils.c \
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c	\
 						ft_token.c		\
-						quote_management.c
+						cmd_line_formatting.c	\
+						cmd_line_formatting_utils.c	\
+						cmd_line_formatting_utils1.c\
 
 SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/ast_builder.c			\
@@ -26,8 +28,6 @@ SRCS_INTERPRETER_FILES = interpreter.c \
 							interpreter_pipes.c \
 							cmd_process.c \
 							cmd_infos_utils.c \
-							quote_formating.c \
-							quote_formating_utils.c
 
 SRCS_BUILTINS_FILES = export.c	\
 						manage_builtins.c	\
