@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 09:22:31 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:34:49 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char	**copy_envp(char *old_envp[]);
 
 int		lexer(char *line, t_token **token);
 char	*lexer_expand_var_replace_quotes(char *line, char **envp);
+char	*format_cmd_line(char *line, char **envp, int exit_status);
 
 int		quote_sequence(int *table, char *line);
 int		operator_sequence(int *table, char *line);
@@ -213,7 +214,7 @@ int		get_env_len(char *old, int *flags, int *i, char **envp);
 int		get_var_len(char *old, int *i);
 int		get_env_index(char *var, int len, char **envp);
 char	*format_quote(char *old, char **envp);
-char	*copy_flagged(char *old, int *flags, char **envp);
+char	*copy_flagged(char *old, int *flags, char **envp, int exit_status);
 int		get_flagged_len(char *old, int *flags);
 
 #endif

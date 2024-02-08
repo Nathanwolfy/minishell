@@ -1,57 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_formating.c                                  :+:      :+:    :+:   */
+/*   cmd_line_formatting_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 16:41:48 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:17:28 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-static void	squote_loop(char *old, int *flags, int *i)
-{
-	flags[*i] = 0;
-	while (old[++(*i)])
-	{
-		if (old[*i] == '\'')
-		{
-			flags[*i] = 0;
-			*i += 1;
-			return ;
-		}
-		flags[*i] = 1;
-	}
-}
-
-static void	set_flags(char *old, int *flags, char **envp)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = ft_strlen(old);
-	while (i < len)
-	{
-		if (i < len && old[i] == '\"')
-			format_dquote_loop(old, flags, &i, envp);
-		if (i < len && old[i] == '\'')
-			squote_loop(old, flags, &i);
-		if (i < len && old[i] == '$')
-		{
-			get_env_len(old, flags, &i, envp);
-			i++;
-		}
-		if (i < len && old[i] != '\"' && old[i] != '\'' && old[i] != '$')
-		{
-			flags[i] = 1;
-			i++;
-		}
-	}
-}
 
 int	get_flagged_len(char *old, int *flags)
 {
@@ -71,7 +30,30 @@ int	get_flagged_len(char *old, int *flags)
 	return (len);
 }
 
-char	*copy_flagged(char *old, int *flags, char **envp)
+static void	copy_exit_status(char *new, int j, int exit_status)
+{
+	int	n;
+
+	n = exit_status;
+	if (exit_status == 0)
+		new[j] = '0';
+	else
+	{
+		while (exit_status >= 10)
+		{
+			j++;
+			exit_status /= 10;
+		}
+		while (n > 0)
+		{
+			new[j] = n % 10 + '0';
+			j--;
+			n /= 10;
+		}
+	}
+}
+
+char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
 {
 	int		len;
 	int		i;
@@ -95,23 +77,13 @@ char	*copy_flagged(char *old, int *flags, char **envp)
 		}
 		else if (flags[i] < 0)
 		{
-			copy_env_var(old, new, &i, envp);
+			if (old[i + 1] == '?')
+				copy_exit_status(new, j, exit_status);
+			else
+				copy_env_var(old, new, &i, envp);
 			j += -flags[i];
 		}
 		i++;
 	}
 	return (new);
-}
-
-char	*format_quote(char *old, char **envp)
-{
-	char	*new;
-	int		*flags;
-
-	flags = ft_calloc(ft_strlen(old), sizeof(int));
-	if (!flags)
-		return (NULL);
-	set_flags(old, flags, envp);
-	new = copy_flagged(old, flags, envp);
-	return (free(flags), new);
 }

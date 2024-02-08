@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_formating_utils.c                            :+:      :+:    :+:   */
+/*   cmd_line_formatting_utils1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 16:07:10 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 15:58:48 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,22 +95,4 @@ void	copy_env_var(char *old, char *new, int *i, char **envp)
 	env_i++;
 	while(envp[index][env_i])
 		new[new_i++] = envp[index][env_i++];
-}
-
-void	format_dquote_loop(char *old, int *flags, int *i, char **envp)
-{
-	flags[*i] = 0;
-	while (old[++(*i)])
-	{
-		if (old[*i] == '\"')
-		{
-			flags[*i] = 0;
-			*i += 1;
-			return ;
-		}
-		else if (old[*i] == '$')
-			get_env_len(old, flags, i, envp);
-		else
-			flags[*i] = 1;
-	}
 }

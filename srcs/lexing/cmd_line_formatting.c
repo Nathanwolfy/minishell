@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_management.c                                 :+:      :+:    :+:   */
+/*   cmd_line_formatting.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/06 16:20:58 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 16:05:49 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,22 @@ static void	replace_squote_loop(char *line, int *flags, int *i)
 	// just raise a flag and readline, ft_strjoin, if no opened quote remains stop, else repeat
 }
 
-static void	lexer_set_flags(char *line, int *flags, char **envp)
+static void	get_exit_status_len(int *flags, int *i, int exit_status)
+{
+	if (exit_status == 0)
+		flags[*i] = -1;
+	else
+	{
+		while (exit_status > 0)
+		{
+			flags[*i] -= 1;
+			exit_status /= 10;
+		}
+	}
+	*i += 2;
+}
+
+static void	lexer_set_flags(char *line, int *flags, char **envp, int exit_status)
 {
 	int	i;
 	int	len;
@@ -75,7 +90,9 @@ static void	lexer_set_flags(char *line, int *flags, char **envp)
 			replace_dquote_loop(line, flags, &i, envp);
 		if (i < len && line[i] == '\'')
 			replace_squote_loop(line, flags, &i);
-		if (i < len && line[i] == '$')
+		if (i < len && line[i] == '$' && line[i + 1] == '?')
+			get_exit_status_len(flags, &i, exit_status);
+		else if (i < len && line[i] == '$')
 			get_env_len(line, flags, &i, envp);
 		if (i < len && line[i] != '\"' && line[i] != '\'' && line[i] != '$')
 		{
@@ -85,7 +102,7 @@ static void	lexer_set_flags(char *line, int *flags, char **envp)
 	}
 }
 
-char	*lexer_expand_var_replace_quotes(char *line, char **envp)
+char	*format_cmd_line(char *line, char **envp, int exit_status)
 {
 	int		*flags;
 	char	*copy;
@@ -99,7 +116,7 @@ char	*lexer_expand_var_replace_quotes(char *line, char **envp)
 	copy = ft_strdup(line);
 	if (!copy)
 		return (free(flags), NULL);
-	lexer_set_flags(copy, flags, envp);
-	new = copy_flagged(copy, flags, envp);
+	lexer_set_flags(copy, flags, envp, exit_status);
+	new = copy_flagged(copy, flags, envp, exit_status);
 	return (free(flags), free(copy), new);
 }
