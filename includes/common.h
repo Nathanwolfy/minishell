@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 15:34:49 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:21:42 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ int		builtin_env(char **envp, int fd);
 int		builtin_unset(char **cmd, char ***envp, int fd);
 int		builtin_echo(char **cmd, int fd);
 int		builtin_pwd(int fd);
+int		builtin_cd(char **cmd, char ***envp);
 
 /*		QUOTE FORMATING		*/
 
@@ -216,5 +217,7 @@ int		get_env_index(char *var, int len, char **envp);
 char	*format_quote(char *old, char **envp);
 char	*copy_flagged(char *old, int *flags, char **envp, int exit_status);
 int		get_flagged_len(char *old, int *flags);
+char	*get_env_val(char *key, char ***envp);
+char	**replace_pwd(char **envp);
 
 #endif
