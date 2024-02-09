@@ -49,7 +49,9 @@ static int	build_token_word(int *table, char *line, int *k, t_token **token)
 	int		res;
 
 	start = *k;
-	while (table[*k] == 1)
+	if (!table)
+		return (-1);
+	while (*k < (int) ft_strlen(line) && table[*k] == 1)
 		(*k)++;
 	end = *k;
 	content = ft_substr(line, start, end - start);
