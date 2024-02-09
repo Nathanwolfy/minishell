@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:09:36 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/08 09:38:31 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 10:06:47 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ static void	ft_put_invalid_identifier(char *str, char *str1, int fd)
 	ft_putstr_fd(": `", fd);
 	ft_putstr_fd(str1, fd);
 	ft_putstr_fd("' : not a valid identifier\n", fd);
+}
+
+char	*get_env_val(char *key, char ***envp)
+{
+	int	index;
+	int	i;
+
+	index = get_env_index(key, ft_strlen(key), *envp);
+	if (index == -1)
+		return ((char *)-1);
+	i = 0;
+	while ((*envp)[index][i] != '=')
+		i++;
+	return ((*envp)[index] + i + 1);
 }
 
 int	check_env_var_format(char *content, char *cmd, int fd)

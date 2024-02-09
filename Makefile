@@ -40,6 +40,7 @@ SRCS_BUILTINS_FILES = export.c	\
 						unset.c				\
 						echo.c				\
 						pwd.c				\
+						cd.c				\
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 

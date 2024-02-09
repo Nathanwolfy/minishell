@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/08 15:58:48 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 17:58:51 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	get_env_index(char *var, int len, char **envp)
 	index = 0;
 	while (envp[index])
 	{
-		if (ft_strncmp(var, envp[index], len) == 0)
+		if (ft_strncmp(var, envp[index], len) == 0 && envp[index][len] == '=')
 			return (index);
 		index++;
 	}
