@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   interpreter_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 13:00:36 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:29:06 by nlederge         ###   ########.fr       */
+/*   Created: 2024/02/09 12:17:36 by nlederge          #+#    #+#             */
+/*   Updated: 2024/02/09 12:17:44 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	ft_perror(void)
+int	cmd_split_count(t_tree *node)
 {
-	if (errno != 0)
+	int		ct;
+	t_tree	*it;
+
+	ct = 1;
+	it = node;
+	while (it->right && (it->right)->type == R_CMD_SUFFIX)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		ct++;
+		it = it->right;
 	}
-	return (errno);
+	return (ct);
 }

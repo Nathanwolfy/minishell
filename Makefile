@@ -6,7 +6,8 @@ SRCS_MAIN_FILES = minishell.c \
 
 SRCS_UTILS_FILES = utils.c \
 					utils_tree.c \
-					utils_envp.c
+					utils_envp.c \
+					utils_envp2.c \
 
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c	\
@@ -24,9 +25,12 @@ SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/parse_io_redirect.c
 
 SRCS_INTERPRETER_FILES = interpreter.c \
+							interpreter_errors.c \
+							interpreter_utils.c \
 							interpreter_redirects.c \
 							interpreter_pipes.c \
 							cmd_process.c \
+							cmd_process_utils.c \
 							cmd_infos_utils.c \
 
 SRCS_BUILTINS_FILES = export.c	\

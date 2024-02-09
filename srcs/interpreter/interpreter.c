@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 20:00:58 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:32:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 {
 	int	res;
 
-	res = -2;
+	res = 1;
 	if (!node)
 		return (0);
 	if (node->type == R_CMD_NAME)
@@ -36,17 +36,13 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 		res = add_io_file_from(node, infos);
 	else if (node->type == R_IO_FILE_DGREAT)
 		res = add_io_file_append(node, infos);
-	if (res < 0)
+	if (res != 0 && !ismain)
+		return (exit_return(res), res);
+	else if (res != 1)
 		return (res);
 	else
 		return (execute_job(node->left, infos, envp, ismain));
 }
-
-/*
-0 : success
--1 : all types of errors handled by errno
--2 : missing ast
-*/
 
 int	interpreter(t_tree **ast, char **envp[])
 {
@@ -54,12 +50,12 @@ int	interpreter(t_tree **ast, char **envp[])
 	t_cmd_infos	*infos;
 
 	if (!ast)
-		return (-2);
+		return (check_unknown_error(2), 1);
 	if ((*ast)->type != R_PIPE_SEQUENCE)
 	{
 		infos = ft_calloc(1, sizeof(t_cmd_infos));
 		if (!infos)
-			return (-1);
+			return (ft_perror(), 1);
 		reset_cmd_infos(infos);
 		res = execute_job(*ast, infos, envp, 1);
 		res = return_status(infos, res);

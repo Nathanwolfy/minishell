@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 20:00:11 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:32:50 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_builtins(char *cmd)
 			return (i);
 		i++;
 	}
-	return (-1); //define error code
+	return (-1);
 }
 
 static int manage_fds_for_builtins(t_cmd_infos *infos)
@@ -64,6 +64,30 @@ static void close_fd_builtin(int fd)
 		close(fd);
 }
 
+static char	**recreate_cmd_builtin(t_tree *node)
+{
+	int		ct;
+	int		j;
+	char	**cmd;
+	t_tree	*it;
+
+	ct = cmd_split_count(node);
+	cmd = ft_calloc(ct + 1, sizeof(char *));
+	if (!cmd)
+		return (NULL);
+	j = 0;
+	it = node;
+	while (j < ct)
+	{
+		cmd[j] = ft_strdup(it->content);
+		if (!cmd[j++])
+			return(free_split(cmd), NULL);
+		it = it->right;
+	}
+	cmd[j] = NULL;
+	return (cmd);
+}
+
 int	exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_infos)
 {
 	int		res;
@@ -71,13 +95,14 @@ int	exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_i
 	int		fd;
 
 	fd = manage_fds_for_builtins(cmd_infos);
-	cmd = recreate_and_get_cmd(node, *envp, 0);
+	cmd = recreate_cmd_builtin(node);
 	if (!cmd)
-		return (close_fd_builtin(fd), -1); //define error code
+		return (close_fd_builtin(fd), ft_perror(), 1);
+	res = 2;
 	if (is_builtin == 0)
 		res = builtin_echo(cmd, fd);
 	else if (is_builtin == 1)
-		res = -1; //implement cd
+		res = 2; //implement cd
 	else if (is_builtin == 2)
 		res = builtin_pwd(fd);
 	else if (is_builtin == 3)
@@ -87,8 +112,6 @@ int	exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_i
 	else if (is_builtin == 5)
 		res = builtin_env(*envp, fd);
 	else if (is_builtin == 6)
-		res = -1; //implement exit
-	else
-		res = -1; //define error code
-	return (close_fd_builtin(fd), free_split(cmd), res);
+		res = 2; //implement exit
+	return (close_fd_builtin(fd), free_split(cmd), check_unknown_error(res));
 }
