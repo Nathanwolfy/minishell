@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:31:23 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:44:06 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_tree
 	struct s_tree	*right;
 }	t_tree;
 
-typedef struct	s_ast_data
+typedef struct s_ast_data
 {
 	int		count;
 	int		start;
@@ -170,7 +170,8 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 /*		INTERPRETER		*/
 
 int		interpreter(t_tree **ast, char **envp[]);
-int		execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain);
+int		execute_job(t_tree *node, t_cmd_infos *infos, \
+char **envp[], int ismain);
 
 /*		INTERPRETER - PIPES		*/
 
@@ -189,7 +190,8 @@ void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
-int		launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain);
+int		launch_cmd_sequence(t_tree *node, \
+t_cmd_infos *infos, char **envp[], int ismain);
 
 /*		INTERPRETER - REDIRECTS		*/
 
@@ -199,7 +201,8 @@ int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
 
 /*		INTERPRETER - BUILTINS		*/
 
-int		exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_infos);
+int		exec_builtin(int is_builtin, t_tree *node, \
+char **envp[], t_cmd_infos *cmd_infos);
 int		check_builtins(char *cmd);
 int		check_env_var_format(char *content, char *cmd, int fd);
 int		get_var_name_len(char *var);
