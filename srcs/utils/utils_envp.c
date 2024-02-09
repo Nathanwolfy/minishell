@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:33:27 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/07 18:14:00 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:16:56 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ char **increment_shlvl(char *copied_envp[])
 	char	*new_shlvl_value;
 	char	*new_shlvl;
 
-	i = get_env_index("SHLVL", 5, copied_envp); //ask the GOAT Ellio about this
+	i = get_env_index("SHLVL", 5, copied_envp);
 	shlvl_value = copied_envp[i] + 6;
-	if (!*shlvl_value) //necessary ?
+	if (!*shlvl_value)
 		return (free_split(copied_envp), NULL);
 	new_shlvl_value = ft_itoa(ft_atoi(shlvl_value) + 1);
 	if (!new_shlvl_value)
@@ -108,7 +108,7 @@ char **replace_shlvl(char *copied_envp[])
 	int		i;
 	char	*new_shlvl;
 
-	i = get_env_index("SHLVL", 5, copied_envp); //ask the GOAT Ellio about this
+	i = get_env_index("SHLVL", 5, copied_envp);
 	new_shlvl = ft_strdup("SHLVL=1");
 	if (!new_shlvl)
 		return (free_split(copied_envp), NULL);
@@ -122,7 +122,7 @@ int	check_valid_shlvl_value(char **copied_envp)
 	int		i;
 	char	*shlvl_value;
 
-	i = get_env_index("SHLVL", 5, copied_envp); //ask the GOAT Ellio about this
+	i = get_env_index("SHLVL", 5, copied_envp);
 	if (i < 0)
 		return (1);
 	shlvl_value = copied_envp[i] + 6;
@@ -176,7 +176,7 @@ char **replace_pwd(char *copied_envp[])
 	char	*pwd_key;
 	char	*new_pwd;
 
-	i = get_env_index("PWD", 3, copied_envp); //ask the GOAT Ellio about this
+	i = get_env_index("PWD", 3, copied_envp);
 	pwd_key = ft_strdup("PWD=");
 	if (!pwd_key)
 		return (free_split(copied_envp), NULL);
@@ -205,7 +205,7 @@ char	**check_mandatory_envp(char *copied_envp[])
 	if (!new_envp)
 		return (NULL);
 	copied_envp = new_envp;
-	if (get_env_index("PWD", 3, copied_envp) < 0) //ask the GOAT Ellio about this
+	if (get_env_index("PWD", 3, copied_envp) < 0)
 	{
 		new_envp = add_pwd(copied_envp);
 		free_split(copied_envp);

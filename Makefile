@@ -24,6 +24,7 @@ SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/parse_io_redirect.c
 
 SRCS_INTERPRETER_FILES = interpreter.c \
+							interpreter_errors.c \
 							interpreter_redirects.c \
 							interpreter_pipes.c \
 							cmd_process.c \

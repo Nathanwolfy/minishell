@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:05:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 20:03:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 11:25:17 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	set_up_pipe_left(t_tree *node, char **envp[], int pipefd[2], int pipe
 
 	infos = ft_calloc(1, sizeof(t_cmd_infos));
 	if (!infos)
-		return (close_all_pipefds(pipefd, pipefd_out), -2); //define clear error codes exit here ?
+		return (close_all_pipefds(pipefd, pipefd_out), print_error_from_errno(), 1);
 	close(pipefd[0]);
 	reset_cmd_infos(infos);
 	add_fd(infos, 'o', pipefd[1]);
@@ -54,10 +54,10 @@ int	set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain)
 	t_cmd_infos	*infos;
 
 	if (pipe(pipefd) < 0)
-		return (close_all_pipefds(NULL, pipefd_out), -3); //define clean error codes
+		return (close_all_pipefds(NULL, pipefd_out), print_error_from_errno(), 1);
 	pipe_pid = fork();
 	if (pipe_pid < 0)
-		return (close_all_pipefds(pipefd, pipefd_out), -6); //define clean error codes
+		return (close_all_pipefds(pipefd, pipefd_out), print_error_from_errno(), 1);
 	else if (pipe_pid == 0)
 	{
 		if ((node->left)->type != R_PIPE_SEQUENCE)
@@ -69,9 +69,8 @@ int	set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain)
 	{
 		infos = ft_calloc(1, sizeof(t_cmd_infos));
 		if (!infos)
-			return (close_all_pipefds(pipefd, pipefd_out), -2); //define clear error codes exit here ?
+			return (close_all_pipefds(pipefd, pipefd_out), print_error_from_errno(), 1);
 		manage_fds_pipe_right(infos, pipefd, pipefd_out);
-		//waitpid(pipe_pid, NULL, 0);
 		return (execute_job(node->right, infos, envp, ismain), waitpid(pipe_pid, &infos->status, 0), return_status(infos, 0));
 	}
 }
