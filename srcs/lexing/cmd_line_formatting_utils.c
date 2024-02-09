@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/08 16:17:28 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 14:39:26 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,33 @@ static void	copy_exit_status(char *new, int j, int exit_status)
 	}
 }
 
-char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
+static char	*create_new_cmd_line(char *old, int *flags)
 {
 	int		len;
-	int		i;
-	int		j;
 	char	*new;
 
 	len = get_flagged_len(old, flags);
 	if (len == 0)
 		return ((char *)-1);
 	new = ft_calloc(len + 1, sizeof(char));
+	if (!new && ft_perror())
+		return (NULL);
+	return (new);
+}
+
+static void	copy_and_increment(char *new, char *old, int *j, int i)
+{
+	new[*j] = old[i];
+	*j += 1;
+}
+
+char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
+{
+	int		i;
+	int		j;
+	char	*new;
+
+	new = create_new_cmd_line(old, flags);
 	if (!new)
 		return (NULL);
 	i = 0;
@@ -71,10 +87,7 @@ char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
 	while (old[i])
 	{
 		if (flags[i] == 1)
-		{
-			new[j] = old[i];
-			j++;
-		}
+			copy_and_increment(new, old, &j, i);
 		else if (flags[i] < 0)
 		{
 			if (old[i + 1] == '?')

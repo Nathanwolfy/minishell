@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:49:38 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 12:34:19 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:59:29 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static int	check_option_n(char *suffix)
 		return (1);
 }
 
-int	builtin_echo(char **cmd, int fd) //what happens if invalid option
+int	builtin_echo(char **cmd, int fd)
 {
 	int	option_n;
 	int	i;
 
 	if (!cmd || !*cmd)
-		return (1); //define clean error codes
+		return (1);
 	i = 1;
 	option_n = check_option_n(cmd[1]);
 	while (cmd[i])
