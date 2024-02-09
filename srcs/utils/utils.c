@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 20:34:24 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:17:16 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,10 @@ int	return_status(t_cmd_infos *infos, int res)
 		return (WEXITSTATUS(infos->status));
 	else
 		return (res);
+}
+
+int	exit_return(int res)
+{
+	exit(res);
+	return (res);
 }

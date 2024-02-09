@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 20:00:58 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:19:23 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 		res = add_io_file_from(node, infos);
 	else if (node->type == R_IO_FILE_DGREAT)
 		res = add_io_file_append(node, infos);
-	if (res < 0)
+	if (res < 0 && !ismain)
+		return (exit_return(res), 1); // to be defined
+	else if (res < 0)
 		return (res);
 	else
 		return (execute_job(node->left, infos, envp, ismain));

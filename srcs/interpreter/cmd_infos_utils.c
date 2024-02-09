@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:49:19 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 19:54:41 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:14:56 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	add_fd(t_cmd_infos *infos, char in_out, int fd)
 	{
 		fds = ft_calloc(infos->fds_in_size + 1, sizeof(int));
 		if (!fds)
-			return (-1); //define clean error codes
+			return (-1);
 		copy_fds(fds, infos->fds_in, infos->fds_in_size);
 		free(infos->fds_in);
 		fds[infos->fds_in_size++] = fd;
@@ -61,14 +61,12 @@ int	add_fd(t_cmd_infos *infos, char in_out, int fd)
 	{
 		fds = ft_calloc(infos->fds_out_size + 1, sizeof(int));
 		if (!fds)
-			return (-1); //define clean error codes
+			return (-1);
 		copy_fds(fds, infos->fds_out, infos->fds_out_size);
 		free(infos->fds_out);
 		fds[infos->fds_out_size++] = fd;
 		infos->fds_out = fds;
 	}
-	else
-		return (-2);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 20:02:45 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:17:35 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,11 +120,11 @@ int		print_error_interpreter(int code);
 
 /*		UTILS		*/
 
-int		ft_isspace(int c);
 void	free_split(char **split);
 int		return_status(t_cmd_infos *infos, int res);
 char	**check_mandatory_envp(char *copied_envp[]);
 char	**copy_envp(char *old_envp[]);
+int		exit_return(int res);
 
 /*		TOKENS AND LEXING		*/
 

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 19:59:22 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:17:03 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,6 @@ char	**recreate_and_get_cmd(t_tree *node, char **envp, int do_check_get_cmd)
 	if (do_check_get_cmd)
 		cmd = check_get_cmd(cmd, envp);
 	return (cmd);
-}
-
-static int	exit_return(int res)
-{
-	exit(res);
-	return (res);
 }
 
 int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
