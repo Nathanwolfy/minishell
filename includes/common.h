@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:11:20 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:31:23 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	prompt(t_token *token, t_tree *ast, char **envp[]);
 
 /*		ERRORS		*/
 
-int		print_error_from_errno(void);
+int		ft_perror(void);
 int		print_error_lexer(int code, int *exit_status);
 int		print_error_interpreter(int code);
 
@@ -171,7 +171,6 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 
 int		interpreter(t_tree **ast, char **envp[]);
 int		execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain);
-int		cmd_split_count(t_tree *node);
 
 /*		INTERPRETER - PIPES		*/
 
@@ -185,6 +184,7 @@ int		check_unknown_error(int status);
 /*		INTERPRETER - UTILS		*/
 
 char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos);
+int		cmd_split_count(t_tree *node);
 void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);

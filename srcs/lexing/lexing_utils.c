@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 18:38:21 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/06 21:19:03 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:35:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ int	print_error_lexer(int code, int *exit_status)
 	{
 		ft_putendl_fd("minishell: syntax error in simple quotes", \
 		STDERR_FILENO);
-		*exit_status = 1;	
+		*exit_status = 1;
 	}
 	else if (code == -2)
 	{
 		ft_putendl_fd("minishell: syntax error in double quotes", \
 		STDERR_FILENO);
-		*exit_status = 1;	
+		*exit_status = 1;
 	}
 	else if (code != 0)
 	{
-		print_error_from_errno();
+		ft_perror();
 		*exit_status = errno;
 		errno = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 11:23:30 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:32:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int	interpreter(t_tree **ast, char **envp[])
 	t_cmd_infos	*infos;
 
 	if (!ast)
-		return (ft_putendl_fd("minishell: interpreter: missing ast", STDERR_FILENO), 1);
+		return (check_unknown_error(2), 1);
 	if ((*ast)->type != R_PIPE_SEQUENCE)
 	{
 		infos = ft_calloc(1, sizeof(t_cmd_infos));
 		if (!infos)
-			return (print_error_from_errno(), 1);
+			return (ft_perror(), 1);
 		reset_cmd_infos(infos);
 		res = execute_job(*ast, infos, envp, 1);
 		res = return_status(infos, res);

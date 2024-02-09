@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 20:17:16 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:38:47 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,21 @@ void	free_split(char **split)
 
 void	print_tokens(t_token **tokens)
 {
- 	t_token	*t;
+	t_token	*t;
 
- 	if (!tokens)
- 		return ;
- 	t = *tokens;
- 	while(t)
- 	{
- 		printf("content = %s, type = %d\n", t->content, t->type);
- 		t = t->next;
- 	}
+	if (!tokens)
+		return ;
+	t = *tokens;
+	while (t)
+	{
+		printf("content = %s, type = %d\n", t->content, t->type);
+		t = t->next;
+	}
 }
 
 void	print_table(int *table, int len)
 {
-	int k;
+	int	k;
 
 	k = 0;
 	while (k < len)

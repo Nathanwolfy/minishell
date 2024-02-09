@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 09:49:19 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 11:21:31 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:32:26 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	add_fd(t_cmd_infos *infos, char in_out, int fd)
 	{
 		fds = ft_calloc(infos->fds_in_size + 1, sizeof(int));
 		if (!fds)
-			return (print_error_from_errno(), 1);
+			return (ft_perror(), 1);
 		copy_fds(fds, infos->fds_in, infos->fds_in_size);
 		free(infos->fds_in);
 		fds[infos->fds_in_size++] = fd;
@@ -61,7 +61,7 @@ int	add_fd(t_cmd_infos *infos, char in_out, int fd)
 	{
 		fds = ft_calloc(infos->fds_out_size + 1, sizeof(int));
 		if (!fds)
-			return (print_error_from_errno(), 1);
+			return (ft_perror(), 1);
 		copy_fds(fds, infos->fds_out, infos->fds_out_size);
 		free(infos->fds_out);
 		fds[infos->fds_out_size++] = fd;
