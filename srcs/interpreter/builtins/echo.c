@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:49:38 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 13:59:29 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:48:08 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,45 @@
 
 static int	check_option_n(char *suffix)
 {
-	if (!suffix)
-		return (1);
-	if (suffix[0] == '-' && suffix[1] == 'n' && suffix[2] == '\0')
-		return (0);
-	else
-		return (1);
+	int	i;
+
+	if (suffix[0] == '-')
+	{
+		i = 1;
+		while (suffix[i] && suffix[i] == 'n')
+			i++;
+		if (i > 1 && suffix[i] == '\0')
+			return (1);
+	}
+	return (0);
 }
 
 int	builtin_echo(char **cmd, int fd)
 {
 	int	option_n;
 	int	i;
+	int	has_printed;
 
 	if (!cmd || !*cmd)
 		return (1);
 	i = 1;
-	option_n = check_option_n(cmd[1]);
+	option_n = 0;
+	has_printed = 0;
 	while (cmd[i])
 	{
-		if (i > 1)
+		if (!has_printed && check_option_n(cmd[i]))
+		{
+			option_n = 1;
+			i++;
+			continue ;
+		}
+		if (has_printed == 1)
 			ft_putchar_fd(' ', fd);
 		ft_putstr_fd(cmd[i], fd);
 		i++;
+		has_printed = 1;
 	}
-	if (option_n)
+	if (!option_n)
 		ft_putchar_fd('\n', fd);
 	return (0);
 }
