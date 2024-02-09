@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/08 17:58:51 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 18:09:13 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int	get_env_len(char *old, int *flags, int *i, char **envp)
 	if (!var_len)
 	{
 		flags[*i] = 1;
+		*i += 1;
 		return (0);
 	}
 	else if (var_len == -1)

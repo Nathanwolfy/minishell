@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:32:00 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:11:31 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	child_sequence(t_tree *node, t_cmd_infos *infos, char **envp[])
 		exit_return(print_error_cmd(node->content, infos->status)));
 	manage_fds_for_cmd(infos);
 	if (execve(cmd[0], cmd, *envp) < 0)
-		return (free_split(cmd), close_fds(infos, 0), exit_return(1));
+		return (free_split(cmd), close_fds(infos, 0), write(1, "A\n", 2), exit_return(1));
 	return (exit_return(print_error_cmd(NULL, 2)));
 }
 

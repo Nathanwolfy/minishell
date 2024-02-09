@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 14:14:28 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:53:37 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ typedef struct s_ast_data
 	int		start;
 	t_token	**stream;
 }	t_ast_data;
+
+typedef struct s_cmd_line_info
+{
+	char	*line;
+	int		*flags;
+	int		exit_status;
+}	t_cmd_line_info;
 
 typedef struct s_cmd_infos
 {
