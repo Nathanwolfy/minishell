@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 18:33:27 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:42:23 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:53:46 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**copy_envp(char *old_envp[])
 
 	ct = count_split(old_envp);
 	envp = ft_calloc(ct + 1, sizeof(char *));
-	if (!envp)
+	if (!envp && ft_perror())
 		return (NULL);
 	l = 0;
 	while (l < ct)

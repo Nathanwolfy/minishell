@@ -6,16 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/08 16:05:49 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:18:36 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-/*	0 == skip
-	1 == copy;
-	< 0 == expand var and number of chars
-*/
 
 static void	replace_dquote_loop(char *line, int *flags, int *i, char **envp)
 {
@@ -58,8 +53,6 @@ static void	replace_squote_loop(char *line, int *flags, int *i)
 		}
 		*i += 1;
 	}
-	// error no closing quotes
-	// just raise a flag and readline, ft_strjoin, if no opened quote remains stop, else repeat
 }
 
 static void	get_exit_status_len(int *flags, int *i, int exit_status)
@@ -111,8 +104,8 @@ char	*format_cmd_line(char *line, char **envp, int exit_status)
 	if (!line)
 		return (NULL);
 	flags = ft_calloc(ft_strlen(line), sizeof(int));
-	if (!flags)
-		return (NULL); //error
+	if (!flags && ft_perror())
+		return (NULL);
 	copy = ft_strdup(line);
 	if (!copy)
 		return (free(flags), NULL);

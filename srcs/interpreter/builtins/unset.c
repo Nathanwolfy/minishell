@@ -6,68 +6,64 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:04:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/08 09:30:50 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/09 13:49:03 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-static int	find_index_to_skip(char *var, char **envp)
+static char	**create_new_envp(char **env)
 {
-	int	i;
-	int	var_len;
+	int		ct;
+	char	**new;
 
-	i = 0;
-	var_len = ft_strlen(var);
-	while (envp[i])
-	{
-		if (get_var_name_len(envp[i]) == var_len
-			&& ft_strncmp(var, envp[i], var_len) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
+	ct = get_double_arr_len(env);
+	new = ft_calloc(ct, sizeof(char *));
+	if (!new && ft_perror())
+		return (NULL);
+	return (new);
 }
 
-static char	**dup_envp(char **envp, int index_to_skip)
+static int	dup_envp(char ***envp, int index_to_skip)
 {
 	int		i;
 	int		j;
-	int		ct;
 	char	**new;
 
 	i = 0;
 	j = 0;
-	ct = get_double_arr_len(envp);
-	new = ft_calloc(ct, sizeof(char *));
+	new = create_new_envp(*envp);
 	if (!new)
-		return (free_split(envp), NULL);
-	while (envp[j])
+		return (1);
+	while ((*envp)[j])
 	{
 		if (j == index_to_skip)
 		{
 			j++;
 			continue ;
 		}
-		new[i] = ft_strdup(envp[j]);
-		if (!new)
-			return (free_split(new), free_split(envp), NULL);
+		new[i] = ft_strdup((*envp)[j]);
+		if (!new && ft_perror())
+			return (free_split(new), 1);
 		i++;
 		j++;
 	}
-	return (new);
+	free_split(*envp);
+	*envp = new;
+	return (0);
 }
-static char	**remove_var(char *var, char **envp)
+
+static int	remove_var(char *var, char ***envp)
 {
 	int		index_to_skip;
 
-	index_to_skip = find_index_to_skip(var, envp);
+	index_to_skip = get_env_index(var, ft_strlen(var), *envp);
 	if (index_to_skip == -1)
-		return (envp);
+		return (1);
 	return (dup_envp(envp, index_to_skip));
 }
 
-int	builtin_unset(char **cmd, char ***envp, int fd)
+int	builtin_unset(char **cmd, char ***envp)
 {
 	int	i;
 	int	exit_status;
@@ -78,33 +74,13 @@ int	builtin_unset(char **cmd, char ***envp, int fd)
 		return (exit_status);
 	while (cmd[i])
 	{
-		if (check_env_var_format(cmd[i], "unset", fd) == -1)
+		if (check_env_var_format(cmd[i], "unset") || remove_var(cmd[i], envp))
 		{
 			exit_status = 1;
 			i++;
 			continue ;
 		}
-		*envp = remove_var(cmd[i], *envp);
-		if (!*envp)
-			return (-1);
 		i++;
 	}
 	return (exit_status);
 }
-
-/*int	main(int argc, char **argv, char **env)
-{
-	char	**cmd;
-
-	cmd = ft_calloc(5, sizeof(char *));
-	for (int i = 0; i < argc - 1; i++)
-	{
-		cmd[i] = ft_strdup(argv[i + 1]);
-	}
-	builtin_env(env);
-	printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
-	builtin_unset(cmd, &env);
-	printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\n");
-	builtin_env(env);
-}*/
-

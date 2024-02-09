@@ -34,6 +34,7 @@ SRCS_INTERPRETER_FILES = interpreter.c \
 							cmd_infos_utils.c \
 
 SRCS_BUILTINS_FILES = export.c	\
+						export2.c			\
 						manage_builtins.c	\
 						env.c	\
 						builtins_utils.c	\
@@ -41,6 +42,7 @@ SRCS_BUILTINS_FILES = export.c	\
 						echo.c				\
 						pwd.c				\
 						cd.c				\
+						cd2.c				\
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 
