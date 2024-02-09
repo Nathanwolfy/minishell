@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 15:19:04 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:21:16 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	free_lines(char *line, char *old_line)
 	}
 }
 
-void	prompt(t_token *token, t_tree *ast, char *envp[])
+void	prompt(t_token *token, t_tree *ast, char **envp[])
 {
 	char	*line;
 	char	*old_line;
@@ -38,7 +38,7 @@ void	prompt(t_token *token, t_tree *ast, char *envp[])
 	while (running)
 	{
 		old_line = readline(PROMPT);
-		line = format_cmd_line(old_line, envp, exit_status); //use exit status if needed
+		line = format_cmd_line(old_line, *envp, exit_status); //use exit status if needed
 		if (line == (char *)-1)
 		{
 			continue ;
