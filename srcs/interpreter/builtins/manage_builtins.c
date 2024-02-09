@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 11:58:54 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:05:26 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_i
 	cmd = recreate_cmd_builtin(node);
 	if (!cmd)
 		return (close_fd_builtin(fd), print_error_from_errno(), 1);
+	res = 2;
 	if (is_builtin == 0)
 		res = builtin_echo(cmd, fd);
 	else if (is_builtin == 1)
@@ -112,7 +113,5 @@ int	exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_i
 		res = builtin_env(*envp, fd);
 	else if (is_builtin == 6)
 		res = 2; //implement exit
-	else
-		res = 2;
 	return (close_fd_builtin(fd), free_split(cmd), check_unknown_error(res));
 }
