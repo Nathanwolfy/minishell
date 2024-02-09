@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:03:31 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:13:25 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, char **envp[], int ism
 			return (close_fds(infos, 0), print_error_from_errno(), 1);
 		cmd = recreate_and_get_cmd(node, *envp, infos);
 		if (!cmd)
-			return (close_fds(infos, 0), exit_return(print_error_cmd(infos->status)));
+			return (close_fds(infos, 0), exit_return(print_error_cmd(node->content, infos->status)));
 		manage_fds_for_cmd(infos);
 		if (execve(cmd[0], cmd, *envp) < 0)
 			return (free_split(cmd), close_fds(infos, 0), exit_return(1));

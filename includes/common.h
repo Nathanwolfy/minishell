@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:00:23 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 12:11:20 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ int		set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain);
 
 /*		INTERPRETER - ERRORS		*/
 
-int		print_error_cmd(int status);
+int		print_error_cmd(char *cmd, int status);
 int		check_unknown_error(int status);
 
 /*		INTERPRETER - UTILS		*/
