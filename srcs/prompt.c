@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/08 20:21:16 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/09 15:54:19 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void	prompt(t_token *token, t_tree *ast, char **envp[])
 		line = format_cmd_line(old_line, *envp, exit_status); //use exit status if needed
 		if (line == (char *)-1)
 		{
-			continue ;
 			exit_status = 0;
+			continue ;
 		}
 		running = lexer(line, &token);
 		if (print_error_lexer(running, &exit_status) < 0)
@@ -50,8 +50,8 @@ void	prompt(t_token *token, t_tree *ast, char **envp[])
 		else //update exit status in case of errors
 		{
 			ast = ast_builder(&token); //catch error code from ast
-			exit_status = interpreter(&ast, envp);
 			ft_tokenclear(&token);
+			exit_status = interpreter(&ast, envp);
 			ft_treeclear(&ast);
 		}
 		if (old_line)
