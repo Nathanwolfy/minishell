@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 15:54:19 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/10 19:07:43 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	prompt(t_token *token, t_tree *ast, char **envp[])
 	while (running)
 	{
 		old_line = readline(PROMPT);
-		line = format_cmd_line(old_line, *envp, exit_status); //use exit status if needed
+		line = format_cmd_line(old_line, *envp, exit_status);
 		if (line == (char *)-1)
 		{
 			exit_status = 0;
