@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/11 16:48:29 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:05:43 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 		res = add_io_file_here_doc(node, infos);
 	if (res != 0 && !ismain)
 		return (exit_return(res), res);
-	else if (res != 1)
+	else if (res != 0)
 		return (res);
 	else
 		return (execute_job(node->left, infos, envp, ismain));

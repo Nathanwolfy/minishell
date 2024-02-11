@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:17:13 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/11 16:58:03 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:03:47 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ int	here_doc_sequence(t_tree *node)
 				&& line[ft_strlen(delimiter)] == '\n')
 				break ;
 			content = ft_strjoin_free(content, line, 3);
-			if (!content)
-				return (1);
-			content = ft_strjoin_free(content, "\n", 1);
 			if (!content)
 				return (1);
 		}

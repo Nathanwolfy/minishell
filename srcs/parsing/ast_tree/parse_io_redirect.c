@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_io_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:18:25 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/26 10:07:38 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:02:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_tree	*parse_io_here(t_ast_data *d)
 {
 	t_tree	*io_here_node;
 
-	io_here_node = create_node(R_IO_HERE, NULL, NULL, NULL);
+	io_here_node = create_node(R_IO_FILE_DLESS, NULL, NULL, NULL);
 	if (!io_here_node)
 		return (NULL);
 	consume_token(d);
