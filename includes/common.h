@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 17:53:37 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:21:28 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef enum e_rules
 	R_IO_FILE_TO,
 	R_IO_FILE_FROM,
 	R_IO_FILE_DGREAT,
-	R_IO_HERE,
+	R_IO_FILE_DLESS,
 	R_FILENAME,
 	R_HERE_END
 }	t_rules;
