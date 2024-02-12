@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/11 16:57:27 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:22:52 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ char	**check_mandatory_envp(char *copied_envp[]);
 char	**copy_envp(char *old_envp[]);
 int		exit_return(int res);
 int		here_doc_sequence(t_tree *node);
+void	close_fd_builtin(int fd);
 
 /*		TOKENS AND LEXING		*/
 

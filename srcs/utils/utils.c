@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:38:47 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:22:41 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ void	print_tokens(t_token **tokens)
 	}
 }
 
-void	print_table(int *table, int len)
+void	close_fd_builtin(int fd)
+{
+	if (fd != STDOUT_FILENO && fd > 0)
+		close(fd);
+}
+
+/*void	print_table(int *table, int len)
 {
 	int	k;
 
@@ -50,7 +56,7 @@ void	print_table(int *table, int len)
 		k++;
 	}
 	ft_putstr_fd("\n", STDERR_FILENO);
-}
+}*/
 
 int	return_status(t_cmd_infos *infos, int res)
 {

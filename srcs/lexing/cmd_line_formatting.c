@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 18:09:22 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:25:55 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static void	lexer_set_flags(char **envp, t_cmd_line_info *d)
 			get_exit_status_len(d->flags, &i, d->exit_status);
 		else if (i < len && d->line[i] == '$')
 			get_env_len(d->line, d->flags, &i, envp);
-		if (i < len && d->line[i] != '\"' && d->line[i] != '\'' && d->line[i] != '$')
+		if (i < len && d->line[i] != '\"' \
+		&& d->line[i] != '\'' && d->line[i] != '$')
 		{
 			d->flags[i] = 1;
 			i++;

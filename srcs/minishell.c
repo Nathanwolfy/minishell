@@ -6,12 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 15:20:37 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:16:34 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
 
 int	main(int argc, char *argv[], char *old_envp[])
 {

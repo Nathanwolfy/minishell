@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_line_formatting_utils1.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 18:09:13 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:28:15 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ int	get_var_len(char *old, int *i)
 	if (ft_isdigit(old[cursor]))
 	{
 		*i = cursor + 1;
-		return (-1);;
+		return (-1);
 	}
-	while (ft_isalpha(old[cursor]) || ft_isdigit(old[cursor]) || old[cursor] == '_')
+	while (ft_isalpha(old[cursor]) \
+	|| ft_isdigit(old[cursor]) || old[cursor] == '_')
 		cursor++;
 	return (cursor - *i - 1);
 }
@@ -59,10 +60,7 @@ int	get_env_len(char *old, int *flags, int *i, char **envp)
 		return (0);
 	index = get_env_index(old + *i + 1, var_len, envp);
 	if (index == -1)
-	{
-		*i += var_len + 1;
-		return (0);
-	}
+		return (*i += var_len + 1, 0);
 	j = 0;
 	while (envp[index][j] != '=')
 		j++;
@@ -70,8 +68,7 @@ int	get_env_len(char *old, int *flags, int *i, char **envp)
 	while (envp[index][++j] != '\0')
 		env_len++;
 	flags[*i] = -env_len;
-	*i += var_len + 1;
-	return (env_len);
+	return (*i += var_len + 1, env_len);
 }
 
 void	copy_env_var(char *old, char *new, int *i, char **envp)
@@ -94,6 +91,6 @@ void	copy_env_var(char *old, char *new, int *i, char **envp)
 	while (envp[index][env_i] != '=')
 		env_i++;
 	env_i++;
-	while(envp[index][env_i])
+	while (envp[index][env_i])
 		new[new_i++] = envp[index][env_i++];
 }
