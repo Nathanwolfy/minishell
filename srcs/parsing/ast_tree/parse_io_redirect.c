@@ -61,6 +61,7 @@ t_tree	*parse_infile(t_ast_data *d)
 	node->left = left;
 	return (node);
 }
+
 t_tree	*parse_io_file_arg(t_ast_data *d, t_tree *prev)
 {
 	t_tree *new_node;

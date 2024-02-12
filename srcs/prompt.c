@@ -50,6 +50,7 @@ void	prompt(t_token *token, t_tree *ast, char **envp[])
 		else //update exit status in case of errors
 		{
 			ast = ast_builder(&token); //catch error code from ast
+			print_ast(ast, 0, 'l');
 			ft_tokenclear(&token);
 			if (!here_doc_sequence(ast))
 				exit_status = interpreter(&ast, envp);	
