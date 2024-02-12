@@ -6,11 +6,12 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 12:40:04 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:42:17 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:09:51 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+
 char	**replace_shlvl(char *copied_envp[]);
 char	**increment_shlvl(char *copied_envp[]);
 char	**add_shlvl(char *copied_envp[]);

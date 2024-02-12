@@ -8,6 +8,7 @@ SRCS_UTILS_FILES = utils.c \
 					utils_tree.c \
 					utils_envp.c \
 					utils_envp2.c \
+					utils_here_doc.c \
 
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c	\

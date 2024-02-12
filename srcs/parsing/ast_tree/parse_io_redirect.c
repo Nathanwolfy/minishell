@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse_io_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:18:25 by ehickman          #+#    #+#             */
 /*   Updated: 2024/02/12 16:25:34 by ehickman         ###   ########.fr       */

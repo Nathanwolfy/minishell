@@ -38,6 +38,7 @@
 # include <errno.h>
 
 # define PROMPT "minishell: "
+# define PROMPT_HERE_DOC "heredoc> "
 # define NOT_FOUND (t_tree *)-1
 # define DQUOTE (char)-1000
 # define SQUOTE (char)-1001
@@ -131,6 +132,8 @@ int		return_status(t_cmd_infos *infos, int res);
 char	**check_mandatory_envp(char *copied_envp[]);
 char	**copy_envp(char *old_envp[]);
 int		exit_return(int res);
+int		here_doc_sequence(t_tree *node);
+void	close_fd_builtin(int fd);
 
 /*		TOKENS AND LEXING		*/
 
@@ -205,6 +208,7 @@ t_cmd_infos *infos, char **envp[], int ismain);
 int		add_io_file_to(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_from(t_tree *node, t_cmd_infos *infos);
 int		add_io_file_append(t_tree *node, t_cmd_infos *infos);
+int		add_io_file_here_doc(t_tree *node, t_cmd_infos *infos);
 
 /*		INTERPRETER - BUILTINS		*/
 

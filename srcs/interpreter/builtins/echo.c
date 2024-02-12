@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 13:49:38 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 15:48:08 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:19:04 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ int	builtin_echo(char **cmd, int fd)
 		}
 		if (has_printed == 1)
 			ft_putchar_fd(' ', fd);
-		ft_putstr_fd(cmd[i], fd);
-		i++;
+		ft_putstr_fd(cmd[i++], fd);
 		has_printed = 1;
 	}
 	if (!option_n)

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 14:19:27 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:22:20 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ int	check_builtins(char *cmd)
 	i = 0;
 	while (i < 7)
 	{
-		if (ft_strncmp(cmd, builtins[i], ft_strlen(cmd)) == 0 && ft_strlen(cmd) == ft_strlen(builtins[i]))
+		if (ft_strncmp(cmd, builtins[i], ft_strlen(cmd)) == 0 \
+		&& ft_strlen(cmd) == ft_strlen(builtins[i]))
 			return (i);
 		i++;
 	}
 	return (-1);
 }
 
-static int manage_fds_for_builtins(t_cmd_infos *infos)
+static int	manage_fds_for_builtins(t_cmd_infos *infos)
 {
 	int	k;
 	int	fd;
@@ -56,12 +57,6 @@ static int manage_fds_for_builtins(t_cmd_infos *infos)
 	if (infos->fds_out_size > 0)
 		fd = (infos->fds_out)[k];
 	return (fd);
-}
-
-static void close_fd_builtin(int fd)
-{
-	if (fd != STDOUT_FILENO && fd > 0)
-		close(fd);
 }
 
 static char	**recreate_cmd_builtin(t_tree *node)
@@ -81,14 +76,15 @@ static char	**recreate_cmd_builtin(t_tree *node)
 	{
 		cmd[j] = ft_strdup(it->content);
 		if (!cmd[j++])
-			return(free_split(cmd), NULL);
+			return (free_split(cmd), NULL);
 		it = it->right;
 	}
 	cmd[j] = NULL;
 	return (cmd);
 }
 
-int	exec_builtin(int is_builtin, t_tree *node, char **envp[], t_cmd_infos *cmd_infos)
+int	exec_builtin(int is_builtin, t_tree *node, \
+char **envp[], t_cmd_infos *cmd_infos)
 {
 	int		res;
 	char	**cmd;
