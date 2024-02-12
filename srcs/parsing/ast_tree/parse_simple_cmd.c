@@ -6,16 +6,30 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:17:22 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/31 15:49:12 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 12:55:24 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
+static int	add_cmd_suffixes_to_bottom_right(t_ast_data *d, t_tree *prev)
+{
+	t_tree	*new_node;
+
+	while (is_token_type(*(d->stream), T_WORD))
+	{
+		new_node = create_node(R_CMD_SUFFIX, (*(d->stream))->content, NULL, NULL);
+		if (!new_node)
+			return (1);
+		add_node_to_bottom_right(prev, new_node);
+		consume_token(d);
+	}
+	return (0);
+}
+
 t_tree	*parse_cmd_suffix(t_ast_data *d, t_tree *prev)
 {
 	t_tree	*suffix_node;
-	t_tree	*new_node;
 
 	suffix_node = parse_io_redirect(d);
 	if (!suffix_node)
@@ -31,17 +45,9 @@ t_tree	*parse_cmd_suffix(t_ast_data *d, t_tree *prev)
 		consume_token(d);
 		return (parse_cmd_suffix(d, prev));
 	}
-	else
-	{
-		while (is_token_type(*(d->stream), T_WORD))
-		{
-			new_node = create_node(R_CMD_SUFFIX, (*(d->stream))->content, NULL, NULL);
-			if (!new_node)
-				return (ft_treeclear(&suffix_node), ft_treeclear(&prev), NULL);
-			add_node_to_bottom_right(prev, new_node);
-			consume_token(d);
-		}
-	}
+	else if (suffix_node->type != R_IO_FILE_DLESS)
+		if (add_cmd_suffixes_to_bottom_right(d, prev))
+			return (ft_treeclear(&suffix_node), ft_treeclear(&prev), NULL);
 	add_node_to_bottom_left(suffix_node, prev);
 	return (parse_cmd_suffix(d, suffix_node));
 }
