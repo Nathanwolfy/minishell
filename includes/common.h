@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 12:21:28 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:28:16 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ typedef struct s_tree
 typedef struct s_ast_data
 {
 	int		count;
-	int		start;
 	t_token	**stream;
 }	t_ast_data;
 
@@ -167,6 +166,7 @@ int		is_token_type(t_token *t, int type);
 int		is_io_file(t_token *t);
 void	add_node_to_bottom_right(t_tree *main, t_tree *new_node);
 void	add_node_to_bottom_left(t_tree *main, t_tree *new_node);
+int		add_cmd_suffixes_to_bottom_right(t_ast_data *d, t_tree *cmd);
 void	ft_treeclear(t_tree **lst);
 void	free_ast_data(t_ast_data *d);
 t_tree	*ft_treenew(void *content, int type);
