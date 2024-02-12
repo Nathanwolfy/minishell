@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/26 10:09:42 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:35:15 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void	add_node_to_bottom_right(t_tree *main, t_tree *new_node)
 
 int	is_io_file(t_token *t)
 {
-	if (t->type == T_RET_TO || t->type == T_RET_FROM || t->type == T_DGREAT)
-		return (1);
-	return (0);
+	return (t->type == T_RET_TO || t->type == T_RET_FROM || t->type == T_DGREAT
+		|| t->type == T_DLESS);
 }
 
 t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right)
@@ -58,10 +57,6 @@ void	consume_token(t_ast_data *d)
 		return ;
 	if (*(d->stream))
 	{
-		if ((*(d->stream))->type == T_PIPE)
-			d->start = 1;
-		else
-			d->start = 0;
 		*(d->stream) = (*(d->stream))->next;
 		d->count += 1;
 	}
