@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/01/26 10:09:42 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:27:56 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ void	add_node_to_bottom_right(t_tree *main, t_tree *new_node)
 
 int	is_io_file(t_token *t)
 {
-	if (t->type == T_RET_TO || t->type == T_RET_FROM || t->type == T_DGREAT)
-		return (1);
-	return (0);
+	return (t->type == T_RET_TO || t->type == T_RET_FROM || t->type == T_DGREAT
+		|| t->type == T_DLESS);
 }
 
 t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right)
