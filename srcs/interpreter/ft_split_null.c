@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_null.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 20:49:06 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 16:16:37 by nlederge         ###   ########.fr       */
+/*   Created: 2024/02/12 16:12:47 by nlederge          #+#    #+#             */
+/*   Updated: 2024/02/12 19:58:16 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-char	**ft_split(const char *s, char c);
+char	**ft_split_null(const char *s, char c);
 
 static size_t	ft_word_size(const char *str, char c)
 {
@@ -78,7 +78,7 @@ static char	**free_tab(char **tab, size_t i)
 	return (NULL);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split_null(const char *s, char c)
 {
 	char	**tab;
 	size_t	size;
@@ -95,13 +95,13 @@ char	**ft_split(const char *s, char c)
 		while (*s && *s == c)
 			s++;
 		size = ft_word_size(s, c);
+		tab[i] = ft_strdup_len(s, size);
+		if (tab[i++] == NULL)
+			return (free_tab(tab, --i));
 		if (size != 0)
-		{
-			tab[i] = ft_strdup_len(s, size);
-			if (tab[i++] == NULL)
-				return (free_tab(tab, --i));
-		}
-		s += size;
+			s += size;
+		else
+			s++;
 	}
 	tab[i] = 0;
 	return (tab);

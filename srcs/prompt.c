@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 15:24:36 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 15:37:28 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	prompt(t_token *token, t_tree *ast, char **envp[])
 		else //update exit status in case of errors
 		{
 			ast = ast_builder(&token); //catch error code from ast
-			print_ast(ast, 0, 'l');
 			ft_tokenclear(&token);
 			if (!here_doc_sequence(ast))
 				exit_status = interpreter(&ast, envp);

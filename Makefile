@@ -32,7 +32,9 @@ SRCS_INTERPRETER_FILES = interpreter.c \
 							interpreter_pipes.c \
 							cmd_process.c \
 							cmd_process_utils.c \
+							cmd_process_utils1.c \
 							cmd_infos_utils.c \
+							ft_split_null.c
 
 SRCS_BUILTINS_FILES = export.c	\
 						export2.c			\

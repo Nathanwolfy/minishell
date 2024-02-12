@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 12:19:06 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:19:12 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:25:06 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,32 +53,46 @@ static char	*find_path_var(char *envp[])
 	return (NULL);
 }
 
+static char	*correct_tmp_cmd(char **cmdin, char **paths, int k)
+{
+	char	*tmp;
+
+	if (paths[k][0] == '\0' && ft_strchr(cmdin[0], '/') != NULL)
+		tmp = ft_strdup(cmdin[0]);
+	else if (paths[k][0] == '\0' && ft_strchr(cmdin[0], '/') == NULL)
+		tmp = ft_strjoin_slash(".", cmdin[0], 1);
+	else
+		tmp = ft_strjoin_slash(paths[k], cmdin[0], 1);
+	return (tmp);
+}
+
 static char	**check_get_cmd(char **cmdin, char **envp, t_cmd_infos *infos)
 {
 	char	**paths;
 	char	*tmp;
 	int		k;
 
-	k = 0;
-	paths = ft_split(find_path_var(envp), ':');
+	k = -1;
+	paths = ft_split_null(find_path_var(envp), ':');
 	if (!paths)
 		return (free_split(cmdin), infos->status = 1, NULL);
-	while (paths[k])
+	while (paths[++k])
 	{
-		tmp = ft_strjoin_slash(paths[k], cmdin[0], 1);
+		tmp = correct_tmp_cmd(cmdin, paths, k);
 		if (!tmp)
 			return (infos->status = 1, NULL);
-		if (access(tmp, F_OK | X_OK) == 0)
+		if (!f_ok(tmp) && x_ok(tmp) != 0)
+			return (ft_perror_str(tmp), free(tmp), free_split(cmdin), \
+			infos->status = 126, NULL);
+		else if (!f_ok(tmp) && !x_ok(tmp))
 			return (free(cmdin[0]), cmdin[0] = tmp, cmdin);
 		free(tmp);
-		k++;
 	}
-	tmp = ft_strjoin_slash("", cmdin[0], 0);
-	if (!tmp)
-		return (infos->status = 1, NULL);
-	if (access(tmp, F_OK | X_OK) == 0)
-		return (free(cmdin[0]), cmdin[0] = tmp, cmdin);
-	return (free_split(cmdin), free(tmp), infos->status = 127, NULL);
+	if (ft_strchr(cmdin[0], '/') && !f_ok(cmdin[0]) && x_ok(cmdin[0]))
+		return (ft_perror_str(cmdin[0]), free_split(cmdin), deny(infos), NULL);
+	else if (ft_strchr(cmdin[0], '/') && !f_ok(cmdin[0]) && !x_ok(cmdin[0]))
+		return (cmdin);
+	return (free_split(cmdin), infos->status = 127, NULL);
 }
 
 char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos)

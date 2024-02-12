@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 15:22:52 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 20:22:06 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,13 @@ void	prompt(t_token *token, t_tree *ast, char **envp[]);
 /*		ERRORS		*/
 
 int		ft_perror(void);
+int		ft_perror_str(char *str);
 int		print_error_lexer(int code, int *exit_status);
 int		print_error_interpreter(int code);
 
 /*		UTILS		*/
 
+void	print_split(char **split);
 void	free_split(char **split);
 int		return_status(t_cmd_infos *infos, int res);
 char	**check_mandatory_envp(char *copied_envp[]);
@@ -194,7 +196,11 @@ int		check_unknown_error(int status);
 
 /*		INTERPRETER - UTILS		*/
 
+char	**ft_split_null(const char *s, char c);
 char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos);
+int		f_ok(char *file);
+int		x_ok(char *file);
+void	deny(t_cmd_infos *infos);
 int		cmd_split_count(t_tree *node);
 void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);

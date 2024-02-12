@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 15:22:41 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:19:24 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ void	close_fd_builtin(int fd)
 {
 	if (fd != STDOUT_FILENO && fd > 0)
 		close(fd);
+}
+
+void	print_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		ft_putendl_fd(split[i], STDERR_FILENO);
+		i++;
+	}
 }
 
 /*void	print_table(int *table, int len)

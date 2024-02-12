@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:06:18 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:26:23 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:57:33 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	print_error_cmd(char *cmd, int status)
 		ft_putstr_fd(cmd, STDERR_FILENO);
 		ft_putendl_fd(": command not found", STDERR_FILENO);
 	}
+	else if (status == 126)
+		return (126);
 	else if (status == 1)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);

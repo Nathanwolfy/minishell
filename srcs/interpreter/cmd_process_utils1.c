@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   cmd_process_utils1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 16:02:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 20:09:16 by nlederge         ###   ########.fr       */
+/*   Created: 2024/02/12 20:21:25 by nlederge          #+#    #+#             */
+/*   Updated: 2024/02/12 20:22:29 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	main(int argc, char *argv[], char *old_envp[])
+int	f_ok(char *file)
 {
-	char	**envp;
-	t_token	*token;
-	t_tree	*ast;
+	return (access(file, F_OK));
+}
 
-	(void)argc;
-	(void)argv;
-	token = NULL;
-	ast = NULL;
-	envp = copy_envp(old_envp);
-	if (!envp)
-		return (ft_perror(), 1);
-	envp = check_mandatory_envp(envp);
-	if (!envp)
-		return (ft_perror(), 1);
-	prompt(token, ast, &envp);
-	return (0);
+int	x_ok(char *file)
+{
+	return (access(file, X_OK));
+}
+
+void	deny(t_cmd_infos *infos)
+{
+	infos->status = 126;
 }
