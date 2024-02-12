@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 12:49:18 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:07:21 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	prompt(t_token *token, t_tree *ast, char **envp[])
 			ast = ast_builder(&token); //catch error code from ast
 			print_ast(ast, 0, 'l');
 			ft_tokenclear(&token);
-			exit_status = interpreter(&ast, envp);
+			if (!here_doc_sequence(ast))
+				exit_status = interpreter(&ast, envp);	
+			else
+				exit_status = 1;
 			ft_treeclear(&ast);
 		}
 		if (old_line)

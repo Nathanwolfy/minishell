@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_io_redirect.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:18:25 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/12 13:00:23 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:02:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
