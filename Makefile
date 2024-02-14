@@ -5,7 +5,6 @@ SRCS_MAIN_FILES = minishell.c	\
 					errors.c
 
 SRCS_UTILS_FILES = utils.c \
-					utils1.c					\
 					utils_tree.c 				\
 					utils_envp.c 				\
 					utils_envp2.c 				\
