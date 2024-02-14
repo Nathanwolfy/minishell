@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 10:59:58 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:03:18 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ static char	*initialize_line(char **envp, char **old_line, int *exit_status)
 		*exit_status = 0;
 		return (NULL);
 	}
-	if (g_sig == SIGINT)
-		return (signal_redisplay(), (char *)-1);
+	if (setup_non_interactive_mode())
+		return (NULL);
 	line = format_cmd_line(*old_line, envp, *exit_status);
 	if (line == (char *)-1)
 	{
@@ -51,6 +51,18 @@ static char	*initialize_line(char **envp, char **old_line, int *exit_status)
 	else if (!line)
 		return (NULL);
 	return (line);
+}
+
+static void	initialize_ast_and_execute(t_token **token, t_tree **ast, char ***envp,\
+int *exit_status)
+{
+	*ast = ast_builder(token); // error
+	ft_tokenclear(token);
+	if (!here_doc_sequence(*ast))
+		*exit_status = interpreter(ast, envp);
+	else
+		*exit_status = 1;
+	ft_treeclear(ast);
 }
 
 void	prompt(t_token *token, t_tree *ast, char **envp[])
@@ -73,15 +85,7 @@ void	prompt(t_token *token, t_tree *ast, char **envp[])
 		if (print_error_lexer(running, &exit_status) < 0)
 			ft_tokenclear(&token);
 		else //update exit status in case of errors
-		{
-			ast = ast_builder(&token); //catch error code from ast
-			ft_tokenclear(&token);
-			if (!here_doc_sequence(ast))
-				exit_status = interpreter(&ast, envp);
-			else
-				exit_status = 1;
-			ft_treeclear(&ast);
-		}
+			initialize_ast_and_execute(&token, &ast, envp, &exit_status);
 		if (old_line)
 			add_history(old_line);
 		free_lines(line, old_line);

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 11:02:30 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:36:54 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ void	close_fd_builtin(int fd);
 int		setup_interactive_mode(void);
 int		setup_non_interactive_mode(void);
 void	signal_redisplay(void);
+void	interactive_sigint_handler(int signum);
+void	non_interactive_sigint_handler(int signum);
 
 /*		TOKENS AND LEXING		*/
 

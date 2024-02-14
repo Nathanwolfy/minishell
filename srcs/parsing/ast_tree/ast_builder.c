@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 10:54:04 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/12 16:35:00 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:11:22 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_tree	*ast_builder(t_token **t)
 	d->count = 0;
 	*(d->stream) = *t;
 	ast = parse_cmd_line(d);
+	if (d->stream != NULL)
+		printf("ERROR\n");
 	free_ast_data(d);
 	return (ast);
 }

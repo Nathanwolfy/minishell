@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 09:05:42 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/14 10:44:46 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:36:38 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	handler_change_g_sig(int signum)
 {
 	g_sig = (sig_atomic_t)signum;
-	printf("%d\n", (int)g_sig);
 }
 
 int	setup_interactive_mode(void)
@@ -24,7 +23,7 @@ int	setup_interactive_mode(void)
 
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
-	sa.sa_handler = handler_change_g_sig;
+	sa.sa_handler = interactive_sigint_handler;
 	if (sigaction(SIGINT, &sa, NULL) < 0)
 		return (ft_perror(), 1);
 	sa.sa_handler = SIG_IGN;
@@ -41,6 +40,9 @@ int	setup_non_interactive_mode(void)
 	sa.sa_flags = 0;
 	sa.sa_handler = handler_change_g_sig;
 	if (sigaction(SIGQUIT, &sa, NULL) < 0)
+		return (ft_perror(), 1);
+	sa.sa_handler = non_interactive_sigint_handler;
+	if (sigaction(SIGINT, &sa, NULL) < 0)
 		return (ft_perror(), 1);
 	return (0);
 }
