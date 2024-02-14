@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_line_formatting_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/14 15:42:57 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:52:09 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
 	new = create_new_cmd_line(old, flags);
 	if (!new || new == (char *)-1)
 		return (new);
-	i = 0;
+	i = -1;
 	j = 0;
-	while (old[i])
+	while (old[++i])
 	{
 		if (flags[i] == 1)
 			copy_and_increment(new, old, &j, i);
@@ -78,7 +78,6 @@ char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
 				copy_env_var(old, new, &i, envp);
 			j += -flags[i];
 		}
-		i++;
 	}
 	return (new);
 }

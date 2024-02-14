@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:17:13 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 14:27:33 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:04:01 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	here_doc_sequence(t_tree *node)
 			return (ft_perror(), 1);
 		while (1)
 		{
-			line = readline(PROMPT_HERE_DOC);
+			line = readline("heredoc> ");
 			if (!line)
 				return (ft_perror(), 1);
 			if (is_del(line, node))

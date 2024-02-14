@@ -6,11 +6,26 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 15:45:17 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:48:20 by nlederge         ###   ########.fr       */
+
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+
+
+int	free_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	if (!split)
+		return (0);
+	while (split[i] != 0)
+		free(split[i++]);
+	free(split);
+	return (0);
+}
 
 void	print_tokens(t_token **tokens)
 {
@@ -46,14 +61,34 @@ void	print_split(char **split)
 
 int	return_status(t_cmd_infos *infos, int res)
 {
-	if (WIFEXITED(infos->status))
-		return (WEXITSTATUS(infos->status));
+	int	ret;
+
+	if (infos && infos->status && WIFEXITED(infos->status))
+		ret = WEXITSTATUS(infos->status);
 	else
-		return (res);
+		ret = res;
+	free_data_infos(NULL, infos);
+	return (ret);
 }
 
 int	exit_return(int res)
 {
 	exit(res);
 	return (res);
+}
+
+void	free_data_infos(t_malloc_data *data, t_cmd_infos *infos)
+{
+	if (data && data->old_line)
+		free(data->old_line);
+	if (data && data->envp && *(data->envp))
+		free_split(*(data->envp));
+	if (data && data->ast)
+		ft_treeclear(data->ast);
+	if (infos && infos->fds_in)
+		free(infos->fds_in);
+	if (infos && infos->fds_out)
+		free(infos->fds_out);
+	if (infos)
+		free(infos);
 }
