@@ -6,23 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 16:19:24 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:45:17 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-void	free_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	if (!split)
-		return ;
-	while (split[i] != 0)
-		free(split[i++]);
-	free(split);
-}
 
 void	print_tokens(t_token **tokens)
 {
@@ -55,20 +43,6 @@ void	print_split(char **split)
 		i++;
 	}
 }
-
-/*void	print_table(int *table, int len)
-{
-	int	k;
-
-	k = 0;
-	while (k < len)
-	{
-		ft_putnbr_fd(table[k], STDERR_FILENO);
-		ft_putstr_fd(" ", STDERR_FILENO);
-		k++;
-	}
-	ft_putstr_fd("\n", STDERR_FILENO);
-}*/
 
 int	return_status(t_cmd_infos *infos, int res)
 {

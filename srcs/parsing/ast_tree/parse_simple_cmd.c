@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:17:22 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/12 16:26:53 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:34:09 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	add_cmd_suffixes_to_bottom_right(t_ast_data *d, t_tree *cmd)
 
 	while (is_token_type(*(d->stream), T_WORD))
 	{
-		new_node = create_node(R_CMD_SUFFIX, (*(d->stream))->content, NULL, NULL);
+		new_node = create_node(R_CMD_SUFFIX, (*(d->stream))->content, NULL, \
+		NULL);
 		if (!new_node)
 			return (1);
 		add_node_to_bottom_right(cmd, new_node);
@@ -38,7 +39,8 @@ t_tree	*parse_cmd_suffix(t_ast_data *d, t_tree *prev)
 	{
 		if ((*(d->stream))->type != T_WORD)
 			return (prev);
-		suffix_node = create_node(R_CMD_SUFFIX, (*(d->stream))->content, NULL, NULL);
+		suffix_node = create_node(R_CMD_SUFFIX, (*(d->stream))->content, \
+		NULL, NULL);
 		if (!suffix_node)
 			return (ft_treeclear(&prev), NULL);
 		add_node_to_bottom_right(prev, suffix_node);
