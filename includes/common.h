@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 20:29:37 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 11:02:30 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # define PROMPT "minishell: "
 # define PROMPT_HERE_DOC "heredoc> "
 # define NOT_FOUND (t_tree *)-1
-# define DQUOTE (char)-1000
-# define SQUOTE (char)-1001
+# define DQUOTE (char)1
+# define SQUOTE (char)2
 # define CMD_NOT_FOUND 127
 
 typedef struct s_token
@@ -117,6 +117,8 @@ typedef enum e_rules
 	R_HERE_END
 }	t_rules;
 
+extern sig_atomic_t	g_sig;
+
 void	prompt(t_token *token, t_tree *ast, char **envp[]);
 
 /*		ERRORS		*/
@@ -136,6 +138,12 @@ char	**copy_envp(char *old_envp[]);
 int		exit_return(int res);
 int		here_doc_sequence(t_tree *node);
 void	close_fd_builtin(int fd);
+
+/*		SIGNALS		*/
+
+int		setup_interactive_mode(void);
+int		setup_non_interactive_mode(void);
+void	signal_redisplay(void);
 
 /*		TOKENS AND LEXING		*/
 

@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 14:39:26 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 10:33:38 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
 	new = create_new_cmd_line(old, flags);
 	if (!new)
 		return (NULL);
+	else if (new == (char *)-1)
+		return (new);
 	i = 0;
 	j = 0;
 	while (old[i])
