@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:13:43 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:27:05 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_malloc_data *data, int *exit_status)
 		return ;	
 	}
 	data->ast = ast;
-	print_ast(*ast, 0, '\0');
 	if (!here_doc_sequence(*ast))
 		*exit_status = interpreter(data, ast);
 	else

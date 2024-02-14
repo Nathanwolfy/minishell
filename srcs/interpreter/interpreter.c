@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:17:39 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:35:53 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int	interpreter(t_malloc_data *data, t_tree **ast)
 		reset_cmd_infos(infos);
 		res = execute_job(*ast, infos, data, 1);
 		res = return_status(infos, res);
-		free_data_infos(NULL, infos);
 	}
 	else
 		res = set_up_pipes(*ast, data, -1, 1);
