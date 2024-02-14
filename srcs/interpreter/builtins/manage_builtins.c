@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 15:22:20 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:24:06 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	**recreate_cmd_builtin(t_tree *node)
 }
 
 int	exec_builtin(int is_builtin, t_tree *node, \
-char **envp[], t_cmd_infos *cmd_infos)
+t_malloc_data *data, t_cmd_infos *cmd_infos)
 {
 	int		res;
 	char	**cmd;
@@ -98,15 +98,15 @@ char **envp[], t_cmd_infos *cmd_infos)
 	if (is_builtin == 0)
 		res = builtin_echo(cmd, fd);
 	else if (is_builtin == 1)
-		res = builtin_cd(cmd, envp);
+		res = builtin_cd(cmd, data->envp);
 	else if (is_builtin == 2)
 		res = builtin_pwd(fd);
 	else if (is_builtin == 3)
-		res = builtin_export(cmd, envp, fd);
+		res = builtin_export(cmd, data->envp, fd);
 	else if (is_builtin == 4)
-		res = builtin_unset(cmd, envp);
+		res = builtin_unset(cmd, data->envp);
 	else if (is_builtin == 5)
-		res = builtin_env(*envp, fd);
+		res = builtin_env(*(data->envp), fd);
 	else if (is_builtin == 6)
 		res = 2; //implement exit
 	return (close_fd_builtin(fd), free_split(cmd), check_unknown_error(res));

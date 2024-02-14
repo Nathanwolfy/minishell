@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:05:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/09 12:31:37 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:22:58 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	close_all_pipefds(int pipefd[2], int pipefd_out)
 		close(pipefd_out);
 }
 
-static int	set_up_pipe_left(t_tree *node, char **envp[], \
+static int	set_up_pipe_left(t_tree *node, t_malloc_data *data, \
 int pipefd[2], int pipefd_out)
 {
 	t_cmd_infos	*infos;
@@ -36,7 +36,7 @@ int pipefd[2], int pipefd_out)
 	add_fd(infos, 'o', pipefd[1]);
 	if (pipefd_out != -1)
 		close(pipefd_out);
-	return (execute_job(node->left, infos, envp, 0));
+	return (execute_job(node->left, infos, data, 0));
 }
 
 static void	manage_fds_pipe_right(t_cmd_infos *infos, \
@@ -49,7 +49,7 @@ int pipefd[2], int pipefd_out)
 		add_fd(infos, 'o', pipefd_out);
 }
 
-int	set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain)
+int	set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out, int ismain)
 {
 	int			pfd[2];
 	pid_t		pipe_pid;
@@ -63,9 +63,9 @@ int	set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain)
 	else if (pipe_pid == 0)
 	{
 		if ((node->left)->type != R_PIPE_SEQUENCE)
-			return (set_up_pipe_left(node, envp, pfd, pipefd_out));
+			return (set_up_pipe_left(node, data, pfd, pipefd_out));
 		else
-			return (close(pfd[0]), set_up_pipes(node->left, envp, pfd[1], 0));
+			return (close(pfd[0]), set_up_pipes(node->left, data, pfd[1], 0));
 	}
 	else
 	{
@@ -73,7 +73,7 @@ int	set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain)
 		if (!infos)
 			return (close_all_pipefds(pfd, pipefd_out), ft_perror(), 1);
 		manage_fds_pipe_right(infos, pfd, pipefd_out);
-		return (execute_job(node->right, infos, envp, ismain), \
+		return (execute_job(node->right, infos, data, ismain), \
 		waitpid(pipe_pid, &infos->status, 0), return_status(infos, 0));
 	}
 }

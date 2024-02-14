@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 11:36:54 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:35:53 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,13 @@ typedef enum e_rules
 	R_HERE_END
 }	t_rules;
 
+typedef struct s_malloc_data
+{
+	char	*old_line;
+	char	***envp;
+	t_tree	**ast;
+}	t_malloc_data;
+
 extern sig_atomic_t	g_sig;
 
 void	prompt(t_token *token, t_tree *ast, char **envp[]);
@@ -138,6 +145,7 @@ char	**copy_envp(char *old_envp[]);
 int		exit_return(int res);
 int		here_doc_sequence(t_tree *node);
 void	close_fd_builtin(int fd);
+void	free_data_infos(t_malloc_data *data, t_cmd_infos *infos);
 
 /*		SIGNALS		*/
 
@@ -191,17 +199,17 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 
 /*		INTERPRETER		*/
 
-int		interpreter(t_tree **ast, char **envp[]);
+int		interpreter(t_malloc_data *data, t_tree **ast);
 int		execute_job(t_tree *node, t_cmd_infos *infos, \
-char **envp[], int ismain);
+t_malloc_data *data, int ismain);
 
 /*		INTERPRETER - PIPES		*/
 
-int		set_up_pipes(t_tree *node, char **envp[], int pipefd_out, int ismain);
+int		set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out, int ismain);
 
 /*		INTERPRETER - ERRORS		*/
 
-int		print_error_cmd(char *cmd, int status);
+int		print_error_cmd(char *cmd, int status, t_malloc_data *data, t_cmd_infos *infos);
 int		check_unknown_error(int status);
 
 /*		INTERPRETER - UTILS		*/
@@ -217,7 +225,7 @@ int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
 int		launch_cmd_sequence(t_tree *node, \
-t_cmd_infos *infos, char **envp[], int ismain);
+t_cmd_infos *infos, t_malloc_data *data, int ismain);
 
 /*		INTERPRETER - REDIRECTS		*/
 
@@ -229,7 +237,7 @@ int		add_io_file_here_doc(t_tree *node, t_cmd_infos *infos);
 /*		INTERPRETER - BUILTINS		*/
 
 int		exec_builtin(int is_builtin, t_tree *node, \
-char **envp[], t_cmd_infos *cmd_infos);
+t_malloc_data *data, t_cmd_infos *cmd_infos);
 int		check_builtins(char *cmd);
 int		check_env_var_format(char *content, char *cmd);
 int		get_var_name_len(char *var);

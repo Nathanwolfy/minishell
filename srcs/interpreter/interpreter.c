@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/11 17:05:43 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:17:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	print_error_interpreter(int code)
 	return (code);
 }
 
-int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
+int	execute_job(t_tree *node, t_cmd_infos *infos, t_malloc_data *data, int ismain)
 {
 	int	res;
 
@@ -29,7 +29,7 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 	if (!node)
 		return (0);
 	if (node->type == R_CMD_NAME)
-		res = launch_cmd_sequence(node, infos, envp, ismain);
+		res = launch_cmd_sequence(node, infos, data, ismain);
 	else if (node->type == R_IO_FILE_TO)
 		res = add_io_file_to(node, infos);
 	else if (node->type == R_IO_FILE_FROM)
@@ -39,14 +39,14 @@ int	execute_job(t_tree *node, t_cmd_infos *infos, char **envp[], int ismain)
 	else if (node->type == R_IO_FILE_DLESS)
 		res = add_io_file_here_doc(node, infos);
 	if (res != 0 && !ismain)
-		return (exit_return(res), res);
+		return (free_data_infos(data, infos), exit_return(res), res);
 	else if (res != 0)
 		return (res);
 	else
-		return (execute_job(node->left, infos, envp, ismain));
+		return (execute_job(node->left, infos, data, ismain));
 }
 
-int	interpreter(t_tree **ast, char **envp[])
+int	interpreter(t_malloc_data *data, t_tree **ast)
 {
 	int			res;
 	t_cmd_infos	*infos;
@@ -59,11 +59,11 @@ int	interpreter(t_tree **ast, char **envp[])
 		if (!infos)
 			return (ft_perror(), 1);
 		reset_cmd_infos(infos);
-		res = execute_job(*ast, infos, envp, 1);
+		res = execute_job(*ast, infos, data, 1);
 		res = return_status(infos, res);
-		free(infos);
+		free_data_infos(NULL, infos);
 	}
 	else
-		res = set_up_pipes(*ast, envp, -1, 1);
+		res = set_up_pipes(*ast, data, -1, 1);
 	return (res);
 }
