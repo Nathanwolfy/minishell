@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 13:03:18 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:01:56 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static void	initialize_ast_and_execute(t_token **token, t_tree **ast, char ***en
 int *exit_status)
 {
 	*ast = ast_builder(token); // error
+	print_ast(*ast, 0, '\0');
 	ft_tokenclear(token);
 	if (!here_doc_sequence(*ast))
 		*exit_status = interpreter(ast, envp);

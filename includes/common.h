@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 11:36:54 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:41:13 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ t_tree	*parse_io_redirect(t_ast_data *d);
 int		is_token_type(t_token *t, int type);
 int		is_io_file(t_token *t);
 void	add_node_to_bottom_right(t_tree *main, t_tree *new_node);
-void	add_node_to_bottom_left(t_tree *main, t_tree *new_node);
+t_tree	*add_node_to_bottom_left(t_tree *main, t_tree *new_node);
 int		add_cmd_suffixes_to_bottom_right(t_ast_data *d, t_tree *cmd);
 void	ft_treeclear(t_tree **lst);
 void	free_ast_data(t_ast_data *d);
