@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 13:00:36 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 16:07:12 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:01:22 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	ft_perror(void)
 		ft_putendl_fd(strerror(errno), STDERR_FILENO);
 	}
 	return (errno);
-
 }
 
 int	ft_perror_str(char *str)
