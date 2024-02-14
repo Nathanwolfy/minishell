@@ -12,24 +12,6 @@
 
 #include "common.h"
 
-int	get_flagged_len(char *old, int *flags)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (old[i])
-	{
-		if (flags[i] < 0)
-			len += -flags[i];
-		else
-			len += flags[i];
-		i++;
-	}
-	return (len);
-}
-
 static void	copy_exit_status(char *new, int j, int exit_status)
 {
 	int	n;
@@ -80,9 +62,7 @@ char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
 	char	*new;
 
 	new = create_new_cmd_line(old, flags);
-	if (!new)
-		return (NULL);
-	else if (new == (char *)-1)
+	if (!new || new == (char *)-1)
 		return (new);
 	i = -1;
 	j = 0;

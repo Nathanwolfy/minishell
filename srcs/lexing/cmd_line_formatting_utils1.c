@@ -6,11 +6,29 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/12 15:28:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:36:12 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+
+int	get_flagged_len(char *old, int *flags)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (old[i])
+	{
+		if (flags[i] < 0)
+			len += -flags[i];
+		else
+			len += flags[i];
+		i++;
+	}
+	return (len);
+}
 
 int	get_var_len(char *old, int *i)
 {
