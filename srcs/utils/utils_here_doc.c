@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:17:13 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/12 15:15:54 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:27:33 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,17 @@ static int	continue_browsing(t_tree *node)
 	return (res);
 }
 
-static char	*get_del(t_tree *node)
+static int	is_del(char *line, t_tree *node)
 {
-	return (node->right->content);
+	return (!ft_strncmp(line, node->right->content, ft_strlen(line)) \
+	&& !ft_strncmp(line, node->right->content, \
+	ft_strlen(node->right->content)));
+}
+
+static char	*free_and_return(t_tree *node, char *content)
+{
+	free(node->content);
+	return (content);
 }
 
 int	here_doc_sequence(t_tree *node)
@@ -61,19 +69,19 @@ int	here_doc_sequence(t_tree *node)
 			return (ft_perror(), 1);
 		while (1)
 		{
-			write(STDOUT_FILENO, PROMPT_HERE_DOC, ft_strlen(PROMPT_HERE_DOC));
-			line = get_next_line(STDIN_FILENO);
+			line = readline(PROMPT_HERE_DOC);
 			if (!line)
 				return (ft_perror(), 1);
-			if (!ft_strncmp(line, get_del(node), ft_strlen(get_del(node))) \
-			&& line[ft_strlen(get_del(node))] == '\n')
+			if (is_del(line, node))
 				break ;
 			content = ft_strjoin_free(content, line, 3);
 			if (!content)
 				return (ft_perror(), 1);
+			content = ft_strjoin_free(content, "\n", 1);
+			if (!content)
+				return (ft_perror(), 1);
 		}
-		free(node->content);
-		node->content = content;
+		node->content = free_and_return(node, content);
 	}
 	return (continue_browsing(node));
 }

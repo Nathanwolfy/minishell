@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:41:23 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/12 16:35:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:13:00 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ t_tree	*create_node(int type, char *content, t_tree *left, t_tree *right)
 
 	node = ft_calloc(1, sizeof(t_tree));
 	if (!node)
-		return (NULL);
+		return (ft_perror(), NULL);
 	node->type = type;
 	if (content)
 	{
 		node->content = ft_strdup(content);
 		if (!node->content)
-			return (NULL);
+			return (ft_perror(), free(node), NULL);
 	}
 	else
 		node->content = NULL;

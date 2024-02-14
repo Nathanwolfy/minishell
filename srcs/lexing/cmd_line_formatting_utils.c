@@ -6,29 +6,11 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 14:39:26 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:42:57 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-int	get_flagged_len(char *old, int *flags)
-{
-	int	i;
-	int	len;
-
-	i = 0;
-	len = 0;
-	while (old[i])
-	{
-		if (flags[i] < 0)
-			len += -flags[i];
-		else
-			len += flags[i];
-		i++;
-	}
-	return (len);
-}
 
 static void	copy_exit_status(char *new, int j, int exit_status)
 {
@@ -80,8 +62,8 @@ char	*copy_flagged(char *old, int *flags, char **envp, int exit_status)
 	char	*new;
 
 	new = create_new_cmd_line(old, flags);
-	if (!new)
-		return (NULL);
+	if (!new || new == (char *)-1)
+		return (new);
 	i = 0;
 	j = 0;
 	while (old[i])

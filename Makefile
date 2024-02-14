@@ -1,19 +1,22 @@
 NAME = minishell
 
-SRCS_MAIN_FILES = minishell.c \
-					prompt.c \
+SRCS_MAIN_FILES = minishell.c	\
+					prompt.c 	\
 					errors.c
 
 SRCS_UTILS_FILES = utils.c \
-					utils_tree.c \
-					utils_envp.c \
-					utils_envp2.c \
-					utils_here_doc.c \
+					utils1.c					\
+					utils_tree.c 				\
+					utils_envp.c 				\
+					utils_envp2.c 				\
+					utils_here_doc.c 			\
+					signals/setup_signals.c		\
+					signals/signal_handlers.c	\
 
 SRCS_LEXING_FILES = lexing.c \
-						lexing_utils.c	\
-						ft_token.c		\
-						cmd_line_formatting.c	\
+						lexing_utils.c				\
+						ft_token.c					\
+						cmd_line_formatting.c		\
 						cmd_line_formatting_utils.c	\
 						cmd_line_formatting_utils1.c\
 
@@ -26,26 +29,26 @@ SRCS_PARSING_FILES = ft_tree.c \
 						ast_tree/parse_io_redirect.c
 
 SRCS_INTERPRETER_FILES = interpreter.c \
-							interpreter_errors.c \
-							interpreter_utils.c \
+							interpreter_errors.c 	\
+							interpreter_utils.c 	\
 							interpreter_redirects.c \
-							interpreter_pipes.c \
-							cmd_process.c \
-							cmd_process_utils.c \
-							cmd_process_utils1.c \
-							cmd_infos_utils.c \
+							interpreter_pipes.c 	\
+							cmd_process.c 			\
+							cmd_process_utils.c 	\
+							cmd_process_utils1.c 	\
+							cmd_infos_utils.c 		\
 							ft_split_null.c
 
 SRCS_BUILTINS_FILES = export.c	\
 						export2.c			\
 						manage_builtins.c	\
-						env.c	\
+						env.c				\
 						builtins_utils.c	\
 						unset.c				\
 						echo.c				\
 						pwd.c				\
 						cd.c				\
-						cd2.c				\
+						cd2.c
 
 SRCS_MAIN = $(addprefix srcs/, $(SRCS_MAIN_FILES))
 
