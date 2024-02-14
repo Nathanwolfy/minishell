@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:40:04 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:56:49 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ t_cmd_infos *infos, t_malloc_data *data)
 }
 
 int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, \
-t_malloc_data *data, int ismain)
+t_malloc_data *data)
 {
 	pid_t	fork_pid;
 	int		is_builtin;
 
 	is_builtin = check_builtins(node->content);
-	if (ismain && is_builtin < 0)
+	if (data->ismain && is_builtin < 0)
 		fork_pid = fork();
 	else
 		fork_pid = 0;
 	if (fork_pid < 0)
 		return (close_fds(infos, 0), ft_perror(), 1);
-	else if (is_builtin >= 0 && !ismain)
+	else if (is_builtin >= 0 && !data->ismain)
 		return (exit_return(exec_builtin(is_builtin, node, data, infos)));
 	else if (is_builtin >= 0)
 		return (exec_builtin(is_builtin, node, data, infos));

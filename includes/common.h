@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:50:23 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 17:44:28 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,9 @@
 # include <errno.h>
 
 # define PROMPT "minishell: "
-# define PROMPT_HERE_DOC "heredoc> "
 # define NOT_FOUND (t_tree *)-1
 # define DQUOTE (char)1
 # define SQUOTE (char)2
-# define CMD_NOT_FOUND 127
 
 typedef struct s_token
 {
@@ -89,6 +87,14 @@ typedef struct s_cmd_infos
 	int		status;
 }	t_cmd_infos;
 
+typedef struct s_malloc_data
+{
+	char	*old_line;
+	char	***envp;
+	t_tree	**ast;
+	int		ismain;
+}	t_malloc_data;
+
 typedef enum e_token_type
 {
 	T_END=-1,
@@ -116,13 +122,6 @@ typedef enum e_rules
 	R_FILENAME,
 	R_HERE_END
 }	t_rules;
-
-typedef struct s_malloc_data
-{
-	char	*old_line;
-	char	***envp;
-	t_tree	**ast;
-}	t_malloc_data;
 
 extern sig_atomic_t	g_sig;
 
@@ -201,15 +200,16 @@ void	print_ast(t_tree *tree, int indent_ct, char side);
 
 int		interpreter(t_malloc_data *data, t_tree **ast);
 int		execute_job(t_tree *node, t_cmd_infos *infos, \
-t_malloc_data *data, int ismain);
+t_malloc_data *data);
 
 /*		INTERPRETER - PIPES		*/
 
-int		set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out, int ismain);
+int		set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out);
 
 /*		INTERPRETER - ERRORS		*/
 
-int		print_error_cmd(char *cmd, int status, t_malloc_data *data, t_cmd_infos *infos);
+int		print_error_cmd(char *cmd, int status, \
+t_malloc_data *data, t_cmd_infos *infos);
 int		check_unknown_error(int status);
 
 /*		INTERPRETER - UTILS		*/
@@ -227,7 +227,7 @@ int		add_fd(t_cmd_infos *infos, char in_out, int fd);
 void	close_fds(t_cmd_infos *infos, int notlast);
 void	manage_fds_for_cmd(t_cmd_infos *infos);
 int		launch_cmd_sequence(t_tree *node, \
-t_cmd_infos *infos, t_malloc_data *data, int ismain);
+t_cmd_infos *infos, t_malloc_data *data);
 
 /*		INTERPRETER - REDIRECTS		*/
 
@@ -251,6 +251,7 @@ int		builtin_unset(char **cmd, char ***envp);
 int		builtin_echo(char **cmd, int fd);
 int		builtin_pwd(int fd);
 int		builtin_cd(char **cmd, char ***envp);
+int		builtin_exit(char **cmd, t_malloc_data *data, t_cmd_infos *infos);
 int		change_pwd(char ***envp);
 
 /*		QUOTE FORMATING		*/
