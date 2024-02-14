@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 08:18:25 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/12 16:25:34 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:58:01 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_tree	*parse_io_file_arg(t_ast_data *d, t_tree *prev)
 		consume_token(d);
 	}
 	else if (prev->type != R_IO_FILE_DLESS && !is_token_type(*(d->stream), T_WORD))
-		return (ft_treeclear(&prev), NOT_FOUND);
+		return (ft_treeclear(&prev), NULL);
 	return (prev);
 }
 
