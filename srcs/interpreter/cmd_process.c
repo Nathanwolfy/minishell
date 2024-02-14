@@ -6,13 +6,14 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:11:36 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:40:04 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-static int	child_sequence(t_tree *node, t_cmd_infos *infos, t_malloc_data *data)
+static int	child_sequence(t_tree *node, \
+t_cmd_infos *infos, t_malloc_data *data)
 {
 	char	**cmd;
 
@@ -22,10 +23,12 @@ static int	child_sequence(t_tree *node, t_cmd_infos *infos, t_malloc_data *data)
 	cmd = recreate_and_get_cmd(node, *(data->envp), infos);
 	if (!cmd)
 		return (close_fds(infos, 0), \
-		exit_return(print_error_cmd(node->content, infos->status, data, infos)));
+		exit_return(print_error_cmd(node->content, \
+		infos->status, data, infos)));
 	manage_fds_for_cmd(infos);
 	if (execve(cmd[0], cmd, *(data->envp)) < 0)
-		return (free_split(cmd), close_fds(infos, 0), free_data_infos(data, infos), exit_return(1));
+		return (free_split(cmd), close_fds(infos, 0), \
+	free_data_infos(data, infos), exit_return(1));
 	return (exit_return(print_error_cmd(NULL, 2, data, infos)));
 }
 

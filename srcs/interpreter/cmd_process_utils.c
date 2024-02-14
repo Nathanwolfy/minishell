@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 12:19:06 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 15:50:10 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:50:53 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,20 @@ static char	**check_get_cmd(char **cmdin, char **envp, t_cmd_infos *infos)
 	k = -1;
 	paths = ft_split_null(find_path_var(envp), ':');
 	if (!paths)
-		return (free_split(cmdin), infos->status = 1, NULL);
+		return (free_split(cmdin), err(infos), NULL);
 	while (paths[++k])
 	{
 		tmp = correct_tmp_cmd(cmdin, paths, k);
 		if (!tmp)
-			return (free_split(cmdin), free_split(paths), infos->status = 1, NULL);
-		if (!f_ok(tmp) && x_ok(tmp) != 0)
+			return (free_split(cmdin), free_split(paths), err(infos), NULL);
+		if (fnot_ok_xok(tmp))
 			return (ft_perror_str(tmp), free(tmp), free_split(cmdin), \
 			free_split(paths), infos->status = 126, NULL);
 		else if (!f_ok(tmp) && !x_ok(tmp))
 			return (free(cmdin[0]), cmdin[0] = tmp, free_split(paths), cmdin);
 		free(tmp);
 	}
-	free_split(paths);
-	if (ft_strchr(cmdin[0], '/') && !f_ok(cmdin[0]) && x_ok(cmdin[0]))
+	if (!free_split(paths) && ft_strchr(cmdin[0], '/') && fnot_ok_xok(cmdin[0]))
 		return (ft_perror_str(cmdin[0]), free_split(cmdin), deny(infos), NULL);
 	else if (ft_strchr(cmdin[0], '/') && !f_ok(cmdin[0]) && !x_ok(cmdin[0]))
 		return (cmdin);

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:06:18 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 15:37:08 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:39:20 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 else : unknown error
 */
 
-int	print_error_cmd(char *cmd, int status, t_malloc_data *data, t_cmd_infos *infos)
+int	print_error_cmd(char *cmd, int status, \
+t_malloc_data *data, t_cmd_infos *infos)
 {
 	if (status == 127 && cmd)
 	{

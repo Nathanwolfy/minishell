@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 15:35:53 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:50:23 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ int		print_error_interpreter(int code);
 /*		UTILS		*/
 
 void	print_split(char **split);
-void	free_split(char **split);
+int		free_split(char **split);
 int		return_status(t_cmd_infos *infos, int res);
 char	**check_mandatory_envp(char *copied_envp[]);
 char	**copy_envp(char *old_envp[]);
@@ -218,7 +218,9 @@ char	**ft_split_null(const char *s, char c);
 char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos);
 int		f_ok(char *file);
 int		x_ok(char *file);
+int		fnot_ok_xok(char *file);
 void	deny(t_cmd_infos *infos);
+void	err(t_cmd_infos *infos);
 int		cmd_split_count(t_tree *node);
 void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);

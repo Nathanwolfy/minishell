@@ -6,22 +6,23 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:33:57 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:48:20 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-void	free_split(char **split)
+int	free_split(char **split)
 {
 	int	i;
 
 	i = 0;
 	if (!split)
-		return ;
+		return (0);
 	while (split[i] != 0)
 		free(split[i++]);
 	free(split);
+	return (0);
 }
 
 void	print_tokens(t_token **tokens)

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:35:53 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:39:10 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int	print_error_interpreter(int code)
 	return (code);
 }
 
-int	execute_job(t_tree *node, t_cmd_infos *infos, t_malloc_data *data, int ismain)
+int	execute_job(t_tree *node, t_cmd_infos *infos, \
+t_malloc_data *data, int ismain)
 {
 	int	res;
 
