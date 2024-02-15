@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:08:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/15 18:15:09 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:16:13 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,6 @@ static int	get_split_size(char **cmd)
 	return (ct);
 }
 
-static int	get_code(char **cmd)
-{
-	int		ct;
-
-	ct = get_split_size(cmd);
-	if (ct != 2)
-		return (-1);
-	if (ft_isnumber(cmd[1]) == 0)
-		return (-2);
-	return ((int)((unsigned char)ft_atoi(cmd[1])));
-}
-
 static int	ft_isnumber(char *str)
 {
 	int		ct;
@@ -57,6 +45,18 @@ static int	ft_isnumber(char *str)
 		ct++;
 	}
 	return (1);
+}
+
+static int	get_code(char **cmd)
+{
+	int		ct;
+
+	ct = get_split_size(cmd);
+	if (ct != 2)
+		return (-1);
+	if (ft_isnumber(cmd[1]) == 0)
+		return (-2);
+	return ((int)((unsigned char)ft_atoi(cmd[1])));
 }
 
 int	builtin_exit(char **cmd, t_malloc_data *data, t_cmd_infos *infos)
