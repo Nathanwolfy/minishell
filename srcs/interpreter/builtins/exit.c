@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:08:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/15 18:16:13 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:18:03 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ static int	get_code(char **cmd)
 	int		ct;
 
 	ct = get_split_size(cmd);
-	if (ct != 2)
+	if (ct == 1)
+		return (0);
+	else if (ct > 2)
 		return (-1);
-	if (ft_isnumber(cmd[1]) == 0)
+	else if (ft_isnumber(cmd[1]) == 0)
 		return (-2);
 	return ((int)((unsigned char)ft_atoi(cmd[1])));
 }
