@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:08:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 17:48:34 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/15 18:08:59 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,26 @@ check for too many arguments
 convert exit code to a number between 0 and 255
 */
 
+static int	get_split_size(char **cmd)
+{
+	int	ct;
+
+	ct = 0;
+	if (!cmd)
+		return (0);
+	while (cmd[ct])
+		ct++;
+	return (ct);
+}
+
 static int	get_code(char **cmd)
 {
-	(void)cmd;
-	return (0);
+	int		ct;
+
+	ct = get_split_size(cmd);
+	if (ct != 2)
+		return (-1);
+	return ((int)((unsigned char)ft_atoi(cmd[1])));
 }
 
 int	builtin_exit(char **cmd, t_malloc_data *data, t_cmd_infos *infos)
