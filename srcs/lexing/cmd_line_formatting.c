@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/12 15:25:55 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 09:41:23 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	get_exit_status_len(int *flags, int *i, int exit_status)
 
 static void	replace_dquote_loop(int *i, char **envp, t_cmd_line_info *d)
 {
-	d->flags[*i] = 1;
+	d->flags[*i] = 0;
 	d->line[*i] = DQUOTE;
 	*i += 1;
 	while (d->line[*i])
@@ -37,7 +37,7 @@ static void	replace_dquote_loop(int *i, char **envp, t_cmd_line_info *d)
 		if (d->line[*i] == '\"')
 		{
 			d->line[*i] = DQUOTE;
-			d->flags[*i] = 1;
+			d->flags[*i] = 0;
 			*i += 1;
 			return ;
 		}
@@ -55,7 +55,7 @@ static void	replace_dquote_loop(int *i, char **envp, t_cmd_line_info *d)
 
 static void	replace_squote_loop(char *line, int *flags, int *i)
 {
-	flags[*i] = 1;
+	flags[*i] = 0;
 	line[*i] = SQUOTE;
 	*i += 1;
 	while (line[*i])
@@ -64,6 +64,7 @@ static void	replace_squote_loop(char *line, int *flags, int *i)
 		if (line[*i] == '\'')
 		{
 			line[*i] = SQUOTE;
+			flags[*i] = 0;
 			*i += 1;
 			return ;
 		}
