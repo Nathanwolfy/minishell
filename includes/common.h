@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 18:23:09 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:56:39 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,8 @@ int		set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out);
 int		print_error_cmd(char *cmd, int status, \
 t_malloc_data *data, t_cmd_infos *infos);
 int		check_unknown_error(int status);
+void	no_such_file(t_cmd_infos *infos, char *cmd);
+void	cmd_not_found(t_cmd_infos *infos, char *cmd);
 
 /*		INTERPRETER - UTILS		*/
 

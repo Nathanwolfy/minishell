@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 12:19:06 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 18:27:59 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:57:00 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,27 @@ static char	**check_get_cmd(char **cmdin, char **envp, t_cmd_infos *infos)
 		return (ft_perror_str(cmdin[0]), free_split(cmdin), deny(infos), NULL);
 	else if (ft_strchr(cmdin[0], '/') && !f_ok(cmdin[0]) && !x_ok(cmdin[0]))
 		return (cmdin);
-	return (free_split(cmdin), infos->status = 127, infos->error = 1, NULL);
+	else if (ft_strchr(cmdin[0], '/') && f_ok(cmdin[0]))
+		return (no_such_file(infos, cmdin[0]), free_split(cmdin), NULL);
+	return (cmd_not_found(infos, cmdin[0]), free_split(cmdin), NULL);
+}
+
+static int	is_directory(char *cmdname, t_cmd_infos *infos)
+{
+	struct stat	path_stat;
+
+	if (stat(cmdname, &path_stat) != 0)
+		return (0);
+   	else if (S_ISDIR(path_stat.st_mode) && ft_strchr(cmdname, '/'))
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(cmdname, STDERR_FILENO);
+		ft_putendl_fd(": Is a directory", STDERR_FILENO);
+		infos->status = 126;
+		infos->error = 1;
+		return (1);
+	}
+	return (0);
 }
 
 char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos)
@@ -102,17 +122,19 @@ char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos)
 	char	**cmd;
 	t_tree	*it;
 
+	if (is_directory(node->content, infos))
+		return (NULL);
 	ct = cmd_split_count(node);
 	cmd = ft_calloc(ct + 1, sizeof(char *));
 	if (!cmd)
-		return (infos->status = 1, infos->error = 1, NULL);
+		return (err(infos), NULL);
 	j = 0;
 	it = node;
 	while (j < ct)
 	{
 		cmd[j] = ft_strdup(it->content);
 		if (!cmd[j++])
-			return (free_split(cmd), infos->status = 1, infos->error = 1, NULL);
+			return (free_split(cmd), err(infos), NULL);
 		it = it->right;
 	}
 	cmd[j] = NULL;
