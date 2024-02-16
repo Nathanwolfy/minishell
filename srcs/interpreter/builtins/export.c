@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 12:20:57 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 14:07:56 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/16 13:28:00 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,11 @@ static int	export_each_arg(char **cmd, char ***envp)
 	exit_status = 0;
 	while (cmd[i])
 	{
-		if (check_env_var_format(cmd[i], "export") == 1)
+		r_val = check_env_var_format(cmd[i], "export");
+		if (r_val > 0)
 		{
-			exit_status = 1;
+			if (r_val == 1)
+				exit_status = 1;
 			i++;
 			continue ;
 		}
