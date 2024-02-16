@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:04:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 13:49:03 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:11:23 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	remove_var(char *var, char ***envp)
 
 	index_to_skip = get_env_index(var, ft_strlen(var), *envp);
 	if (index_to_skip == -1)
-		return (1);
+		return (0);
 	return (dup_envp(envp, index_to_skip));
 }
 
@@ -74,12 +74,8 @@ int	builtin_unset(char **cmd, char ***envp)
 		return (exit_status);
 	while (cmd[i])
 	{
-		if (check_env_var_format(cmd[i], "unset") || remove_var(cmd[i], envp))
-		{
+		if (remove_var(cmd[i], envp))
 			exit_status = 1;
-			i++;
-			continue ;
-		}
 		i++;
 	}
 	return (exit_status);
