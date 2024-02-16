@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:05:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 17:00:38 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:15:20 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ int	set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out)
 			return (close_all_pipefds(pfd, pipefd_out), ft_perror(), 1);
 		manage_fds_pipe_right(infos, pfd, pipefd_out);
 		return (execute_job(node->right, infos, data), \
-		waitpid(pipe_pid, &infos->status, 0), return_status(infos, 0));
+		waitpid(pipe_pid, &(infos->status), 0), return_status(infos, infos->status));
 	}
 }

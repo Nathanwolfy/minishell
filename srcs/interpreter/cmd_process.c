@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 16:56:49 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:51:23 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ t_malloc_data *data)
 	{
 		return (child_sequence(node, infos, data));
 	}
-	return (close_fds(infos, 0), \
-	waitpid(fork_pid, &infos->status, 0), wait(NULL), 0);
+	return (close_fds(infos, 0), wait(NULL), \
+	waitpid(fork_pid, &(infos->status), 0), infos->status);
 }

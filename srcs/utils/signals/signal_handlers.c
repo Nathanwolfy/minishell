@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handlers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 10:53:03 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/16 09:46:00 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:37:28 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ void	interactive_sigint_handler(int signum)
 
 void	non_interactive_sigint_handler(int signum)
 {
-	(void)signum;
+	g_sig = signum;
 	write(1, "\n", 1);
 }
 
 void	non_interactive_sigquit_handler(int signum)
 {
-	(void)signum;
 	g_sig = signum;
 	write(1, "Quit\n", 5);
 }
