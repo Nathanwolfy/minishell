@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 15:43:55 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:23:09 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef struct s_cmd_infos
 	int		fds_out_size;
 	pid_t	child_pid;
 	int		status;
+	int		is_builtin;
+	int		error;
 }	t_cmd_infos;
 
 typedef struct s_malloc_data

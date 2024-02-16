@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 16:56:07 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 15:54:54 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:28:52 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,14 @@ int	return_status(t_cmd_infos *infos, int res)
 {
 	int	ret;
 
-	if (infos && WIFSIGNALED(infos->status))
-		ret = 128 + WTERMSIG(infos->status);
+	if (infos && infos->is_builtin >= 0)
+		ret = res;
+	else if (infos && infos->error == 1)
+		ret = res;
 	else if (infos && WIFEXITED(infos->status))
 		ret = WEXITSTATUS(infos->status);
+	else if (infos && WIFSIGNALED(infos->status))
+		ret = 128 + WTERMSIG(infos->status);
 	else
 		ret = res;
 	free_data_infos(NULL, infos);
