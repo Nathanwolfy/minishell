@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:58:01 by nlederge          #+#    #+#             */
-/*   Updated: 2024/01/31 13:26:19 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/16 14:42:46 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,51 @@ static int	build_token(t_token **token, int type, int *k, char *content)
 	return (0);
 }
 
+static char	*get_word_content(int len, int *k, int *table, char *line)
+{
+	int		line_len;
+	char	*content;
+	int		i;
+
+	i = 0;
+	line_len = (int)ft_strlen(line);
+	content = ft_calloc(len + 1, sizeof(char));
+	if (!content)
+		return (ft_perror(), NULL);
+	while (*k < line_len && (table[*k] == 1 || table[*k] == -1))
+	{
+		if (table[*k] == 1)
+			content[i++] = line[(*k)++];
+		else
+			*k += 1;
+	}
+	return (content);
+}
+
+static int	get_content_len(int *table, char *line, int k)
+{
+	int		len;
+	int		line_len;
+
+	len = 0;
+	line_len = (int)ft_strlen(line);
+	while (k < line_len && (table[k] == 1 || table[k] == -1))
+	{
+		if (table[k] == 1)
+			len++;
+		k++;
+	}
+	return (len);
+}
+
 static int	build_token_word(int *table, char *line, int *k, t_token **token)
 {
-	int		start;
-	int		end;
 	char	*content;
+	int		content_len;
 	int		res;
 
-	start = *k;
-	if (!table)
-		return (-1);
-	while (*k < (int) ft_strlen(line) && table[*k] == 1)
-		(*k)++;
-	end = *k;
-	content = ft_substr(line, start, end - start);
+	content_len = get_content_len(table, line, *k);
+	content = get_word_content(content_len, k, table, line);
 	if (!content)
 		return (-3);
 	res = build_token(token, T_WORD, k, content);
@@ -104,10 +135,10 @@ int	lexer(char *line, t_token **token)
 	table = ft_calloc(ft_strlen(line), sizeof(int));
 	if (!table)
 		return (ft_tokendelone(end_token), -3);
+	operator_sequence(table, line);
 	res = quote_sequence(table, line);
 	if (res < 0)
 		return (free(table), ft_tokendelone(end_token), res);
-	operator_sequence(table, line);
 	other_chars_sequence(table, line);
 	res = tokenize(table, line, token);
 	ft_tokenadd_back(token, end_token);
