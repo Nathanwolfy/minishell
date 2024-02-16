@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 12:57:51 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/16 15:07:42 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,6 @@ t_cmd_infos *infos, t_malloc_data *data)
 	return (exit_return(print_error_cmd(NULL, 2, data, infos)));
 }
 
-static int	handle_child_signal(int signum)
-{
-	if (signum == SIGQUIT)
-		return (write(2, "Quit\n", 5), 131);
-	else if (signum == SIGINT)
-		return (130);
-	return (0);
-}
-
-static int	check_child_signals(pid_t fork_pid, t_cmd_infos *infos)
-{
-	close_fds(infos, 0);
-	waitpid(fork_pid, &infos->status, 0);
-	wait(NULL);
-	if (WIFSIGNALED(infos->status))
-		return (handle_child_signal(WTERMSIG(infos->status)));
-	return (0);
-}
-
 int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, \
 t_malloc_data *data)
 {
@@ -72,5 +53,6 @@ t_malloc_data *data)
 	{
 		return (child_sequence(node, infos, data));
 	}
-	return (check_child_signals(fork_pid, infos));
+	return (close_fds(infos, 0), waitpid(fork_pid, &infos->status, 0), \
+	wait(NULL), 0);
 }
