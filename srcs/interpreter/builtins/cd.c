@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/08 17:33:35 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/09 14:17:08 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:12:32 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	builtin_cd(char **cmd, char ***envp)
 {
 	if (!cmd[1])
 		return (change_to_home(envp));
+	else if (cmd[2] != NULL)
+		return (ft_putendl_fd("minishell: cd: too many arguments", 2), 1);
 	else if (cmd[1][0] == '~' && (cmd[1][1] == '/' || cmd[1][1] == '\0'))
 		return (expand_tilde(cmd[1], envp));
 	else

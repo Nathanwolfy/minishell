@@ -6,7 +6,7 @@
 /*   By: ehickman <ehickman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:09:36 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/16 13:30:00 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:12:41 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,5 @@ int	check_env_var_format(char *content, char *cmd)
 		}
 		i++;
 	}
-	if (cmd[0] == 'u')
-		return (0);
 	return (2);
 }
