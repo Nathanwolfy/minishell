@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/17 16:33:05 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:22:31 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static char	*initialize_line(char ***envp, char **old_line, int *exit_status)
 static void	initialize_ast_and_execute(t_token **token, t_tree **ast, \
 t_malloc_data *data, int *exit_status)
 {
+	int	res;
+
 	*ast = ast_builder(token);
 	ft_tokenclear(token);
 	if (!ast || !*ast)
@@ -65,10 +67,17 @@ t_malloc_data *data, int *exit_status)
 		return ;
 	}
 	data->ast = ast;
-	if (!here_doc_sequence(*ast))
+	if (setup_here_doc_mode())
+		return ;
+	res = here_doc_sequence(*ast);
+	if (!res)
+	{
+		if (setup_non_interactive_mode())
+			return ;
 		*exit_status = interpreter(data, ast);
+	}
 	else
-		*exit_status = 1;
+		*exit_status = res;
 	ft_treeclear(ast);
 }
 

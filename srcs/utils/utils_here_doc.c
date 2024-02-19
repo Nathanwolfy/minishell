@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:17:13 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 17:04:01 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:40:15 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,42 +46,54 @@ static int	continue_browsing(t_tree *node)
 
 static int	is_del(char *line, t_tree *node)
 {
-	return (!ft_strncmp(line, node->right->content, ft_strlen(line)) \
-	&& !ft_strncmp(line, node->right->content, \
-	ft_strlen(node->right->content)));
+	return (!ft_strncmp(line, node->right->content, \
+	ft_strlen(node->right->content)) \
+	&& line[ft_strlen(node->right->content)] == '\n');
 }
 
-static char	*free_and_return(t_tree *node, char *content)
+static int	here_doc_routine(t_tree *node, char *content)
 {
-	free(node->content);
-	return (content);
+	char	*line;
+
+	while (1)
+	{
+		ft_putstr_fd("heredoc> ", STDOUT_FILENO);
+		line = s_get_next_line(STDIN_FILENO);
+		if (line == (char *)-1)
+		{
+			ft_putstr_fd("\nminishell: warning: here-document delimited by end-of-file (wanted `", STDOUT_FILENO);
+			ft_putstr_fd(node->right->content, STDOUT_FILENO);
+			ft_putendl_fd("\')", STDOUT_FILENO);
+			break ;
+		}
+		else if (!line && g_sig == SIGINT)
+			return (free(content), 128 + SIGINT);
+		else if (!line)
+			return (free(content), ft_perror(), 1);
+		else if (is_del(line, node))
+			break ;
+		content = ft_strjoin_free(content, line, 3);
+		if (!content)
+			return (ft_perror(), 1);
+	}
+	return (0);
 }
 
 int	here_doc_sequence(t_tree *node)
 {
-	char	*line;
 	char	*content;
+	int		res;
 
 	if (node->type == R_IO_FILE_DLESS)
 	{
 		content = ft_strdup("");
 		if (!content)
 			return (ft_perror(), 1);
-		while (1)
-		{
-			line = readline("heredoc> ");
-			if (!line)
-				return (ft_perror(), 1);
-			if (is_del(line, node))
-				break ;
-			content = ft_strjoin_free(content, line, 3);
-			if (!content)
-				return (ft_perror(), 1);
-			content = ft_strjoin_free(content, "\n", 1);
-			if (!content)
-				return (ft_perror(), 1);
-		}
-		node->content = free_and_return(node, content);
+		res = here_doc_routine(node, content);
+		if (res != 0)
+			return (res);
+		free(node->content);
+		node->content = content;
 	}
 	return (continue_browsing(node));
 }

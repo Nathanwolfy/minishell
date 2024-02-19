@@ -11,6 +11,7 @@ SRCS_UTILS_FILES = utils.c \
 					utils_here_doc.c 			\
 					signals/setup_signals.c		\
 					signals/signal_handlers.c	\
+					s_get_next_line.c			\
 
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c				\
