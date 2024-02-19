@@ -87,15 +87,13 @@ static void	set_malloc_data(t_malloc_data *data, char *old_line, char ***envp)
 	data->envp = envp;
 }
 
-void	prompt(t_token *token, t_tree *ast, char **envp[])
+void	prompt(int running, t_token *token, t_tree *ast, char **envp[])
 {
 	char			*line;
 	char			*old_line;
-	int				running;
 	int				exit_status;
 	t_malloc_data	data;
 
-	running = 1;
 	exit_status = 0;
 	while (running)
 	{

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:52:11 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 15:22:33 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:18:08 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ t_malloc_data *data, t_cmd_infos *infos)
 		res = builtin_env(*(data->envp), fd);
 	else if (is_builtin == 6)
 		res = builtin_exit(cmd, data, infos);
-	return (close_fd_builtin(fd), free_split(cmd), infos->status = res, check_unknown_error(res));
+	return (close_fd_builtin(fd), free_split(cmd), \
+	infos->status = res, check_unknown_error(res));
 }

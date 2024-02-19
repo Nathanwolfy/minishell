@@ -38,7 +38,6 @@
 # include <errno.h>
 
 # define PROMPT "minishell: "
-# define NOT_FOUND (t_tree *)-1
 # define DQUOTE (char)1
 # define SQUOTE (char)2
 
@@ -127,7 +126,7 @@ typedef enum e_rules
 
 extern sig_atomic_t	g_sig;
 
-void	prompt(t_token *token, t_tree *ast, char **envp[]);
+void	prompt(int running, t_token *token, t_tree *ast, char **envp[]);
 
 /*		ERRORS		*/
 
@@ -167,7 +166,9 @@ char	*format_cmd_line(char *line, char **envp, int exit_status);
 
 int		quote_sequence(int *table, char *line);
 int		operator_sequence(int *table, char *line);
+int		other_chars_sequence(int *table, char *line);
 
+int		build_token(t_token **token, int type, int *k, char *content);
 void	ft_tokendelone(t_token *lst);
 void	ft_tokenclear(t_token **lst);
 t_token	*ft_tokennew(void *content, int type);
@@ -228,6 +229,7 @@ int		x_ok(char *file);
 int		fnot_ok_xok(char *file);
 void	deny(t_cmd_infos *infos);
 void	err(t_cmd_infos *infos);
+int		is_directory(char *cmdname, t_cmd_infos *infos);
 int		cmd_split_count(t_tree *node);
 void	reset_cmd_infos(t_cmd_infos *infos);
 int		add_fd(t_cmd_infos *infos, char in_out, int fd);
