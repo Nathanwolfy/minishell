@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 14:33:30 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/14 15:32:40 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:17:22 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_tree	*parse_pipe_sequence(t_ast_data *d)
 	a = parse_simple_cmd(d);
 	if (!a)
 		return (NULL);
-	else if (a == NOT_FOUND)
-		return (NOT_FOUND);
+	else if (a == (t_tree *)-1)
+		return ((t_tree *)-1);
 	if (is_token_type(*(d->stream), T_PIPE))
 		return (parse_pipe_sequence_prime(d, a));
 	return (a);

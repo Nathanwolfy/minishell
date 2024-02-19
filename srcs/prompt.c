@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/14 17:06:12 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:33:05 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,13 @@ static void	set_malloc_data(t_malloc_data *data, char *old_line, char ***envp)
 	data->envp = envp;
 }
 
-void	prompt(t_token *token, t_tree *ast, char **envp[])
+void	prompt(int running, t_token *token, t_tree *ast, char **envp[])
 {
 	char			*line;
 	char			*old_line;
-	int				running;
 	int				exit_status;
 	t_malloc_data	data;
 
-	running = 1;
 	exit_status = 0;
 	while (running)
 	{

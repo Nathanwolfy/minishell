@@ -14,6 +14,7 @@ SRCS_UTILS_FILES = utils.c \
 
 SRCS_LEXING_FILES = lexing.c \
 						lexing_utils.c				\
+						lexing_utils2.c				\
 						ft_token.c					\
 						cmd_line_formatting.c		\
 						cmd_line_formatting_utils.c	\
@@ -34,7 +35,7 @@ SRCS_INTERPRETER_FILES = interpreter.c \
 							interpreter_pipes.c 	\
 							cmd_process.c 			\
 							cmd_process_utils.c 	\
-							cmd_process_utils1.c 	\
+							cmd_process_utils2.c 	\
 							cmd_infos_utils.c 		\
 							ft_split_null.c
 

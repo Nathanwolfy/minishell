@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 12:19:06 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 18:57:00 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:28:12 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,12 @@ static char	*correct_tmp_cmd(char **cmdin, char **paths, int k)
 	return (tmp);
 }
 
-static char	**check_get_cmd(char **cmdin, char **envp, t_cmd_infos *infos)
+static char	**check_get_cmd(int k, char **cmdin, \
+char **envp, t_cmd_infos *infos)
 {
 	char	**paths;
 	char	*tmp;
-	int		k;
 
-	k = -1;
 	paths = ft_split_null(find_path_var(envp), ':');
 	if (!paths)
 		return (free_split(cmdin), err(infos), NULL);
@@ -95,24 +94,6 @@ static char	**check_get_cmd(char **cmdin, char **envp, t_cmd_infos *infos)
 	else if (ft_strchr(cmdin[0], '/') && f_ok(cmdin[0]))
 		return (no_such_file(infos, cmdin[0]), free_split(cmdin), NULL);
 	return (cmd_not_found(infos, cmdin[0]), free_split(cmdin), NULL);
-}
-
-static int	is_directory(char *cmdname, t_cmd_infos *infos)
-{
-	struct stat	path_stat;
-
-	if (stat(cmdname, &path_stat) != 0)
-		return (0);
-   	else if (S_ISDIR(path_stat.st_mode) && ft_strchr(cmdname, '/'))
-	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(cmdname, STDERR_FILENO);
-		ft_putendl_fd(": Is a directory", STDERR_FILENO);
-		infos->status = 126;
-		infos->error = 1;
-		return (1);
-	}
-	return (0);
 }
 
 char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos)
@@ -138,5 +119,6 @@ char	**recreate_and_get_cmd(t_tree *node, char **envp, t_cmd_infos *infos)
 		it = it->right;
 	}
 	cmd[j] = NULL;
-	return (check_get_cmd(cmd, envp, infos));
+	j = -1;
+	return (check_get_cmd(j, cmd, envp, infos));
 }

@@ -6,40 +6,11 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 16:58:01 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 14:42:46 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:22:17 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
-
-static int	other_chars_sequence(int *table, char *line)
-{
-	int	k;
-
-	k = 0;
-	while (line[k])
-	{
-		if (!(line[k] == ' ' || line[k] == '\t') && !table[k])
-			table[k] = 1;
-		k++;
-	}
-	return (0);
-}
-
-static int	build_token(t_token **token, int type, int *k, char *content)
-{
-	t_token	*new_token;
-
-	new_token = ft_tokennew(content, type);
-	if (!new_token)
-		return (-3);
-	ft_tokenadd_back(token, new_token);
-	if (type == T_DGREAT || type == T_DLESS)
-		(*k)++;
-	if (type != T_WORD)
-		(*k)++;
-	return (0);
-}
 
 static char	*get_word_content(int len, int *k, int *table, char *line)
 {

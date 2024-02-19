@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 17:26:40 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 18:34:29 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:17:37 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ t_cmd_infos *infos, t_malloc_data *data)
 	if (execve(cmd[0], cmd, *(data->envp)) < 0)
 		return (free_split(cmd), close_fds(infos, 0), \
 	free_data_infos(data, infos), exit_return(1));
-	return (free_split(cmd), close_fds(infos, 0), print_error_cmd(NULL, 2, data, infos), free_data_infos(data, infos), exit(2), 2);
+	return (free_split(cmd), close_fds(infos, 0), \
+	print_error_cmd(NULL, 2, data, infos), free_data_infos(data, infos), \
+	exit(2), 2);
 }
 
 int	launch_cmd_sequence(t_tree *node, t_cmd_infos *infos, \
@@ -45,7 +47,8 @@ t_malloc_data *data)
 	if (fork_pid < 0)
 		return (close_fds(infos, 0), ft_perror(), 1);
 	else if (infos->is_builtin >= 0 && !data->ismain)
-		return (exit_return(exec_builtin(infos->is_builtin, node, data, infos)));
+		return (exit_return(exec_builtin(infos->is_builtin, \
+		node, data, infos)));
 	else if (infos->is_builtin >= 0)
 		return (exec_builtin(infos->is_builtin, node, data, infos));
 	else if (fork_pid == 0)
