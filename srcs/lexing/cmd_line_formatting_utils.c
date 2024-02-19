@@ -6,11 +6,25 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 09:45:56 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/16 09:44:03 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:57:47 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
+
+int	check_empty_cmd_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ' && line[i] != '	')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 static void	copy_exit_status(char *new, int j, int exit_status)
 {

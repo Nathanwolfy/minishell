@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/19 12:57:44 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:57:24 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ void	non_interactive_sigquit_handler(int signum);
 int		lexer(char *line, t_token **token);
 char	*lexer_expand_var_replace_quotes(char *line, char **envp);
 char	*format_cmd_line(char *line, char **envp, int exit_status);
+int		check_empty_cmd_line(char *str);
 
 int		quote_sequence(int *table, char *line);
 int		operator_sequence(int *table, char *line);

@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/19 12:57:09 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:58:20 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ char	*format_cmd_line(char *line, char **envp, int exit_status)
 
 	if (!line)
 		return (NULL);
+	if (check_empty_cmd_line(line))
+		return ((char *)-1);
 	d = malloc(sizeof(t_cmd_line_info));
 	if (!d && ft_perror())
 		return (NULL);
