@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 15:38:10 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/14 15:36:12 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:30:04 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	get_env_len(char *old, int *flags, int *i, char **envp)
 	var_len = get_var_len(old, i);
 	if (!var_len)
 	{
-		flags[*i] = 1;
+		flags[*i] = 0;
 		*i += 1;
 		return (0);
 	}
