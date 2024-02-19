@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/17 16:33:14 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:22:00 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@
 # include <errno.h>
 
 # define PROMPT "minishell: "
-# define NOT_FOUND (t_tree *)-1
 # define DQUOTE (char)1
 # define SQUOTE (char)2
 
