@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:17:13 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/19 12:40:15 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:50:59 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ static int	here_doc_routine(t_tree *node, char *content)
 		line = s_get_next_line(STDIN_FILENO);
 		if (line == (char *)-1)
 		{
-			ft_putstr_fd("\nminishell: warning: here-document delimited by end-of-file (wanted `", STDOUT_FILENO);
+			ft_putstr_fd("\nminishell: warning: here-document \
+			delimited by end-of-file (wanted `", STDOUT_FILENO);
 			ft_putstr_fd(node->right->content, STDOUT_FILENO);
 			ft_putendl_fd("\')", STDOUT_FILENO);
 			break ;
