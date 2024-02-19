@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 18:56:39 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:30:27 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,13 @@ int		exit_return(int res);
 int		here_doc_sequence(t_tree *node);
 void	close_fd_builtin(int fd);
 void	free_data_infos(t_malloc_data *data, t_cmd_infos *infos);
+char	*s_get_next_line(int fd);
 
 /*		SIGNALS		*/
 
 int		setup_interactive_mode(void);
 int		setup_non_interactive_mode(void);
+int		setup_here_doc_mode(void);
 void	signal_redisplay(void);
 void	interactive_sigint_handler(int signum);
 void	non_interactive_sigint_handler(int signum);
