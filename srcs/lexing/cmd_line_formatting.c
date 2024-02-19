@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/02 09:27:54 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/16 14:53:29 by ehickman         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:57:09 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static void	get_exit_status_len(int *flags, int *i, int exit_status)
 static void	replace_dquote_loop(int *i, char **envp, t_cmd_line_info *d)
 {
 	d->flags[*i] = 1;
-	d->line[*i] = DQUOTE;
+	d->line[*i] = (char)1;
 	*i += 1;
 	while (d->line[*i])
 	{
 		if (d->line[*i] == '\"')
 		{
-			d->line[*i] = DQUOTE;
+			d->line[*i] = (char)1;
 			d->flags[*i] = 1;
 			*i += 1;
 			return ;
@@ -56,14 +56,14 @@ static void	replace_dquote_loop(int *i, char **envp, t_cmd_line_info *d)
 static void	replace_squote_loop(char *line, int *flags, int *i)
 {
 	flags[*i] = 1;
-	line[*i] = SQUOTE;
+	line[*i] = (char)2;
 	*i += 1;
 	while (line[*i])
 	{
 		flags[*i] = 1;
 		if (line[*i] == '\'')
 		{
-			line[*i] = SQUOTE;
+			line[*i] = (char)2;
 			flags[*i] = 1;
 			*i += 1;
 			return ;

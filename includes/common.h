@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/19 12:30:27 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:57:44 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@
 # include <errno.h>
 
 # define PROMPT "minishell: "
-# define DQUOTE (char)1
-# define SQUOTE (char)2
 
 typedef struct s_token
 {
