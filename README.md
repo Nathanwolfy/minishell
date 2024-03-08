@@ -143,7 +143,7 @@ If you want to dive deeper into parsing, here is another pretty good video on th
 
 Any variable and quotes in the argument will first be expanded and handled following the rules specified earlier.
 
-###env
+### env
 
 	Displays all environment variables and not the shell variables.
 
