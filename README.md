@@ -2,10 +2,6 @@
 
 To effectively interact with command-line input, our algorithm must be able to interpret it. This requires translating the command line input, a process known as parsing. Among the various parsing methods available, we have selected a Recursive Descent parser. This choice is motivated by the parser's simplicity and flexibility, making it well-suited for Minishell.
 
-Here is a link to the best video I found regarding Recursive Descent parsing :
-
-	https://youtu.be/SToUyjAsaFk?si=7EHUhZQaDTpUa-Sv&t=1
-
 ## Lexing
 
 In order to translate it we first need to change our command line from a string to a list of tokens. This is a process known as the lexing, short for "lexical analysis". A token is a meaningful element of a language, in shell they are words, pipes, redirections, etc...
@@ -107,7 +103,12 @@ We talked about quotes being interpreted literally when contained in a variable 
 
 ## Parsing
 
-Now that we have converted our command line into its meaningful elements, we now need to arrange them following the rules of our grammar. To do so, we will apply the Recursive Descent Parsing algorithm (watch the video for more details) to build an AST (Abstract Syntax Tree). Basically, we will convert each tokens into node, and arrange in a manner that will allow us to interpret these commands more easily while respecting the order and priorities of the command line.
+Now that we have converted our command line into its meaningful elements, we need to arrange them following the rules of our grammar. To do so, we will apply a [Recursive Descent Parsing](https://youtu.be/SToUyjAsaFk?si=7EHUhZQaDTpUa-Sv&t=1
+) algorithm to build an [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) (Abstract Syntax Tree). Basically, we will convert each tokens into node, and arrange in a manner that will allow us to interpret these commands more easily while respecting the order and priorities of the command line.
+
+This is another video on parsing in general, more complex, but pretty good if you wanna dive deeper into parsing:
+
+	https://youtu.be/eF9qWbuQLuw?si=KE4RAS7PykbpBkxs&t=0
 
 ## Builtins
 
