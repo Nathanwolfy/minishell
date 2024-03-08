@@ -107,7 +107,7 @@ We talked about quotes being interpreted literally when contained in a variable 
 
 ## Parsing
 
-Now that we have converted our command line into its meaningful elements, we now need to arrange them following the rules of our grammar. To do so, we will apply the Recursive Descent Parsing algorithm (watch the video for more details) to build an AST (Abstract Syntax Tree). Basically, we will convert each tokens into node, and arrange in a manner that will allow us to interpret these commands more easily while respecting the order of the command line.
+Now that we have converted our command line into its meaningful elements, we now need to arrange them following the rules of our grammar. To do so, we will apply the Recursive Descent Parsing algorithm (watch the video for more details) to build an AST (Abstract Syntax Tree). Basically, we will convert each tokens into node, and arrange in a manner that will allow us to interpret these commands more easily while respecting the order and priorities of the command line.
 
 ## Builtins
 
