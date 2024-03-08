@@ -103,10 +103,10 @@ We talked about quotes being interpreted literally when contained in a variable 
 
 ## Parsing
 
-Now that we have converted our command line into its meaningful elements, we need to arrange them following the rules of our grammar. To do so, we will apply a [Recursive Descent Parsing](https://youtu.be/SToUyjAsaFk?si=7EHUhZQaDTpUa-Sv&t=1
+Now that we have converted our command line into its meaningful elements, we need to arrange them following the rules of our grammar. To do so, we will apply a [Recursive Descent Parsing](https://youtu.be/SToUyjAsaFk?si=7EHUhZQaDTpUa-Sv&t=0
 ) algorithm to build an [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) (Abstract Syntax Tree). Basically, we will convert each tokens into node, and arrange in a manner that will allow us to interpret these commands more easily while respecting the order and priorities of the command line.
 
-This is another video on parsing in general, more complex, but pretty good if you wanna dive deeper into parsing:
+If you want to dive deeper into parsing, here is another pretty good video on the subject :
 
 	https://youtu.be/eF9qWbuQLuw?si=KE4RAS7PykbpBkxs&t=0
 
