@@ -2,7 +2,7 @@
 
 To effectively interact with command-line input, our algorithm must be able to interpret it. This requires translating the command line input, a process known as parsing. Among the various parsing methods available, we have selected a Recursive Descent parser. This choice is motivated by the parser's simplicity and flexibility, making it well-suited for Minishell.
 
-Here is a link to the best video I found regarding Recursive Descent parsing
+Here is a link to the best video I found regarding Recursive Descent parsing :
 
 	https://youtu.be/SToUyjAsaFk?si=7EHUhZQaDTpUa-Sv&t=1
 
@@ -103,9 +103,11 @@ Now, the confusing part comes when quotes appear in the cmd line and in variable
 > 2. Split into tokens:		**| ls | | "-ls | | -a" |** (gets splitted because the quotes are literal)
 > 3. Quote formatting:		**| ls | | "-ls | | -a" |** (literal quotes are not removed)
 
+We talked about quotes being interpreted literally when contained in a variable value, however, they are not the exception. Every character contained in a variable value should be interpreted literally, therefore, any special characters ('>', '<', '|', etc...) should be interpreted as T_WORD, and not as any other type of token.
+
 ## Parsing
 
-Now that we have converted our command line into its meaningful elements, we now need to arrange them following the rules of our grammar.
+Now that we have converted our command line into its meaningful elements, we now need to arrange them following the rules of our grammar. To do so, we will apply the Recursive Descent Parsing algorithm (watch the video for more details) to build an AST (Abstract Syntax Tree). Basically, we will convert each tokens into node, and arrange in a manner that will allow us to interpret these commands more easily while respecting the order of the command line.
 
 ## Builtins
 
