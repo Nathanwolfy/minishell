@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:03:05 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/19 12:57:44 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:48:13 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_malloc_data
 	char	***envp;
 	t_tree	**ast;
 	int		ismain;
+	int		flag_quit;
 }	t_malloc_data;
 
 typedef enum e_token_type
@@ -151,6 +152,8 @@ char	*s_get_next_line(int fd);
 int		setup_interactive_mode(void);
 int		setup_non_interactive_mode(void);
 int		setup_here_doc_mode(void);
+void	s_ign(void);
+void	handle_sigquit(int *exit_status, t_malloc_data *data);
 void	signal_redisplay(void);
 void	interactive_sigint_handler(int signum);
 void	non_interactive_sigint_handler(int signum);
@@ -161,6 +164,7 @@ void	non_interactive_sigquit_handler(int signum);
 int		lexer(char *line, t_token **token);
 char	*lexer_expand_var_replace_quotes(char *line, char **envp);
 char	*format_cmd_line(char *line, char **envp, int exit_status);
+int		check_empty_cmd_line(char *line);
 
 int		quote_sequence(int *table, char *line);
 int		operator_sequence(int *table, char *line);

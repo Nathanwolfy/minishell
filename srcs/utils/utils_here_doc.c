@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:17:13 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/19 12:50:59 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:53:51 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,20 @@ static int	continue_browsing(t_tree *node)
 	return (res);
 }
 
-static int	is_del(char *line, t_tree *node)
+static int	is_del(char **line, t_tree *node)
 {
-	return (!ft_strncmp(line, node->right->content, \
+	if (!ft_strncmp(*line, node->right->content, \
 	ft_strlen(node->right->content)) \
-	&& line[ft_strlen(node->right->content)] == '\n');
+	&& (*line)[ft_strlen(node->right->content)] == '\n')
+	{
+		free(*line);
+		return (1);
+	}
+	else
+		return (0);
 }
 
-static int	here_doc_routine(t_tree *node, char *content)
+static int	here_doc_routine(t_tree *node, char **content)
 {
 	char	*line;
 
@@ -62,19 +68,19 @@ static int	here_doc_routine(t_tree *node, char *content)
 		if (line == (char *)-1)
 		{
 			ft_putstr_fd("\nminishell: warning: here-document \
-			delimited by end-of-file (wanted `", STDOUT_FILENO);
+delimited by end-of-file (wanted `", STDOUT_FILENO);
 			ft_putstr_fd(node->right->content, STDOUT_FILENO);
 			ft_putendl_fd("\')", STDOUT_FILENO);
 			break ;
 		}
 		else if (!line && g_sig == SIGINT)
-			return (free(content), 128 + SIGINT);
+			return (free(*content), 128 + SIGINT);
 		else if (!line)
-			return (free(content), ft_perror(), 1);
-		else if (is_del(line, node))
+			return (free(*content), ft_perror(), 1);
+		else if (is_del(&line, node))
 			break ;
-		content = ft_strjoin_free(content, line, 3);
-		if (!content)
+		*content = ft_strjoin_free(*content, line, 3);
+		if (!*content)
 			return (ft_perror(), 1);
 	}
 	return (0);
@@ -90,7 +96,7 @@ int	here_doc_sequence(t_tree *node)
 		content = ft_strdup("");
 		if (!content)
 			return (ft_perror(), 1);
-		res = here_doc_routine(node, content);
+		res = here_doc_routine(node, &content);
 		if (res != 0)
 			return (res);
 		free(node->content);

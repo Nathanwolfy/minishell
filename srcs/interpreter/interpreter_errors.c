@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/09 11:06:18 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 18:56:10 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:48:29 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ else : unknown error
 int	print_error_cmd(char *cmd, int status, \
 t_malloc_data *data, t_cmd_infos *infos)
 {
+	char	*error;
+
 	(void)cmd;
 	if (status == 127)
 		status = 127;
@@ -29,8 +31,14 @@ t_malloc_data *data, t_cmd_infos *infos)
 		status = 126;
 	else if (status == 1)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putendl_fd(strerror(status), STDERR_FILENO);
+		error = ft_strjoin("minishell: ", strerror(status));
+		if (!error)
+			ft_perror();
+		else
+		{
+			ft_putendl_fd(error, STDERR_FILENO);
+			free(error);
+		}
 	}
 	else
 	{
@@ -43,18 +51,48 @@ t_malloc_data *data, t_cmd_infos *infos)
 
 void	no_such_file(t_cmd_infos *infos, char *cmd)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+	char	*tmp;
+	char	*error;
+
+	tmp = ft_strjoin("minishell: ", cmd);
+	if (!tmp)
+		ft_perror();
+	else
+	{
+		error = ft_strjoin(tmp, ": No such file or directory\n");
+		if (!error)
+			ft_perror();
+		else
+		{
+			ft_putstr_fd(error, STDERR_FILENO);
+			free(error);
+		}
+		free(tmp);
+	}
 	infos->status = 127;
 	infos->error = 1;
 }
 
 void	cmd_not_found(t_cmd_infos *infos, char *cmd)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd(": command not found", STDERR_FILENO);
+	char	*tmp;
+	char	*error;
+
+	tmp = ft_strjoin("minishell: ", cmd);
+	if (!tmp)
+		ft_perror();
+	else
+	{
+		error = ft_strjoin(tmp, ": command not found\n");
+		if (!error)
+			ft_perror();
+		else
+		{
+			ft_putstr_fd(error, STDERR_FILENO);
+			free(error);
+		}
+		free(tmp);
+	}
 	infos->status = 127;
 	infos->error = 1;
 }
@@ -69,6 +107,6 @@ int	check_unknown_error(int status)
 
 int	print_missing_ast(void)
 {
-	ft_putendl_fd("minishell: interpreter: missing ast", STDERR_FILENO);
+	ft_putstr_fd("minishell: interpreter: missing ast\n", STDERR_FILENO);
 	return (1);
 }

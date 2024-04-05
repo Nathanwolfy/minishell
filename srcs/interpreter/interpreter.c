@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 19:17:47 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 15:52:30 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:25:21 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_malloc_data *data)
 
 	res = 1;
 	if (!node)
-		return (0);
+		return (close_fds(infos, 0), 0);
 	if (node->type == R_CMD_NAME)
 		res = launch_cmd_sequence(node, infos, data);
 	else if (node->type == R_IO_FILE_TO)
@@ -66,5 +66,6 @@ int	interpreter(t_malloc_data *data, t_tree **ast)
 	}
 	else
 		res = set_up_pipes(*ast, data, -1);
+	wait(NULL);
 	return (res);
 }

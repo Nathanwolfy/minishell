@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 14:05:59 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/16 18:32:31 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:42:43 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int pipefd[2], int pipefd_out)
 
 	infos = ft_calloc(1, sizeof(t_cmd_infos));
 	if (!infos)
-		return (close_all_pipefds(pipefd, pipefd_out), ft_perror(), 1);
+		return (ft_perror(), close_all_pipefds(pipefd, pipefd_out), 1);
 	close(pipefd[0]);
 	reset_cmd_infos(infos);
 	add_fd(infos, 'o', pipefd[1]);
@@ -62,10 +62,10 @@ int	set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out)
 	t_cmd_infos	*infos;
 
 	if (pipe(pfd) < 0)
-		return (close_all_pipefds(NULL, pipefd_out), ft_perror(), 1);
+		return (ft_perror(), close_all_pipefds(NULL, pipefd_out), 1);
 	pipe_pid = fork();
 	if (pipe_pid < 0)
-		return (close_all_pipefds(pfd, pipefd_out), ft_perror(), 1);
+		return (ft_perror(), close_all_pipefds(pfd, pipefd_out), 1);
 	else if (pipe_pid == 0)
 	{
 		if ((node->left)->type != R_PIPE_SEQUENCE)
@@ -77,7 +77,7 @@ int	set_up_pipes(t_tree *node, t_malloc_data *data, int pipefd_out)
 	{
 		infos = ft_calloc(1, sizeof(t_cmd_infos));
 		if (!infos)
-			return (close_all_pipefds(pfd, pipefd_out), ft_perror(), 1);
+			return (ft_perror(), close_all_pipefds(pfd, pipefd_out), 1);
 		manage_fds_pipe_right(infos, pfd, pipefd_out);
 		return (return_status(infos, execute_job(node->right, infos, data)));
 	}

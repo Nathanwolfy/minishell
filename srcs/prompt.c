@@ -6,7 +6,7 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:27:14 by nlederge          #+#    #+#             */
-/*   Updated: 2024/02/19 12:22:31 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:57:22 by nlederge         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 sig_atomic_t	g_sig = 0;
 
-static void	free_lines(char *line, char *old_line, int code)
+static void	free_lines(char *line, char *old_line, int code, int *running)
 {
 	if (line && (code == 1 || code == 3))
 	{
@@ -26,15 +26,21 @@ static void	free_lines(char *line, char *old_line, int code)
 		free(old_line);
 		old_line = NULL;
 	}
+	if (running)
+		*running = 1;
 }
 
-static char	*initialize_line(char ***envp, char **old_line, int *exit_status)
+static char	*initialize_line(char ***envp, char **old_line, int *exit_status, \
+t_malloc_data *data)
 {
 	char	*line;
 
+	handle_sigquit(exit_status, data);
 	if (setup_interactive_mode())
 		return (NULL);
 	*old_line = readline(PROMPT);
+	if (g_sig == SIGINT)
+		*exit_status = 130;
 	if (!*old_line)
 	{
 		*exit_status = 0;
@@ -45,10 +51,7 @@ static char	*initialize_line(char ***envp, char **old_line, int *exit_status)
 		return (NULL);
 	line = format_cmd_line(*old_line, *envp, *exit_status);
 	if (line == (char *)-1)
-	{
-		*exit_status = 0;
 		return ((char *)-1);
-	}
 	else if (!line)
 		return (NULL);
 	return (line);
@@ -75,6 +78,7 @@ t_malloc_data *data, int *exit_status)
 		if (setup_non_interactive_mode())
 			return ;
 		*exit_status = interpreter(data, ast);
+		data->flag_quit = 1;
 	}
 	else
 		*exit_status = res;
@@ -95,15 +99,16 @@ void	prompt(int running, t_token *token, t_tree *ast, char **envp[])
 	t_malloc_data	data;
 
 	exit_status = 0;
+	data.flag_quit = 0;
 	while (running)
 	{
-		line = initialize_line(envp, &old_line, &exit_status);
+		line = initialize_line(envp, &old_line, &exit_status, &data);
 		if (line == (char *)-1)
 			continue ;
 		else if (!line)
 			return ;
 		running = lexer(line, &token);
-		free_lines(line, old_line, 1);
+		free_lines(line, old_line, 1, NULL);
 		set_malloc_data(&data, old_line, envp);
 		if (print_error_lexer(running, &exit_status) < 0)
 			ft_tokenclear(&token);
@@ -111,7 +116,6 @@ void	prompt(int running, t_token *token, t_tree *ast, char **envp[])
 			initialize_ast_and_execute(&token, &ast, &data, &exit_status);
 		if (old_line)
 			add_history(old_line);
-		free_lines(line, old_line, 2);
-		running = 1;
+		free_lines(line, old_line, 2, &running);
 	}
 }

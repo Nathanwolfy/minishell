@@ -6,22 +6,16 @@
 /*   By: nlederge <nlederge@student.42mulhouse.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 09:05:42 by ehickman          #+#    #+#             */
-/*   Updated: 2024/02/19 12:30:18 by nlederge         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:51:26 by ehickman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-void	handler_change_g_sig(int signum)
-{
-	g_sig = (sig_atomic_t)signum;
-}
-
 int	setup_interactive_mode(void)
 {
 	struct sigaction	sa;
 
-	g_sig = 0;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sa.sa_handler = interactive_sigint_handler;
@@ -37,7 +31,6 @@ int	setup_non_interactive_mode(void)
 {
 	struct sigaction	sa;
 
-	g_sig = 0;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sa.sa_handler = non_interactive_sigquit_handler;
@@ -53,11 +46,16 @@ int	setup_here_doc_mode(void)
 {
 	struct sigaction	sa;
 
-	g_sig = 0;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = 0;
 	sa.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sa, NULL) < 0)
 		return (ft_perror(), 1);
 	return (0);
+}
+
+void	s_ign(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
